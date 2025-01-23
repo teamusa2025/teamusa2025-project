@@ -11,7 +11,7 @@ const Home = () => (
         role="alert"
       >
         <svg
-          className="me-3 mt-[2px] inline size-4 shrink-0"
+          className="me-3 mt-0.5 inline size-4 shrink-0"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -38,7 +38,7 @@ const Home = () => (
         role="alert"
       >
         <svg
-          className="me-3 mt-[2px] inline size-4 shrink-0"
+          className="me-3 mt-0.5 inline size-4 shrink-0"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
@@ -74,7 +74,7 @@ const Home = () => (
     </Container>
     <div>
       <a
-        href="#"
+        href="/"
         className="block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow
         hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
       >
@@ -107,7 +107,7 @@ const Home = () => (
         <div className="ms-3 text-sm font-medium">
           A simple info alert with an
           {' '}
-          <a href="#" className="font-semibold underline hover:no-underline">
+          <a href="/" className="font-semibold underline hover:no-underline">
             example link
           </a>
           . Give it a click if you like.
@@ -158,7 +158,7 @@ const Home = () => (
         <div className="ms-3 text-sm font-medium">
           A simple danger alert with an
           {' '}
-          <a href="#" className="font-semibold underline hover:no-underline">
+          <a href="/" className="font-semibold underline hover:no-underline">
             example link
           </a>
           . Give it a click if you like.
@@ -209,7 +209,7 @@ const Home = () => (
         <div className="ms-3 text-sm font-medium">
           A simple success alert with an
           {' '}
-          <a href="#" className="font-semibold underline hover:no-underline">
+          <a href="/" className="font-semibold underline hover:no-underline">
             example link
           </a>
           . Give it a click if you like.
@@ -260,7 +260,7 @@ const Home = () => (
         <div className="ms-3 text-sm font-medium">
           A simple danger alert with an
           {' '}
-          <a href="#" className="font-semibold underline hover:no-underline">
+          <a href="/" className="font-semibold underline hover:no-underline">
             example link
           </a>
           . Give it a click if you like.
@@ -311,7 +311,7 @@ const Home = () => (
           A simple dark alert with an
           {' '}
           <a
-            href="#"
+            href="/"
             className="font-semibold underline hover:text-gray-800 hover:no-underline dark:text-gray-300"
           >
             example link
