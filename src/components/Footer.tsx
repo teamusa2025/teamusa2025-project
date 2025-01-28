@@ -6,7 +6,12 @@ const Footer = () => (
       <span className="block text-sm text-gray-500 dark:text-gray-400 sm:text-center">
         © 2025
         {' '}
-        <a href="https://teamusa2025.github.io/" className="text-gray-500 hover:underline dark:text-gray-400">
+        <a
+          href="https://teamusa2025.github.io/"
+          className="text-gray-500 hover:underline dark:text-gray-400"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           TeamUSA2025™
         </a>
         . All Rights Reserved.
