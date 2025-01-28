@@ -1,3 +1,5 @@
+'use client';
+
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const Footer = () => (
   <footer className="m-4 rounded-lg bg-white dark:bg-gray-900">
