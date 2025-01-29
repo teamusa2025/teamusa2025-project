@@ -122,16 +122,16 @@ const SignIn = () => {
               >
                 Sign in
               </button>
-              {/* <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?
                 {' '}
                 <a
                   href="/"
                   className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
                 >
-                  Sign up
+                  Request access
                 </a>
-              </p> */}
+              </p>
             </form>
           </div>
         </div>
