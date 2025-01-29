@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 'use client';
 
 import { signIn } from 'next-auth/react';
@@ -26,7 +28,7 @@ const SignIn = () => {
 
   return (
     <section className="bg-white-50 dark:bg-gray-900">
-      <div className="mx-auto mt-20 flex flex-col items-center px-6 py-8 min-h-[60vh] lg:min-h-[50vh]">
+      <div className="min-h-3/5 lg:min-h-1/2 mx-auto mt-20 flex flex-col items-center px-6 py-8">
         <div
           className="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800
         sm:max-w-md md:mt-0 xl:p-0"
@@ -109,7 +111,8 @@ const SignIn = () => {
                 Sign in
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{' '}
+                Don’t have an account yet?
+                {' '}
                 <a
                   href="/"
                   className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
