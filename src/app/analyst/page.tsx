@@ -2,13 +2,13 @@
 
 import { Container } from 'react-bootstrap';
 
-/** The Home page. */
-const Home = () => (
+/** The Analyst page. */
+const Analyst = () => (
   <main>
     <Container id="landing-page" fluid className="mt-20 py-3">
-      <h1>This is the Home Page</h1>
+      <h1>This is the Analyst Page</h1>
     </Container>
   </main>
 );
 
-export default Home;
+export default Analyst;
