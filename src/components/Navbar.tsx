@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
@@ -72,13 +72,15 @@ const NavBar: React.FC = () => {
 
         {/* Get Started Button */}
         <div className="flex items-center space-x-3">
-          <div className="flex items-center space-x-2">
-            <a href="/auth/signin" className="no-underline">
+          {/* Authentication Buttons */}
+          <div className="flex items-center space-x-3">
+            {session ? (
               <button
                 type="button"
-                className="flex items-center space-x-2 rounded-lg bg-blue-600 px-4 py-2 text-center text-sm
-                font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4
-                focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onClick={() => signOut()}
+                className="flex items-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-center text-sm
+              font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4
+              focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
               >
                 <svg
                   className="text-white-800 size-6 dark:text-white"
@@ -94,13 +96,41 @@ const NavBar: React.FC = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13
-                    16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    d="M15 12h6m0 0-3-3m3 3-3 3M9 5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z"
                   />
                 </svg>
-                <span>Login</span>
+                <span>Sign Out</span>
               </button>
-            </a>
+            ) : (
+              <a href="/auth/signin" className="no-underline">
+                <button
+                  type="button"
+                  className="flex items-center space-x-2 rounded-lg bg-blue-600 px-4 py-2 text-center text-sm
+                font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4
+                focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  <svg
+                    className="text-white-800 size-6 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="2 0.25 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13
+                    16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                  <span>Login</span>
+                </button>
+              </a>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
