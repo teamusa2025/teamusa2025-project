@@ -48,21 +48,21 @@ const NavBar: React.FC = () => {
             Admin
           </a>
           <a
-            href="/"
+            href="/auditor"
             className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
             dark:hover:text-blue-500"
           >
             Auditor
           </a>
           <a
-            href="/"
+            href="/analyst"
             className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
             dark:hover:text-blue-500"
           >
             Analyst
           </a>
           <a
-            href="/"
+            href="/executive"
             className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
             dark:hover:text-blue-500"
           >
