@@ -5,7 +5,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 
 /** After the user clicks the "SignOut" link in the NavBar, log them out and display this page. */
 const SignOut = () => (
-  <Col id="signout-page" className="py-3 text-center">
+  <Col id="signout-page" className="mt-20 py-3 text-center">
     <h2>Do you want to sign out?</h2>
     <Row>
       <Col xs={4} />
