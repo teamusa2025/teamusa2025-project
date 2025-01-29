@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
             Home
           </a>
           <a
-            href="/"
+            href="/admin"
             className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
             dark:hover:text-blue-500"
           >

@@ -24,7 +24,7 @@ const ListPage = async () => {
   // console.log(stuff);
   return (
     <main>
-      <Container id="list" fluid className="py-3">
+      <Container id="list" fluid className="mt-20 py-3">
         <Row>
           <Col>
             <h1>Stuff</h1>
