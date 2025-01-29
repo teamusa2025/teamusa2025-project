@@ -1,11 +1,10 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import Image from 'next/image';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 
-/** The sign in page. */
+/** The sign-in page. */
 const SignIn = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -36,7 +35,7 @@ const SignIn = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -82,7 +81,6 @@ const SignIn = () => {
                       type="checkbox"
                       className="focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 size-4 rounded border
                       border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                      required
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -103,10 +101,10 @@ const SignIn = () => {
               </div>
               <button
                 type="submit"
-                className="bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600
-                dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-2.5
-                text-center text-sm font-medium text-white focus:outline-none
-                focus:ring-4"
+                className="w-full rounded-lg bg-blue-600 px-5
+                py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700
+                focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700
+                dark:focus:ring-blue-800"
               >
                 Sign in
               </button>
