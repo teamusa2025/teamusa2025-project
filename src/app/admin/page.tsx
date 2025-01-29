@@ -17,10 +17,11 @@ const AdminPage = async () => {
 
   return (
     <main>
-      <Container id="list" fluid className="py-3">
+      <Container id="list" fluid className="mt-20 py-3">
         <Row>
           <Col>
-            <h1>List Stuff Admin</h1>
+            <h1>This is the Admin Page</h1>
+            <h4 className="mt-10">List Stuff Admin</h4>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -41,7 +42,7 @@ const AdminPage = async () => {
         </Row>
         <Row>
           <Col>
-            <h1>List Users Admin</h1>
+            <h4>List Users Admin</h4>
             <Table striped bordered hover>
               <thead>
                 <tr>
