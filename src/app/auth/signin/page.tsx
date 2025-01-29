@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 
-/** The sign in page. */
+/** The sign-in page. */
 const SignIn = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -25,36 +27,104 @@ const SignIn = () => {
   };
 
   return (
-    <main>
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={5}>
-            <h1 className="text-center">Sign In</h1>
-            <Card>
-              <Card.Body>
-                <Form method="post" onSubmit={handleSubmit}>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <input name="email" type="text" className="form-control" />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <input name="password" type="password" className="form-control" />
-                  </Form.Group>
-                  <Button type="submit" className="mt-3">
-                    Signin
-                  </Button>
-                </Form>
-              </Card.Body>
-              <Card.Footer>
-                Don&apos;t have an account?
-                <a href="/auth/signup">Sign up</a>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </main>
+    <section className="bg-white-50 dark:bg-gray-900">
+      <div className="min-h-3/5 lg:min-h-1/2 mx-auto mt-20 flex flex-col items-center px-6 py-8">
+        <div
+          className="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800
+        sm:max-w-md md:mt-0 xl:p-0"
+        >
+          <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+              Sign in to your account
+            </h1>
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border
+                  border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white
+                  dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  placeholder="name@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border
+                  border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white
+                  dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-start">
+                  <div className="flex h-5 items-center">
+                    <input
+                      id="remember"
+                      aria-describedby="remember"
+                      type="checkbox"
+                      className="focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 size-4 rounded border
+                      border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label
+                      htmlFor="remember"
+                      className="text-gray-500 dark:text-gray-300"
+                    >
+                      Remember me
+                    </label>
+                  </div>
+                </div>
+                <a
+                  href="/"
+                  className="text-primary-600 dark:text-primary-500 text-sm font-medium hover:underline"
+                >
+                  Forgot password?
+                </a>
+              </div>
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-blue-600 px-5
+                py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700
+                focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700
+                dark:focus:ring-blue-800"
+              >
+                Sign in
+              </button>
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Don’t have an account yet?
+                {' '}
+                <a
+                  href="/"
+                  className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
+                >
+                  Sign up
+                </a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
