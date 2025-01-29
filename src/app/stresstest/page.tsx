@@ -10,10 +10,10 @@ const ScenarioOne: React.FC = () => {
   return (
     <div className=" mx-auto mt-6 max-w-4xl p-6">
       {/* Header */}
-      <h1 className="mb-8 mt-20 text-center text-3xl font-bold">Scenario #1</h1>
+      <h1 className="mt-20 text-center text-3xl font-bold">Scenario #1</h1>
+      <h2 className="mb-8 text-center text-2xl">30% Drop in return rate of investment</h2>
 
       {/* Toggle Switch */}
-
       <div>
         <label htmlFor={scenarioToggle} className="inline-flex cursor-pointer items-center">
           <input id={scenarioToggle} type="checkbox" value="" className="peer sr-only" />
