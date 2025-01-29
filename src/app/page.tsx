@@ -1,13 +1,22 @@
 'use client';
 
-import { Container } from 'react-bootstrap';
-
 /** The Home page. */
 const Home = () => (
   <main>
-    <Container id="landing-page" fluid className="py-3">
-      <h1>This is the Home Page</h1>
-    </Container>
+    <h1 className="center">Mockup Page for Auditor Home Page</h1>
+    <div className="center">
+      <a href="/">
+        <button
+          type="button"
+          className="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800"
+        >
+          Edit
+        </button>
+      </a>
+    </div>
+    <div className="center">
+      <img src="mockupPage.png" alt="Paris" />
+    </div>
   </main>
 );
 
