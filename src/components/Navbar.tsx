@@ -2,7 +2,7 @@
 
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
@@ -75,32 +75,33 @@ const NavBar: React.FC = () => {
           {/* Authentication Buttons */}
           <div className="flex items-center space-x-3">
             {session ? (
-              <button
-                type="button"
-                onClick={() => signOut()}
-                className="flex items-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-center text-sm
+              <a href="/auth/signout" className="no-underline">
+                <button
+                  type="button"
+                  className="flex items-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-center text-sm
               font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4
               focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-              >
-                <svg
-                  className="text-white-800 size-6 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="2 0.25 24 24"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 12h6m0 0-3-3m3 3-3 3M9 5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z"
-                  />
-                </svg>
-                <span>Sign Out</span>
-              </button>
+                  <svg
+                    className="text-white-800 size-6 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="2 0.25 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 12h6m0 0-3-3m3 3-3 3M9 5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z"
+                    />
+                  </svg>
+                  <span>Sign Out</span>
+                </button>
+              </a>
             ) : (
               <a href="/auth/signin" className="no-underline">
                 <button
