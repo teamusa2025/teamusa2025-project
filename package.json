@@ -22,7 +22,7 @@
     "bootstrap": "^5.3.3",
     "flowbite-react": "^0.10.2",
     "multiselect-react-dropdown": "^2.0.25",
-    "next": "14.2.10",
+    "next": "14.2.23",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-bootstrap": "^2.10.4",
