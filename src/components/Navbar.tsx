@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client';
@@ -15,6 +16,29 @@ const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+
+  // test
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   // Close the menu when clicking outside
   useEffect(() => {
@@ -127,33 +151,50 @@ const NavBar: React.FC = () => {
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-3">
             {session ? (
-              <a href="/auth/signout" className="no-underline">
+              <div className="relative" ref={dropdownRef}>
+                {/* Profile Image Button */}
                 <button
                   type="button"
-                  className="flex items-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-center text-sm
-                  font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4
-                  focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                  className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300
+                  dark:focus:ring-gray-600"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  <svg
-                    className="text-white-800 size-6 dark:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="2 0.25 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 12h6m0 0-3-3m3 3-3 3M9 5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z"
-                    />
-                  </svg>
-                  <span>Sign Out</span>
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    className="h-10 rounded-full"
+                    // eslint-disable-next-line max-len
+                    src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b0b4c759-ad9c-4425-a9f4-ab89e2fd9837/de8cefl-35c0bc59-59b9-42ab-b19f-5c73828bb78e.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2IwYjRjNzU5LWFkOWMtNDQyNS1hOWY0LWFiODllMmZkOTgzN1wvZGU4Y2VmbC0zNWMwYmM1OS01OWI5LTQyYWItYjE5Zi01YzczODI4YmI3OGUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.81ixeN9b4cfDmfBlskK9CUyAMDtRhYNU7lfwTI8WI5Q"
+                    alt="User"
+                  />
                 </button>
-              </a>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg
+                  dark:border-gray-600 dark:bg-gray-700"
+                  >
+                    <div className="border-bottom px-4 py-3">
+                      <span className="block text-sm font-medium text-gray-900 dark:text-white">
+                        John Foo
+                      </span>
+                      <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
+                        name@example.com
+                      </span>
+                    </div>
+                    <ul className="p-0">
+                      <li>
+                        <a
+                          href="/auth/signout"
+                          className="block px-4 py-2 text-sm text-gray-700 no-underline hover:bg-gray-100
+                          dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >
+                          Sign out
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             ) : (
               <a href="/auth/signin" className="no-underline">
                 <button
