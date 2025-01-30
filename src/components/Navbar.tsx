@@ -17,7 +17,7 @@ const NavBar: React.FC = () => {
   return (
     <nav
       className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600
-    dark:bg-gray-900"
+      dark:bg-gray-900"
     >
       <div className="mx-auto flex max-w-screen-xl items-center justify-between p-4">
         {/* Logo Section */}
@@ -79,8 +79,8 @@ const NavBar: React.FC = () => {
                 <button
                   type="button"
                   className="flex items-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-center text-sm
-              font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4
-              focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                  font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4
+                  focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                 >
                   <svg
                     className="text-white-800 size-6 dark:text-white"
@@ -107,8 +107,8 @@ const NavBar: React.FC = () => {
                 <button
                   type="button"
                   className="flex items-center space-x-2 rounded-lg bg-blue-600 px-4 py-2 text-center text-sm
-                font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4
-                focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4
+                  focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   <svg
                     className="text-white-800 size-6 dark:text-white"
@@ -125,7 +125,7 @@ const NavBar: React.FC = () => {
                       strokeLinejoin="round"
                       strokeWidth="2"
                       d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13
-                    16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                      16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                   </svg>
                   <span>Login</span>
@@ -139,8 +139,8 @@ const NavBar: React.FC = () => {
             onClick={() => setIsOpen(!isOpen)}
             type="button"
             className="inline-flex size-10 items-center justify-center rounded-lg p-2 text-gray-700 hover:bg-gray-100
-  focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-300 dark:hover:bg-gray-700
-  dark:focus:ring-gray-600 md:hidden"
+            focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-300 dark:hover:bg-gray-700
+            dark:focus:ring-gray-600 md:hidden"
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -168,32 +168,48 @@ const NavBar: React.FC = () => {
           <div className="absolute left-0 top-16 w-full bg-white dark:bg-gray-900 md:hidden">
             <ul className="flex flex-col items-center space-y-4 p-4">
               <li>
-                <a href="/" className="font-medium text-blue-700">
+                <a
+                  href="/"
+                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
+                  dark:hover:text-blue-500"
+                >
                   Home
                 </a>
               </li>
               <li>
                 <a
-                  href="/"
-                  className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500"
+                  href="/admin"
+                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
+                  dark:hover:text-blue-500"
                 >
-                  About
+                  Admin
                 </a>
               </li>
               <li>
                 <a
-                  href="/"
-                  className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500"
+                  href="/auditor"
+                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
+                  dark:hover:text-blue-500"
                 >
-                  Services
+                  Auditor
                 </a>
               </li>
               <li>
                 <a
-                  href="/"
-                  className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500"
+                  href="/analyst"
+                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
+                  dark:hover:text-blue-500"
                 >
-                  Contact
+                  Analyst
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/executive"
+                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
+                  dark:hover:text-blue-500"
+                >
+                  Executive
                 </a>
               </li>
             </ul>
