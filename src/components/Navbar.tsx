@@ -4,7 +4,7 @@
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -13,6 +13,29 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close the menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <nav
@@ -72,7 +95,6 @@ const NavBar: React.FC = () => {
 
         {/* Get Started Button */}
         <div className="flex items-center space-x-3">
-          {/* Authentication Buttons */}
           <div className="flex items-center space-x-3">
             {session ? (
               <a href="/auth/signout" className="no-underline">
@@ -139,9 +161,8 @@ const NavBar: React.FC = () => {
             onClick={() => setIsOpen(!isOpen)}
             type="button"
             className="inline-flex size-10 items-center justify-center rounded-lg p-2 text-gray-700
-            hover:bg-gray-100
-            focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-300 dark:hover:bg-gray-700
-            dark:focus:ring-gray-600 md:hidden"
+            hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-300
+            dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -166,7 +187,10 @@ const NavBar: React.FC = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="round fixed left-0 mt-36 w-full border bg-white shadow dark:bg-gray-900 md:hidden">
+          <div
+            ref={mobileMenuRef}
+            className="fixed left-0 mt-36 w-full border bg-white shadow dark:bg-gray-900 md:hidden"
+          >
             <ul className="mt-10 flex flex-col items-center space-y-4 p-4">
               <li>
                 <a
