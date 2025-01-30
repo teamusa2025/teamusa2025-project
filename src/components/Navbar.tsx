@@ -19,8 +19,8 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target as Node)
+        mobileMenuRef.current
+        && !mobileMenuRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
