@@ -138,7 +138,8 @@ const NavBar: React.FC = () => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             type="button"
-            className="inline-flex size-10 items-center justify-center rounded-lg p-2 text-gray-700 hover:bg-gray-100
+            className="inline-flex size-10 items-center justify-center rounded-lg p-2 text-gray-700
+            hover:bg-gray-100
             focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-300 dark:hover:bg-gray-700
             dark:focus:ring-gray-600 md:hidden"
           >
@@ -165,8 +166,8 @@ const NavBar: React.FC = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="absolute left-0 top-16 w-full bg-white dark:bg-gray-900 md:hidden">
-            <ul className="flex flex-col items-center space-y-4 p-4">
+          <div className="round fixed left-0 mt-36 w-full border bg-white shadow dark:bg-gray-900 md:hidden">
+            <ul className="mt-10 flex flex-col items-center space-y-4 p-4">
               <li>
                 <a
                   href="/"
