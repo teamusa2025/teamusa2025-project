@@ -178,7 +178,7 @@ const NavBar: React.FC = () => {
                         John Foo
                       </span>
                       <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
-                        name@example.com
+                        {currentUser}
                       </span>
                     </div>
                     <ul className="p-0">
