@@ -14,6 +14,7 @@ const NavBar: React.FC = () => {
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   // Close the menu when clicking outside
   useEffect(() => {
@@ -58,36 +59,65 @@ const NavBar: React.FC = () => {
         <div className="hidden md:flex">
           <a
             href="/"
-            className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-            dark:hover:text-blue-500"
+            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
+              hoveredLink === 'home'
+                ? 'text-blue-700 dark:text-blue-400'
+                : 'text-gray-900 dark:text-white'
+            }`}
+            onMouseEnter={() => setHoveredLink('home')}
+            onMouseLeave={() => setHoveredLink(null)}
           >
             Home
           </a>
+
           <a
             href="/admin"
-            className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-            dark:hover:text-blue-500"
+            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
+              hoveredLink === 'admin'
+                ? 'text-blue-700 dark:text-blue-400'
+                : 'text-gray-900 dark:text-white'
+            }`}
+            onMouseEnter={() => setHoveredLink('admin')}
+            onMouseLeave={() => setHoveredLink(null)}
           >
             Admin
           </a>
+
           <a
             href="/auditor"
-            className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-            dark:hover:text-blue-500"
+            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
+              hoveredLink === 'auditor'
+                ? 'text-blue-700 dark:text-blue-400'
+                : 'text-gray-900 dark:text-white'
+            }`}
+            onMouseEnter={() => setHoveredLink('auditor')}
+            onMouseLeave={() => setHoveredLink(null)}
           >
             Auditor
           </a>
+
           <a
             href="/analyst"
-            className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-            dark:hover:text-blue-500"
+            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
+              hoveredLink === 'analyst'
+                ? 'text-blue-700 dark:text-blue-400'
+                : 'text-gray-900 dark:text-white'
+            }`}
+            onMouseEnter={() => setHoveredLink('analyst')}
+            onMouseLeave={() => setHoveredLink(null)}
           >
             Analyst
           </a>
+
           <a
             href="/executive"
-            className="mx-3 font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-            dark:hover:text-blue-500"
+            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
+              hoveredLink === 'executive'
+                ? 'text-blue-700 dark:text-blue-400'
+                : 'text-gray-900 dark:text-white'
+            }`}
+            onMouseEnter={() => setHoveredLink('executive')}
+            onMouseLeave={() => setHoveredLink(null)}
           >
             Executive
           </a>
@@ -195,8 +225,13 @@ const NavBar: React.FC = () => {
               <li>
                 <a
                   href="/"
-                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-                  dark:hover:text-blue-500"
+                  className={`font-medium no-underline transition duration-300 ${
+                    hoveredLink === 'home'
+                      ? 'text-blue-700 dark:text-blue-400'
+                      : 'text-gray-900 dark:text-white'
+                  }`}
+                  onMouseEnter={() => setHoveredLink('home')}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   Home
                 </a>
@@ -204,8 +239,13 @@ const NavBar: React.FC = () => {
               <li>
                 <a
                   href="/admin"
-                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-                  dark:hover:text-blue-500"
+                  className={`font-medium no-underline transition duration-300 ${
+                    hoveredLink === 'admin'
+                      ? 'text-blue-700 dark:text-blue-400'
+                      : 'text-gray-900 dark:text-white'
+                  }`}
+                  onMouseEnter={() => setHoveredLink('admin')}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   Admin
                 </a>
@@ -213,8 +253,13 @@ const NavBar: React.FC = () => {
               <li>
                 <a
                   href="/auditor"
-                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-                  dark:hover:text-blue-500"
+                  className={`font-medium no-underline transition duration-300 ${
+                    hoveredLink === 'auditor'
+                      ? 'text-blue-700 dark:text-blue-400'
+                      : 'text-gray-900 dark:text-white'
+                  }`}
+                  onMouseEnter={() => setHoveredLink('auditor')}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   Auditor
                 </a>
@@ -222,8 +267,13 @@ const NavBar: React.FC = () => {
               <li>
                 <a
                   href="/analyst"
-                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-                  dark:hover:text-blue-500"
+                  className={`font-medium no-underline transition duration-300 ${
+                    hoveredLink === 'analyst'
+                      ? 'text-blue-700 dark:text-blue-400'
+                      : 'text-gray-900 dark:text-white'
+                  }`}
+                  onMouseEnter={() => setHoveredLink('analyst')}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   Analyst
                 </a>
@@ -231,8 +281,13 @@ const NavBar: React.FC = () => {
               <li>
                 <a
                   href="/executive"
-                  className="font-medium text-gray-900 no-underline hover:text-blue-700 dark:text-white
-                  dark:hover:text-blue-500"
+                  className={`font-medium no-underline transition duration-300 ${
+                    hoveredLink === 'executive'
+                      ? 'text-blue-700 dark:text-blue-400'
+                      : 'text-gray-900 dark:text-white'
+                  }`}
+                  onMouseEnter={() => setHoveredLink('executive')}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   Executive
                 </a>
