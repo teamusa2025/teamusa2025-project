@@ -25,8 +25,8 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        dropdownRef.current
+        && !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsDropdownOpen(false);
       }
@@ -47,8 +47,8 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target as Node)
+        mobileMenuRef.current
+        && !mobileMenuRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
