@@ -24,7 +24,10 @@ const NavBar: React.FC = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     }
@@ -44,8 +47,8 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        mobileMenuRef.current
-        && !mobileMenuRef.current.contains(event.target as Node)
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
@@ -170,7 +173,8 @@ const NavBar: React.FC = () => {
 
                 {/* Dropdown Menu */}
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg
+                  <div
+                    className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg
                   dark:border-gray-600 dark:bg-gray-700"
                   >
                     <div className="border-bottom px-4 py-3">
@@ -182,6 +186,15 @@ const NavBar: React.FC = () => {
                       </span>
                     </div>
                     <ul className="p-0">
+                      <li>
+                        <a
+                          href="/auth/change-password"
+                          className="block px-4 py-2 text-sm text-gray-700 no-underline hover:bg-gray-100
+                          dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >
+                          Change Password
+                        </a>
+                      </li>
                       <li>
                         <a
                           href="/auth/signout"
