@@ -53,7 +53,7 @@ const ChangePassword = () => {
 
   return (
     <main>
-      <Container>
+      <Container className="mt-36">
         <Row className="justify-content-center">
           <Col xs={5}>
             <h1 className="text-center">Change Password</h1>
