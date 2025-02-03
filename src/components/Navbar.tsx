@@ -10,7 +10,8 @@ import { useState, useEffect, useRef } from 'react';
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { email: string; randomKey: string };
+  const currentUsername = session?.user?.username;
+  const userWithRole = session?.user as unknown as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -179,7 +180,7 @@ const NavBar: React.FC = () => {
                   >
                     <div className="border-bottom px-4 py-3">
                       <span className="block text-sm font-medium text-gray-900 dark:text-white">
-                        John Foo
+                        {currentUsername || 'Unknown User'}
                       </span>
                       <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
                         {currentUser}
