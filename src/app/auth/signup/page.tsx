@@ -8,15 +8,16 @@ import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
 
 type SignUpForm = {
+  username: string;
   email: string;
   password: string;
   confirmPassword: string;
-  // acceptTerms: boolean;
 };
 
 /** The sign up page. */
 const SignUp = () => {
   const validationSchema = Yup.object().shape({
+    username: Yup.string().required('Username is required'),
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
       .required('Password is required')
@@ -37,21 +38,33 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: SignUpForm) => {
-    // console.log(JSON.stringify(data, null, 2));
+    // Create the user with the provided data (username, email, password)
     await createUser(data);
-    // After creating, signIn with redirect to the add page
+    // Sign in the user and redirect to the add page
     await signIn('credentials', { callbackUrl: '/add', ...data });
   };
 
   return (
     <main>
-      <Container>
+      <Container className="mt-36">
         <Row className="justify-content-center">
           <Col xs={5}>
             <h1 className="text-center">Sign Up</h1>
             <Card>
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
+                  {/* Username Field */}
+                  <Form.Group className="form-group">
+                    <Form.Label>Username</Form.Label>
+                    <input
+                      type="text"
+                      {...register('username')}
+                      className={`form-control ${errors.username ? 'is-invalid' : ''}`}
+                    />
+                    <div className="invalid-feedback">{errors.username?.message}</div>
+                  </Form.Group>
+
+                  {/* Email Field */}
                   <Form.Group className="form-group">
                     <Form.Label>Email</Form.Label>
                     <input
@@ -62,6 +75,7 @@ const SignUp = () => {
                     <div className="invalid-feedback">{errors.email?.message}</div>
                   </Form.Group>
 
+                  {/* Password Field */}
                   <Form.Group className="form-group">
                     <Form.Label>Password</Form.Label>
                     <input
@@ -71,6 +85,8 @@ const SignUp = () => {
                     />
                     <div className="invalid-feedback">{errors.password?.message}</div>
                   </Form.Group>
+
+                  {/* Confirm Password Field */}
                   <Form.Group className="form-group">
                     <Form.Label>Confirm Password</Form.Label>
                     <input
@@ -80,6 +96,7 @@ const SignUp = () => {
                     />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                   </Form.Group>
+
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
@@ -98,6 +115,7 @@ const SignUp = () => {
               </Card.Body>
               <Card.Footer>
                 Already have an account?
+                {' '}
                 <a href="/auth/signin">Sign in</a>
               </Card.Footer>
             </Card>
