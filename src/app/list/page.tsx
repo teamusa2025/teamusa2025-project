@@ -31,6 +31,7 @@ const ListPage = async () => {
           <Col>
             <h1>
               Stuff for
+              {' '}
               {username}
             </h1>
             <Table striped bordered hover>
