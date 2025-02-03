@@ -1,6 +1,6 @@
-'use client';
+'use auditor';
 
-/** The Auditor page. */
+/** The Home page. */
 const Auditor = () => (
   <main>
     <h1 className="center">Mockup Page for Auditor Home Page</h1>
@@ -13,6 +13,9 @@ const Auditor = () => (
           Edit
         </button>
       </a>
+    </div>
+    <div className="center">
+      <img src="mockupPage.png" alt="Paris" />
     </div>
   </main>
 );
