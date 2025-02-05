@@ -1,6 +1,6 @@
 /* global fixture:false, test:false */
 import { Selector, t } from 'testcafe';
-import { addStuffPage, listStuffAdminPage, listStuffPage, editStuffPage, /* manageDatabasePage, */ signOutPage } from './simple.page';
+import { addStuffPage, listStuffAdminPage, listStuffPage, editStuffPage, signOutPage } from './simple.page';
 import { landingPage } from './landing.page';
 import { signInPage } from './signin.page';
 import { signUpPage } from './signup.page';
@@ -12,7 +12,7 @@ const credentials = { username: 'executive@foo.com', password: 'changeme' };
 const adminCredentials = { username: 'admin@foo.com', password: 'changeme' };
 const newCredentials = { username: 'john@foo.com', password: 'changeme' };
 
-fixture('meteor-application-template-production localhost test with default db')
+fixture('nextjs-application-template localhost test with default db')
   .page('http://localhost:3000');
 
 test('Test that landing page shows up', async () => {
@@ -66,6 +66,4 @@ test('Test that admin pages show up', async () => {
   await editStuffPage.isDisplayed();
   await navBar.gotoListStuffAdminPage();
   await listStuffAdminPage.isDisplayed();
-  // await navBar.gotoManageDatabasePage();
-  // await manageDatabasePage.isDisplayed();
 });
