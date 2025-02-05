@@ -21,7 +21,7 @@ const Auditor = () => (
             <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Income Statement
+                  INCOME STATEMENT
                 </th>
                 <th scope="col" className="px-6 py-3">
                   2022
@@ -50,7 +50,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Net Sales
                 </th>
                 <td className="px-6 py-4">
@@ -63,12 +63,16 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Cost of Goods Sold
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Cost of Goods Sold:
                 </th>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+              <tr className="bg-white dark:bg-gray-800">
                 <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   Cost of Contracting
                 </th>
@@ -83,7 +87,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Cost of Goods Sold
                 </th>
                 <td className="px-6 py-4">
@@ -96,8 +100,8 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+              <tr className="bg-white dark:bg-gray-800">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Gross Profit
                 </th>
                 <td className="px-6 py-4">
@@ -111,7 +115,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Gross Margin
                 </th>
                 <td className="px-6 py-4">
@@ -124,12 +128,16 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Operating Expenses
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white" />
+              </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Operating Expenses:
                 </th>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+              <tr className="bg-white dark:bg-gray-800">
                 <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   Salaries and Benefits
                 </th>
@@ -143,7 +151,7 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+              <tr className="bg-white dark:bg-gray-800">
                 <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   Rent and Overhead
                 </th>
@@ -157,7 +165,7 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+              <tr className="bg-white dark:bg-gray-800">
                 <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
                   Depreciation and Amortization
                 </th>
@@ -185,8 +193,8 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
-              <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+              <tr className="bg-white dark:bg-gray-800">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total Operating Expenses
                 </th>
                 <td className="px-6 py-4">
@@ -200,7 +208,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Operating Expenses%
                 </th>
                 <td className="px-6 py-4">
@@ -213,8 +221,12 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Profit (loss) from operations
                 </th>
                 <td className="px-6 py-4">
@@ -228,7 +240,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Profit (loss) from operations %
                 </th>
                 <td className="px-6 py-4">
@@ -241,8 +253,13 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                {/* eslint-disable-next-line max-len */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 underline dark:text-white">
                   Other Income Expenses
                 </th>
               </tr>
@@ -289,7 +306,8 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                {/* eslint-disable-next-line max-len */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 underline dark:text-white">
                   Other income (expense)
                 </th>
                 <td className="px-6 py-4">
@@ -303,7 +321,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total other income (expense)
                 </th>
                 <td className="px-6 py-4">
@@ -317,7 +335,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total other income (expense) %
                 </th>
                 <td className="px-6 py-4">
@@ -331,7 +349,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Income (loss) before income taxes
                 </th>
                 <td className="px-6 py-4">
@@ -345,7 +363,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Pre-tax income %
                 </th>
                 <td className="px-6 py-4">
@@ -373,7 +391,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Net income (loss)
                 </th>
                 <td className="px-6 py-4">
@@ -387,7 +405,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Net income (loss) %
                 </th>
                 <td className="px-6 py-4">
@@ -400,14 +418,19 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Assets Please Underline
+                {/* eslint-disable-next-line max-len */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 underline dark:text-white">
+                  Assets
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Current Assets
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Current Assets:
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -453,7 +476,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total Current Assets
                 </th>
                 <td className="px-6 py-4">
@@ -466,9 +489,13 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Long Term Assets
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Long Term Assets:
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -500,7 +527,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total long-term asset
                 </th>
                 <td className="px-6 py-4">
@@ -513,9 +540,14 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Total Assets
+                {/* eslint-disable-next-line max-len */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 underline dark:text-white">
+                  TOTAL ASSETS
                 </th>
                 <td className="px-6 py-4">
                   White
@@ -527,14 +559,19 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Liabilities and Equity (Please Underline)
+                {/* eslint-disable-next-line max-len */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 underline dark:text-white">
+                  Liabilities and Equity
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Current Liabilities (due within 1 year)
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Current Liabilities (due within 1 year):
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -580,7 +617,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total Current Liabilities
                 </th>
                 <td className="px-6 py-4">
@@ -593,9 +630,13 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Long Term Liabilities (Due after one year)
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Long Term Liabilities (Due after one year):
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -627,8 +668,8 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Total Long-term Liabilities
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Total Long-term Liabilities:
                 </th>
                 <td className="px-6 py-4">
                   White
@@ -641,7 +682,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total Liabilities
                 </th>
                 <td className="px-6 py-4">
@@ -654,9 +695,13 @@ const Auditor = () => (
                   $1999
                 </td>
               </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  Stockholder&#39;s Equity
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
+                  Stockholder&#39;s Equity:
                 </th>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -688,7 +733,7 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white">
                   Total Stockholder&#39;s Equity
                 </th>
                 <td className="px-6 py-4">
@@ -702,7 +747,12 @@ const Auditor = () => (
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
-                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white" />
+              </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                {/* eslint-disable-next-line max-len */}
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 underline dark:text-white">
                   TOTAL LIABILITIES AND EQUITY
                 </th>
                 <td className="px-6 py-4">
