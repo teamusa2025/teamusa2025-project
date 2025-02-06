@@ -34,17 +34,30 @@ jobs:
           name: test-results
           path: test-results.html
 
-      - name: Create Badge
+      - name: Create Test Status JSON
         if: always()
         run: |
           if [ "$TEST_FAILED" = "true" ]; then
-            echo "tests_failed" > test_status.txt
+            echo '{"schemaVersion":1,"label":"TestCafe","message":"failed","color":"red"}' > test_status.json
           else
-            echo "tests_passed" > test_status.txt
+            echo '{"schemaVersion":1,"label":"TestCafe","message":"passed","color":"green"}' > test_status.json
           fi
 
-      - name: Upload Badge Status
+      - name: Upload Test Status Artifact
         uses: actions/upload-artifact@v4
         with:
           name: test-status
-          path: test_status.txt
+          path: test_status.json
+
+      - name: Push Test Status to teamusa2025.github.io
+        if: always()
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/teamusa2025/teamusa2025.github.io.git
+          cd teamusa2025.github.io
+          mkdir -p badges
+          mv ../test_status.json badges/test_status.json
+          git add badges/test_status.json
+          git commit -m "Update TestCafe test status"
+          git push
