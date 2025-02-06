@@ -10,10 +10,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: chrome-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: npm install
@@ -31,7 +31,7 @@ jobs:
           fi
 
       - name: Upload Badge Status
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-status
           path: test_status.txt
