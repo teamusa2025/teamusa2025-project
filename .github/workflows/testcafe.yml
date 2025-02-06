@@ -1,0 +1,37 @@
+name: TestCafe Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run TestCafe Tests
+        run: npm test || echo "TEST_FAILED=true" >> $GITHUB_ENV
+
+      - name: Create Badge
+        if: always()
+        run: |
+          if [ "$TEST_FAILED" = "true" ]; then
+            echo "tests_failed" > test_status.txt
+          else
+            echo "tests_passed" > test_status.txt
+          fi
+
+      - name: Upload Badge Status
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-status
+          path: test_status.txt
