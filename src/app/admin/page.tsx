@@ -20,16 +20,21 @@ const AdminPage = async () => {
       <Container id="list" fluid className="mt-20 py-3">
         <Row>
           <Col>
-            <h1>This is the Admin Page</h1>
-            <h4 className="mt-10">List Stuff Admin</h4>
+            <h1>Admin</h1>
+            <h4 className="mt-10">Income Statement (Audited Data)</h4>
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Condition</th>
-                  <th>Owner</th>
-                  <th>Actions</th>
+                  {/* <th>Year</th>
+                  <th>Revenue</th>
+                  <th>Net Sales (calculate)</th> */}
+                  {/* Cost of Goods sold */}
+                  {/* <th>Cost of Contracting</th>
+                  <th>Overhead</th>
+                  <th>Cost of Goods sold (calculate)</th>
+                  <th>Gross profit (calculate)</th>
+                  <th>Gross margin % (calculate)</th> */}
+                  {/* Operating expenses */}
                 </tr>
               </thead>
               <tbody>
@@ -42,10 +47,11 @@ const AdminPage = async () => {
         </Row>
         <Row>
           <Col>
-            <h4>List Users Admin</h4>
+            <h4>Accounts Management</h4>
             <Table striped bordered hover>
               <thead>
                 <tr>
+                  <th>Username</th>
                   <th>Email</th>
                   <th>Role</th>
                 </tr>
