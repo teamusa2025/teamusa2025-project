@@ -7,27 +7,33 @@ import authOptions from '@/lib/authOptions';
 
 /** Render a list of stuff for the logged in user. */
 const ListPage = async () => {
-  // Protect the page, only logged in users can access it.
+  // Protect the page; only logged in users can access it.
+  // Update the type to include the username field.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
     session as {
-      user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
+      user: { email: string; id: string; username: string; randomKey: string };
     } | null,
   );
-  const owner = (session && session.user && session.user.email) || '';
+
+  // Extract owner's email and username from the session.
+  const owner = session?.user?.email || '';
+  const username = session?.user?.username || '';
+
   const stuff = await prisma.stuff.findMany({
-    where: {
-      owner,
-    },
+    where: { owner },
   });
-  // console.log(stuff);
+
   return (
     <main>
       <Container id="list" fluid className="mt-20 py-3">
         <Row>
           <Col>
-            <h1>Stuff</h1>
+            <h1>
+              Stuff for
+              {' '}
+              {username}
+            </h1>
             <Table striped bordered hover>
               <thead>
                 <tr>
