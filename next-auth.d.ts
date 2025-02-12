@@ -12,6 +12,8 @@ declare module 'next-auth' {
       image?: string | null;
       /** The user's username. */
       username: string;
+      /** The user's subrole. */
+      subrole: Subrole;
     };
   }
 }
