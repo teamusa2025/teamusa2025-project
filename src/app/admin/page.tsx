@@ -27,7 +27,7 @@ const AdminPage = async () => {
                 <tr>
                   <th>Year</th>
                   <th>Revenue</th>
-                  <th>Net Sales (calculate)</th> 
+                  <th>Net Sales (calculate)</th>
                   COMMENTED Cost of Goods sold
                   <th>Cost of Contracting</th>
                   <th>Overhead</th>
