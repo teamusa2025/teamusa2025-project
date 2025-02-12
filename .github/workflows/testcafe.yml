@@ -1,0 +1,50 @@
+name: TestCafe Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Browsers
+        run: |
+          sudo apt update
+          sudo apt install -y google-chrome-stable firefox
+
+      - name: Run TestCafe Tests (Chrome & Firefox)
+        run: |
+          testcafe "chrome,firefox" tests/ --reporter html:test-results.html || echo "TEST_FAILED=true" >> $GITHUB_ENV
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results.html
+
+      - name: Create Badge
+        if: always()
+        run: |
+          if [ "$TEST_FAILED" = "true" ]; then
+            echo "tests_failed" > test_status.txt
+          else
+            echo "tests_passed" > test_status.txt
+          fi
+
+      - name: Upload Badge Status
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-status
+          path: test_status.txt
