@@ -41,6 +41,8 @@ const authOptions: NextAuthOptions = {
           id: `${user.id}`,
           email: user.email,
           randomKey: user.role,
+          username: user.username,
+          subrole: user.subrole,
         };
       },
     }),
@@ -48,30 +50,32 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/signin',
     signOut: '/auth/signout',
-    //   error: '/auth/error',
-    //   verifyRequest: '/auth/verify-request',
-    //   newUser: '/auth/new-user'
+    // error: '/auth/error',
+    // verifyRequest: '/auth/verify-request',
+    // newUser: '/auth/new-user'
   },
   callbacks: {
     session: ({ session, token }) => {
-      // console.log('Session Callback', { session, token })
       return {
         ...session,
         user: {
           ...session.user,
           id: token.id,
           randomKey: token.randomKey,
+          username: token.username,
+          subrole: token.subrole,
         },
       };
     },
     jwt: ({ token, user }) => {
-      // console.log('JWT Callback', { token, user })
       if (user) {
-        const u = user as unknown as any;
+        const u = user as any;
         return {
           ...token,
           id: u.id,
           randomKey: u.randomKey,
+          username: u.username,
+          subrole: u.subrole,
         };
       }
       return token;

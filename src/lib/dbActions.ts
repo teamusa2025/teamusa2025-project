@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, User } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -51,6 +51,26 @@ export async function editStuff(stuff: Stuff) {
 }
 
 /**
+ * Edits an existing user in the database.
+ * @param user, an object with the following properties: id, name, quantity, owner, condition.
+ */
+export async function editUser(user: User) {
+  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      subrole: user.subrole,
+    },
+  });
+  // After updating, redirect to the admin page
+  redirect('/admin');
+}
+
+/**
  * Deletes an existing stuff from the database.
  * @param id, the id of the stuff to delete.
  */
@@ -65,15 +85,16 @@ export async function deleteStuff(id: number) {
 
 /**
  * Creates a new user in the database.
- * @param credentials, an object with the following properties: email, password.
+ * @param credentials, an object with the following properties: email, password, username.
  */
-export async function createUser(credentials: { email: string; password: string }) {
+export async function createUser(credentials: { email: string; password: string; username: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
-  const password = await hash(credentials.password, 10);
+  const hashedPassword = await hash(credentials.password, 10);
   await prisma.user.create({
     data: {
       email: credentials.email,
-      password,
+      username: credentials.username,
+      password: hashedPassword,
     },
   });
 }
@@ -84,11 +105,11 @@ export async function createUser(credentials: { email: string; password: string 
  */
 export async function changePassword(credentials: { email: string; password: string }) {
   // console.log(`changePassword data: ${JSON.stringify(credentials, null, 2)}`);
-  const password = await hash(credentials.password, 10);
+  const hashedPassword = await hash(credentials.password, 10);
   await prisma.user.update({
     where: { email: credentials.email },
     data: {
-      password,
+      password: hashedPassword,
     },
   });
 }

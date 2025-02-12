@@ -1,0 +1,17 @@
+{
+    "browsers": ["chrome"],
+    "src": "tests/*.testcafe.js",
+    "reporter": {
+        "name": "spec"
+    },
+    "screenshots": {
+        "path": "screenshots/",
+        "takeOnFails": true,
+        "fullPage": true
+    },
+    "videoPath": "videos/",
+    "videoOptions": {
+        "singleFile": true,
+        "failedOnly": true
+    }
+}
