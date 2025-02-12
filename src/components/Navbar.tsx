@@ -11,6 +11,8 @@ const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
   const currentUsername = session?.user?.username;
+  const currentSubrole = session?.user?.subrole;
+  console.log(currentSubrole);
   const userWithRole = session?.user as unknown as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
@@ -66,6 +68,22 @@ const NavBar: React.FC = () => {
     };
   }, [isOpen]);
 
+  // Define the navigation links array
+  const navLinks = [
+    { id: 'home', label: 'Home', href: '/' },
+    { id: 'admin', label: 'Admin', href: '/admin' },
+    { id: 'auditor', label: 'Auditor', href: '/auditor' },
+    { id: 'analyst', label: 'Analyst', href: '/analyst' },
+    { id: 'executive', label: 'Executive', href: '/executive' },
+  ];
+
+  const filteredNavLinks = session
+    ? navLinks.filter(
+      (link) => link.id === 'home'
+          || link.id === currentSubrole?.toLowerCase(),
+    )
+    : navLinks.filter((link) => link.id === 'home');
+
   return (
     <nav
       className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600
@@ -85,70 +103,21 @@ const NavBar: React.FC = () => {
 
         {/* Navigation Links */}
         <div className="hidden md:flex">
-          <a
-            href="/"
-            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
-              hoveredLink === 'home'
-                ? 'text-blue-700 dark:text-blue-400'
-                : 'text-gray-900 dark:text-white'
-            }`}
-            onMouseEnter={() => setHoveredLink('home')}
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            Home
-          </a>
-
-          <a
-            href="/admin"
-            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
-              hoveredLink === 'admin'
-                ? 'text-blue-700 dark:text-blue-400'
-                : 'text-gray-900 dark:text-white'
-            }`}
-            onMouseEnter={() => setHoveredLink('admin')}
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            Admin
-          </a>
-
-          <a
-            href="/auditor"
-            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
-              hoveredLink === 'auditor'
-                ? 'text-blue-700 dark:text-blue-400'
-                : 'text-gray-900 dark:text-white'
-            }`}
-            onMouseEnter={() => setHoveredLink('auditor')}
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            Auditor
-          </a>
-
-          <a
-            href="/analyst"
-            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
-              hoveredLink === 'analyst'
-                ? 'text-blue-700 dark:text-blue-400'
-                : 'text-gray-900 dark:text-white'
-            }`}
-            onMouseEnter={() => setHoveredLink('analyst')}
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            Analyst
-          </a>
-
-          <a
-            href="/executive"
-            className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
-              hoveredLink === 'executive'
-                ? 'text-blue-700 dark:text-blue-400'
-                : 'text-gray-900 dark:text-white'
-            }`}
-            onMouseEnter={() => setHoveredLink('executive')}
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            Executive
-          </a>
+          {filteredNavLinks.map((link) => (
+            <a
+              key={link.id}
+              href={link.href}
+              className={`mx-3 inline-block font-medium no-underline transition duration-100 ${
+                hoveredLink === link.id
+                  ? 'text-blue-700 dark:text-blue-400'
+                  : 'text-gray-900 dark:text-white'
+              }`}
+              onMouseEnter={() => setHoveredLink(link.id)}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
 
         {/* Get Started Button */}
@@ -277,76 +246,22 @@ const NavBar: React.FC = () => {
             className="fixed left-0 mt-36 w-full border bg-white shadow dark:bg-gray-900 md:hidden"
           >
             <ul className="mt-10 flex flex-col items-center space-y-4 p-4">
-              <li>
-                <a
-                  href="/"
-                  className={`font-medium no-underline transition duration-300 ${
-                    hoveredLink === 'home'
-                      ? 'text-blue-700 dark:text-blue-400'
-                      : 'text-gray-900 dark:text-white'
-                  }`}
-                  onMouseEnter={() => setHoveredLink('home')}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/admin"
-                  className={`font-medium no-underline transition duration-300 ${
-                    hoveredLink === 'admin'
-                      ? 'text-blue-700 dark:text-blue-400'
-                      : 'text-gray-900 dark:text-white'
-                  }`}
-                  onMouseEnter={() => setHoveredLink('admin')}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  Admin
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/auditor"
-                  className={`font-medium no-underline transition duration-300 ${
-                    hoveredLink === 'auditor'
-                      ? 'text-blue-700 dark:text-blue-400'
-                      : 'text-gray-900 dark:text-white'
-                  }`}
-                  onMouseEnter={() => setHoveredLink('auditor')}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  Auditor
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/analyst"
-                  className={`font-medium no-underline transition duration-300 ${
-                    hoveredLink === 'analyst'
-                      ? 'text-blue-700 dark:text-blue-400'
-                      : 'text-gray-900 dark:text-white'
-                  }`}
-                  onMouseEnter={() => setHoveredLink('analyst')}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  Analyst
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/executive"
-                  className={`font-medium no-underline transition duration-300 ${
-                    hoveredLink === 'executive'
-                      ? 'text-blue-700 dark:text-blue-400'
-                      : 'text-gray-900 dark:text-white'
-                  }`}
-                  onMouseEnter={() => setHoveredLink('executive')}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  Executive
-                </a>
-              </li>
+              {filteredNavLinks.map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={link.href}
+                    className={`font-medium no-underline transition duration-300 ${
+                      hoveredLink === link.id
+                        ? 'text-blue-700 dark:text-blue-400'
+                        : 'text-gray-900 dark:text-white'
+                    }`}
+                    onMouseEnter={() => setHoveredLink(link.id)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         )}

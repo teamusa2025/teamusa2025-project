@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, User } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -48,6 +48,26 @@ export async function editStuff(stuff: Stuff) {
   });
   // After updating, redirect to the list page
   redirect('/list');
+}
+
+/**
+ * Edits an existing user in the database.
+ * @param user, an object with the following properties: id, name, quantity, owner, condition.
+ */
+export async function editUser(user: User) {
+  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      subrole: user.subrole,
+    },
+  });
+  // After updating, redirect to the admin page
+  redirect('/admin');
 }
 
 /**
