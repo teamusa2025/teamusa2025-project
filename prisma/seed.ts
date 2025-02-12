@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Condition } from '@prisma/client';
+import { PrismaClient, Role, Subrole, Condition } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
 
@@ -7,23 +7,34 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding the database');
   const password = await hash('changeme', 10);
+
   config.defaultAccounts.forEach(async (account) => {
     let role: Role = 'USER';
+    let subrole: Subrole = 'EXECUTIVE';
     if (account.role === 'ADMIN') {
       role = 'ADMIN';
+      subrole = 'ADMIN';
     }
-    console.log(`  Creating user: ${account.email} with role: ${role}`);
+    if (account.subrole === 'ANALYST') {
+      subrole = 'ANALYST';
+    }
+    if (account.subrole === 'AUDITOR') {
+      subrole = 'AUDITOR';
+    }
+    console.log(`  Creating user: ${account.email} with role: ${role} and subrole: ${subrole}`);
     await prisma.user.upsert({
       where: { email: account.email },
       update: {},
       create: {
         email: account.email,
+        username: account.username,
         password,
         role,
+        subrole,
       },
     });
-    // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
+
   config.defaultData.forEach(async (data, index) => {
     let condition: Condition = 'good';
     if (data.condition === 'poor') {
@@ -46,6 +57,7 @@ async function main() {
     });
   });
 }
+
 main()
   .then(() => prisma.$disconnect())
   .catch(async (e) => {
