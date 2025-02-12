@@ -40,13 +40,13 @@ const Auditor = () => (
                   Revenue
                 </th>
                 <td className="px-6 py-4">
-                  Silver
+                  131,345
                 </td>
                 <td className="px-6 py-4">
-                  Laptop
+                  142,341
                 </td>
                 <td className="px-6 py-4">
-                  $2999
+                  150,772
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -54,13 +54,13 @@ const Auditor = () => (
                   Net Sales
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  131,345
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  142,341
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  150,772
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -77,13 +77,27 @@ const Auditor = () => (
                   Cost of Contracting
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  48,456
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  52,587
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  56,643
+                </td>
+              </tr>
+              <tr className="bg-white dark:bg-gray-800">
+                <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                  Overhead
+                </th>
+                <td className="px-6 py-4">
+                  667
+                </td>
+                <td className="px-6 py-4">
+                  667
+                </td>
+                <td className="px-6 py-4">
+                  667
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -91,13 +105,13 @@ const Auditor = () => (
                   Cost of Goods Sold
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  49,123
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  53,254
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  57,310
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -105,13 +119,13 @@ const Auditor = () => (
                   Gross Profit
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  82,222
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  89,087
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  93,462
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -119,13 +133,13 @@ const Auditor = () => (
                   Gross Margin
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  62.6%
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  62.6%
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  62.0%
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -142,13 +156,13 @@ const Auditor = () => (
                   Salaries and Benefits
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  23,872
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  23,002
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  25,245
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -156,13 +170,13 @@ const Auditor = () => (
                   Rent and Overhead
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  10,087
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  11,020
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  11,412
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -170,13 +184,13 @@ const Auditor = () => (
                   Depreciation and Amortization
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  17,205
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  16,544
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  16,080
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -184,13 +198,13 @@ const Auditor = () => (
                   Interest
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  1500
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  900
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  900
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -198,13 +212,13 @@ const Auditor = () => (
                   Total Operating Expenses
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  52,664
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  51,466
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  53,637
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -212,13 +226,13 @@ const Auditor = () => (
                   Operating Expenses%
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  40.1%
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  36.2%
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  35.6%
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -230,13 +244,13 @@ const Auditor = () => (
                   Profit (loss) from operations
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  29,558
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  37,621
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  39,825
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -244,13 +258,13 @@ const Auditor = () => (
                   Profit (loss) from operations %
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  22.5%
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  26.4%
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  26.4%
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -268,13 +282,13 @@ const Auditor = () => (
                   Interest income
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  -
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -282,13 +296,13 @@ const Auditor = () => (
                   Interest expense
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  -
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -296,13 +310,13 @@ const Auditor = () => (
                   Gain (loss) on disposal of assets
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  -
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -311,13 +325,13 @@ const Auditor = () => (
                   Other income (expense)
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  -
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -325,13 +339,13 @@ const Auditor = () => (
                   Total other income (expense)
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  -
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -339,13 +353,13 @@ const Auditor = () => (
                   Total other income (expense) %
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  0.0%
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  0.0%
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  0.0%
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -353,13 +367,13 @@ const Auditor = () => (
                   Income (loss) before income taxes
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  29,558
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  37,621
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  39,825
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -367,13 +381,13 @@ const Auditor = () => (
                   Pre-tax income %
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  22.5%
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  26.4%
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  26.4%
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -395,13 +409,13 @@ const Auditor = () => (
                   Net income (loss)
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  (8,483)
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  (10,908)
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  (11,598)
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -409,13 +423,13 @@ const Auditor = () => (
                   Net income (loss) %
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  16.0%
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  18.8%
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  18.7%
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -438,13 +452,13 @@ const Auditor = () => (
                   Cash and cash equivalents
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  183,715
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  191,069
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  189,550
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -452,13 +466,13 @@ const Auditor = () => (
                   Accounts receivable
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  6,567
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  7,117
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  7,539
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -466,13 +480,13 @@ const Auditor = () => (
                   Inventory
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  9,825
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  10,531
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  11,342
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -480,13 +494,13 @@ const Auditor = () => (
                   Total Current Assets
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  200,107
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  208,717
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  208,431
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -503,13 +517,13 @@ const Auditor = () => (
                   Property, plant, and equipment
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  40,145
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  38,602
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  37,521
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -517,13 +531,13 @@ const Auditor = () => (
                   Investment
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  -
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  20000
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  50000
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -531,13 +545,13 @@ const Auditor = () => (
                   Total long-term asset
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  40,145
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  58,602
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  87,521
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -550,13 +564,13 @@ const Auditor = () => (
                   TOTAL ASSETS
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  240,252
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  267,319
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  295,952
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -579,13 +593,13 @@ const Auditor = () => (
                   Accounts payable
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  4,912
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  5,265
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  5,671
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -593,13 +607,13 @@ const Auditor = () => (
                   Debt service
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  5000
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  5000
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  5000
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -607,13 +621,13 @@ const Auditor = () => (
                   Taxes payable
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  4,265
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  5341
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  2,054
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -621,13 +635,13 @@ const Auditor = () => (
                   Total Current Liabilities
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  14,177
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  15,606
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  12,725
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -644,13 +658,13 @@ const Auditor = () => (
                   Debt service
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  15000
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  15000
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  15000
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -658,13 +672,13 @@ const Auditor = () => (
                   Loans payable
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  20000
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  40000
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  70000
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -672,13 +686,13 @@ const Auditor = () => (
                   Total Long-term Liabilities:
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  35000
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  55000
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  85000
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -686,13 +700,13 @@ const Auditor = () => (
                   Total Liabilities
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  49,177
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  70,606
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  97,725
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -709,13 +723,13 @@ const Auditor = () => (
                   Equity Capital
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  170000
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  170000
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  170000
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -723,13 +737,13 @@ const Auditor = () => (
                   Retained earnings
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  21,075
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  26,713
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  28,227
                 </td>
               </tr>
               <tr className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -737,13 +751,13 @@ const Auditor = () => (
                   Total Stockholder&#39;s Equity
                 </th>
                 <td className="px-6 py-4">
-                  White
+                  191,075
                 </td>
                 <td className="px-6 py-4">
-                  Laptop PC
+                  196,713
                 </td>
                 <td className="px-6 py-4">
-                  $1999
+                  198,227
                 </td>
               </tr>
               <tr className="bg-white dark:bg-gray-800">
@@ -756,13 +770,13 @@ const Auditor = () => (
                   TOTAL LIABILITIES AND EQUITY
                 </th>
                 <td className="px-6 py-4">
-                  Black
+                  240,252
                 </td>
                 <td className="px-6 py-4">
-                  Accessories
+                  267,319
                 </td>
                 <td className="px-6 py-4">
-                  $99
+                  295,952
                 </td>
               </tr>
             </tbody>
