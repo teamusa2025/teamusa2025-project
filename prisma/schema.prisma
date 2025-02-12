@@ -38,6 +38,81 @@ enum Subrole {
   ADMIN
 }
 
+model AuditedFinances {
+  id                                    Int     @id @default(autoincrement())
+  year                                  Int     @unique
+
+  revenue                               Float
+  netSales                              Float
+
+  // Cost of goods sold:
+  costOfContracting                     Float
+  overhead                              Float
+  costOfGoodsSold                       Float
+  grossProfit                           Float
+  grossMarginPercent                    Float
+
+  // Operating Expenses:
+  salariesAndBenefits                   Float
+  rentAndOverhead                       Float
+  depreciationAndAmortization           Float
+  interest                              Float
+  totalOperatingExpenses                Float
+  operatingExpensesPercent              Float
+
+  profitLossFromOperations              Float
+  profitLossFromOperationsPercent       Float
+
+  // Other income (expenses):
+  interestIncome                        Float
+  interestExpense                       Float
+  gainLossOnDisposalOfAssets            Float
+  otherIncomeExpense                    Float
+  totalOtherIncomeExpense               Float
+  totalOtherIncomeExpensePercent        Float
+  incomeLossBeforeIncomeTaxes           Float
+  preTaxIncomePercent                   Float
+  incomeTaxes                           Float
+  netIncomeLoss                         Float
+  netIncomeLossPercent                  Float
+
+  // Balance Sheet (Assets)
+  // Current Assets
+  cashEquivalents                       Float
+  accountsReceivable                    Float
+  inventory                             Float
+  totalCurrentAssets                    Float
+
+  // Long-term Asset
+  propertyPlantAndEquipment             Float
+  investment                            Float
+  totalLongTermAssets                   Float
+
+  totalAssets                           Float
+
+  // Liabilities and Equity
+  // Current Liabilities (due within 1 year)
+  accountsPayable                       Float
+  debtService                           Float
+  taxesPayable                          Float
+  totalCurrentLiabilities               Float
+
+  // Long-term Liabilities (due after one year)
+  debtServiceLongTerm                   Float
+  loansPayable                          Float
+  totalLongTermLiabilities              Float
+
+  totalLiabilities                      Float
+
+  // Stockholder's Equity
+  equityCapital                         Float
+  retainedEarnings                      Float
+  totalStockholdersEquity               Float
+
+  totalLiabilitiesAndEquity             Float
+}
+
+
 enum Condition {
   excellent
   good
