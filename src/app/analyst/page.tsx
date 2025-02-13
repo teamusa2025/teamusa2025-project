@@ -17,3 +17,4 @@ const Analyst: React.FC<AnalystProps> = ({ children }) => (
 );
 
 export default Analyst;
+
