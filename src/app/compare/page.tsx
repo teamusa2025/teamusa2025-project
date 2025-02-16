@@ -1,8 +1,9 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable import/no-extraneous-dependencies */
 
 'use client';
 
 import { useState } from 'react';
+import { LineChart } from '@mui/x-charts/LineChart';
 
 // Define the structure for data points used in the sustainability models
 interface DataPoint {
@@ -49,16 +50,42 @@ const sustainabilityModels: Models = {
 const stressTests: string[] = ['Baseline', 'Recession'];
 
 export default function SustainabilityComparison() {
-  // State to track the selected stress tests for two tables
+  // State to track the selected stress tests for the charts
   const [selectedTest1, setSelectedTest1] = useState<string>(stressTests[0]);
   const [selectedTest2, setSelectedTest2] = useState<string>(stressTests[0]);
+
+  // Helper function to format the data for the chart
+  const getChartData = (modelData: DataPoint[]) => modelData.map((entry) => ({
+    x: entry.year.toString(), // Convert year to string for better X-axis handling
+    y: entry.value,
+  }));
+
+  // Helper function to display table data for each model
+  const renderTableData = (modelData: DataPoint[]) => (
+    <table className="min-w-full border-collapse">
+      <thead>
+        <tr>
+          <th className="border p-2 text-left">Year</th>
+          <th className="border p-2 text-left">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {modelData.map((data) => (
+          <tr key={data.year}>
+            <td className="border p-2">{data.year}</td>
+            <td className="border p-2">{data.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 
   return (
     <div className="mx-auto max-w-screen-lg space-y-6 p-6">
       {/* Title of the page */}
       <h1 className="text-center text-2xl font-bold">Sustainability Model Comparison</h1>
 
-      {/* Dropdowns for selecting stress tests, centered above tables */}
+      {/* Dropdowns for selecting stress tests, centered above charts */}
       <div className="grid grid-cols-2 justify-center gap-8">
         <div className="text-center">
           <label htmlFor="stressTest1" className="block text-sm md:text-base">First Stress Test:</label>
@@ -88,38 +115,40 @@ export default function SustainabilityComparison() {
         </div>
       </div>
 
-      {/* Tables displayed side by side */}
+      {/* Charts and tables displayed side by side */}
       <div className="grid grid-cols-2 gap-8">
         {[selectedTest1, selectedTest2].map((selectedTest, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index} className="w-full overflow-auto rounded-lg border p-4 shadow-md">
             <h2 className="text-center text-xl font-semibold">
-              {selectedTest}
-              {' '}
-              Comparison
+              {selectedTest} Comparison
             </h2>
-            <table className="mt-2 w-full border-collapse border border-gray-300 text-sm md:text-base">
-              <thead>
-                <tr>
-                  <th className="border border-gray-300 p-2">Year</th>
-                  {Object.keys(sustainabilityModels[selectedTest]).map((model) => (
-                    <th key={model} className="border border-gray-300 p-2">{model}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {sustainabilityModels[selectedTest]['Model A'].map((entry, i) => (
-                  <tr key={entry.year}>
-                    <td className="border border-gray-300 p-2">{entry.year}</td>
-                    {Object.keys(sustainabilityModels[selectedTest]).map((model) => (
-                      <td key={model} className="border border-gray-300 p-2">
-                        {sustainabilityModels[selectedTest][model][i].value}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+            {/* Table displaying the model data */}
+            <div className="my-4">
+              <h3 className="text-center text-lg font-semibold">Model A</h3>
+              {renderTableData(sustainabilityModels[selectedTest]['Model A'])}
+              <h3 className="text-center text-lg font-semibold mt-4">Model B</h3>
+              {renderTableData(sustainabilityModels[selectedTest]['Model B'])}
+            </div>
+
+            {/* Line charts */}
+            <LineChart
+              dataset={getChartData(sustainabilityModels[selectedTest]['Model A'])}
+              xAxis={[{ dataKey: 'x' }]}
+              series={[{ dataKey: 'y' }]}
+              height={300}
+              margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+              grid={{ vertical: true, horizontal: true }}
+            />
+            <LineChart
+              dataset={getChartData(sustainabilityModels[selectedTest]['Model B'])}
+              xAxis={[{ dataKey: 'x' }]}
+              series={[{ dataKey: 'y' }]}
+              height={300}
+              margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+              grid={{ vertical: true, horizontal: true }}
+            />
           </div>
         ))}
       </div>
