@@ -127,3 +127,12 @@ model Stuff {
   condition Condition
   owner     String
 }
+
+model RequestAccess {
+  id        String  @id @default(uuid())
+  email     String  @unique
+  fullName  String
+  reason    String
+  status    String  @default("pending")
+  createdAt DateTime @default(now())
+}
