@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { Role } from '@prisma/client';
+import { Subrole } from '@prisma/client';
 
 /**
  * Redirects to the login page if the user is not logged in.
@@ -16,7 +16,40 @@ export const loggedInProtectedPage = (session: { user: { email: string; id: stri
  */
 export const adminProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
   loggedInProtectedPage(session);
-  if (session && session.user.randomKey !== Role.ADMIN) {
+  if (session && session.user.randomKey !== Subrole.ADMIN) {
+    redirect('/not-authorized');
+  }
+};
+
+/**
+ * Redirects to the login page if the user is not logged in.
+ * Redirects to the not-authorized page if the user is not an analyst.
+ */
+export const analystProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+  loggedInProtectedPage(session);
+  if (session && session.user.randomKey !== Subrole.ANALYST) {
+    redirect('/not-authorized');
+  }
+};
+
+/**
+ * Redirects to the login page if the user is not logged in.
+ * Redirects to the not-authorized page if the user is not an auditor.
+ */
+export const auditorProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+  loggedInProtectedPage(session);
+  if (session && session.user.randomKey !== Subrole.AUDITOR) {
+    redirect('/not-authorized');
+  }
+};
+
+/**
+ * Redirects to the login page if the user is not logged in.
+ * Redirects to the not-authorized page if the user is not an executive.
+ */
+export const executiveProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+  loggedInProtectedPage(session);
+  if (session && session.user.randomKey !== Subrole.EXECUTIVE) {
     redirect('/not-authorized');
   }
 };

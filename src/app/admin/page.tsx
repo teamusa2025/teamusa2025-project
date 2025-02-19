@@ -7,12 +7,16 @@ import authOptions from '@/lib/authOptions';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
-  adminProtectedPage(
-    session as {
-      user: { email: string; id: string; randomKey: string };
-    } | null,
-  );
-  // const stuff = await prisma.stuff.findMany({});
+  try {
+    adminProtectedPage(
+      session as {
+        user: { email: string; id: string; randomKey: string };
+      } | null,
+    );
+  } catch (error) {
+    return <div>Access denied</div>;
+  }
+
   const users = await prisma.user.findMany({});
   return (
     <main>
