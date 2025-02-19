@@ -72,6 +72,7 @@ const NavBar: React.FC = () => {
   const navLinks = [
     { id: 'home', label: 'Home', href: '/' },
     { id: 'admin', label: 'Admin', href: '/admin' },
+    { id: 'admin', label: 'Documentation', href: '/admin/documents' },
     { id: 'auditor', label: 'Auditor', href: '/auditor' },
     { id: 'analyst', label: 'Analyst', href: '/analyst' },
     { id: 'executive', label: 'Executive', href: '/executive' },
