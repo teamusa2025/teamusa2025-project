@@ -24,9 +24,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={classString}>
         <Providers>
-          <NavBar />
-          <Sidebar />
-          {children}
+          <div className="flex">
+            <Sidebar />
+            <div className="ml-64 flex flex-1 flex-col">
+              <NavBar />
+              <main className="flex-1 p-4 pt-14">{children}</main>
+            </div>
+          </div>
           <Footer />
         </Providers>
       </body>

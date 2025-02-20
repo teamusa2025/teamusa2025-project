@@ -1,101 +1,71 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
-import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import * as React from 'react';
 
-const Sidebar: React.FC = () => {
-  const { data: session } = useSession();
-  const currentUser = session?.user?.email;
-  const currentUsername = session?.user?.username;
-  const currentSubrole = session?.user?.subrole;
-  console.log(currentSubrole);
-  const userWithRole = session?.user as unknown as {
-    email: string;
-    randomKey: string;
-  };
-  const role = userWithRole?.randomKey;
-  const pathName = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string;
+}
 
-  // test
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+interface NavigationItem {
+  title: string;
+  symbol: string;
+  href: string;
+  isActive?: boolean;
+  badge?: string;
+}
 
-  return (
-    <aside
-      id="logo-sidebar"
-      className="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-20 transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0"
-      aria-label="Sidebar"
-    >
-      <div className="h-full overflow-y-auto bg-white px-3 pb-4 dark:bg-gray-800">
-        <ul className="space-y-2 font-medium">
-          <li>
-            <a
-              href="/"
-              className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-              {/* <Home className="size-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" /> */}
-              <span className="ms-3">Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/"
-              className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-              {/* <Inbox className="size-5 shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" /> */}
-              <span className="ms-3 flex-1 whitespace-nowrap">Inbox</span>
-              <span className="ms-3 inline-flex size-3 items-center justify-center rounded-full bg-blue-100 p-3 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-                3
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/"
-              className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-              {/* <Users className="size-5 shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" /> */}
-              <span className="ms-3 flex-1 whitespace-nowrap">Users</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/"
-              className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-              {/* <ShoppingBag className="size-5 shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" /> */}
-              <span className="ms-3 flex-1 whitespace-nowrap">Products</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/"
-              className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-              {/* <LogIn className="size-5 shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" /> */}
-              <span className="ms-3 flex-1 whitespace-nowrap">Sign In</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/"
-              className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-              {/* <UserPlus className="size-5 shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" /> */}
-              <span className="ms-3 flex-1 whitespace-nowrap">Sign Up</span>
-            </a>
-          </li>
-        </ul>
+const navigation: NavigationItem[] = [
+  { title: 'Dashboard', symbol: '◈', href: '#', isActive: true },
+  { title: 'Projects', symbol: '□', href: '#' },
+  { title: 'Tasks', symbol: '○', href: '#' },
+  { title: 'Messages', symbol: '◇', href: '#', badge: '5' },
+  { title: 'Documents', symbol: '△', href: '#' },
+  { title: 'Team', symbol: '⬡', href: '#' },
+  { title: 'Reports', symbol: '▣', href: '#' },
+  { title: 'Settings', symbol: '⚙', href: '#' },
+];
+
+const Sidebar = ({ className = '', ...props }: SidebarProps) => (
+  <aside
+    id="sidebar"
+    role="navigation"
+    aria-label="Main navigation"
+    className={`fixed left-0 top-0 h-screen w-64 flex-col border-r bg-stone-900 ${className}`}
+    {...props}
+  >
+    {/* Header */}
+    <div className="flex h-14 items-center border-b px-4">
+      <img
+        className="h-7 rounded-full"
+        src="https://cdn.prod.website-files.com/5fdaca5a4d51110c2f760a05/651ee756e790fe1817276c02_SpireLogo-2z-p-500.png"
+        alt="sidebar logo"
+      />{' '}
       </div>
-    </aside>
-  );
-};
+
+    {/* Navigation */}
+    <nav className="flex-1 space-y-1 p-2">
+      {navigation.map((item) => (
+        <a
+          key={item.title}
+          href={item.href}
+          aria-current={item.isActive ? 'page' : undefined}
+          className={`hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring group flex items-center rounded-md px-3 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 ${
+            item.isActive ? 'bg-accent text-accent-foreground' : ''
+          }`}
+        >
+          <span className="mr-3 text-lg" aria-hidden="true">
+            {item.symbol}
+          </span>
+          <span className="transition-all duration-300">{item.title}</span>
+          {item.badge && (
+            <span className="bg-primary text-primary-foreground ml-auto flex size-5 items-center justify-center rounded-full text-xs font-medium">
+              {item.badge}
+            </span>
+          )}
+        </a>
+      ))}
+    </nav>
+  </aside>
+);
 
 export default Sidebar;
