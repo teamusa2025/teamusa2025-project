@@ -30,7 +30,7 @@ const Sidebar = ({ className = '', ...props }: SidebarProps) => (
     id="sidebar"
     role="navigation"
     aria-label="Main navigation"
-    className={`fixed left-0 top-0 h-screen w-64 flex-col border-r bg-stone-900 ${className}`}
+    className={`fixed left-0 top-0 h-screen w-64 flex-col border-r bg-stone-900 shadow-md ${className}`}
     {...props}
   >
     {/* Header */}
