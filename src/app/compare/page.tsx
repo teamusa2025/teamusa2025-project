@@ -1,5 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 'use client';
 
 import { useState } from 'react';
@@ -88,30 +86,34 @@ export default function SustainabilityComparison() {
       {/* Dropdowns for selecting stress tests, centered above charts */}
       <div className="grid grid-cols-2 justify-center gap-8">
         <div className="text-center">
-          <label htmlFor="stressTest1" className="block text-sm md:text-base">First Stress Test:</label>
-          <select
-            id="stressTest1"
-            className="mt-1 rounded-md border p-2"
-            value={selectedTest1}
-            onChange={(e) => setSelectedTest1(e.target.value)}
-          >
-            {stressTests.map((test) => (
-              <option key={test} value={test}>{test}</option>
-            ))}
-          </select>
+          <label htmlFor="stressTest1" className="block text-sm md:text-base">
+            First Stress Test:
+            <select
+              id="stressTest1"
+              className="mt-1 rounded-md border p-2"
+              value={selectedTest1}
+              onChange={(e) => setSelectedTest1(e.target.value)}
+            >
+              {stressTests.map((test) => (
+                <option key={test} value={test}>{test}</option>
+              ))}
+            </select>
+          </label>
         </div>
         <div className="text-center">
-          <label htmlFor="stressTest2" className="block text-sm md:text-base">Second Stress Test:</label>
-          <select
-            id="stressTest2"
-            className="mt-1 rounded-md border p-2"
-            value={selectedTest2}
-            onChange={(e) => setSelectedTest2(e.target.value)}
-          >
-            {stressTests.map((test) => (
-              <option key={test} value={test}>{test}</option>
-            ))}
-          </select>
+          <label htmlFor="stressTest2" className="block text-sm md:text-base">
+            Second Stress Test:
+            <select
+              id="stressTest2"
+              className="mt-1 rounded-md border p-2"
+              value={selectedTest2}
+              onChange={(e) => setSelectedTest2(e.target.value)}
+            >
+              {stressTests.map((test) => (
+                <option key={test} value={test}>{test}</option>
+              ))}
+            </select>
+          </label>
         </div>
       </div>
 
@@ -121,14 +123,15 @@ export default function SustainabilityComparison() {
           // eslint-disable-next-line react/no-array-index-key
           <div key={index} className="w-full overflow-auto rounded-lg border p-4 shadow-md">
             <h2 className="text-center text-xl font-semibold">
-              {selectedTest} Comparison
+              {selectedTest}
+              Comparison
             </h2>
 
             {/* Table displaying the model data */}
             <div className="my-4">
               <h3 className="text-center text-lg font-semibold">Model A</h3>
               {renderTableData(sustainabilityModels[selectedTest]['Model A'])}
-              <h3 className="text-center text-lg font-semibold mt-4">Model B</h3>
+              <h3 className="mt-4 text-center text-lg font-semibold">Model B</h3>
               {renderTableData(sustainabilityModels[selectedTest]['Model B'])}
             </div>
 
