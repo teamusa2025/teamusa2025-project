@@ -31,7 +31,9 @@ export default function RootLayout({
               <main className="flex-1 p-4 pt-14">{children}</main>
             </div>
           </div>
-          <Footer />
+          <div className="ml-64 mt-auto">
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>
