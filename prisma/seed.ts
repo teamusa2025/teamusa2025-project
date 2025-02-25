@@ -116,6 +116,22 @@ async function main() {
       },
     });
   });
+
+  // Seed requestAccess data
+  config.requestAccess.forEach(async (data) => {
+    console.log(`  Adding access request: ${data.fullName} (${data.email})`);
+    await prisma.requestAccess.upsert({
+      where: { email: data.email },
+      update: {},
+      create: {
+        fullName: data.fullName,
+        email: data.email,
+        reason: data.reason,
+        status: data.status || 'pending', // Default to "pending" if missing
+        createdAt: new Date(data.createdAt), // Ensure Date format
+      },
+    });
+  });
 }
 
 main()

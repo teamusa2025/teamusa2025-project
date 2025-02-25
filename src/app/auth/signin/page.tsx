@@ -123,7 +123,7 @@ const SignIn = () => {
                 Don’t have an account yet?
                 {' '}
                 <a
-                  href="/"
+                  href="/auth/request-access"
                   className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
                 >
                   Request access
