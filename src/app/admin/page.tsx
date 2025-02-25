@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import UserRowAdmin from '@/components/UserRowAdmin';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
@@ -14,9 +14,10 @@ const AdminPage = async () => {
   );
   // const stuff = await prisma.stuff.findMany({});
   const users = await prisma.user.findMany({});
+
   return (
     <main>
-      <Container id="list" fluid className="mt-20 py-3">
+      <Container id="list" fluid className="mt-10 py-3">
         <Row>
           {/* IMPLEMENT BELOW IN ANOTHER PAGE OR DELETE */}
           {/* <Col>
@@ -47,22 +48,35 @@ const AdminPage = async () => {
         </Row>
         <Row>
           <Col>
-            <h4>Accounts Management</h4>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Subrole</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <UserRowAdmin key={user.id} {...user} />
-                ))}
-              </tbody>
-            </Table>
+            <span className="center text-2xl">Admin Dashboard | Accounts</span>
+            <div className="relative mt-4 overflow-x-auto shadow-md sm:rounded-lg">
+              <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+                <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Username
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Email
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Role
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Subrole
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Edit
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <UserRowAdmin key={user.id} {...user} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Col>
         </Row>
       </Container>
