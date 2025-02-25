@@ -50,8 +50,8 @@ const NavBar: React.FC = () => {
           >
             <span className="sr-only">Open user menu</span>
             <img
-              className="h-7 rounded-full"
-              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              className="h-8 rounded-full"
+              src="https://as1.ftcdn.net/v2/jpg/00/64/67/52/1000_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
               alt="user"
             />
           </button>

@@ -56,7 +56,7 @@ const Sidebar = () => {
               clipRule="evenodd"
             />
           </svg>
-          <span>{currentUsername || 'Guest'}</span>
+          <span>{currentUsername || 'Unknown User'}</span>
         </p>
       </div>
 
