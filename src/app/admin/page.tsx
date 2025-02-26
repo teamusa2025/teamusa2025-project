@@ -4,6 +4,7 @@ import UserRowAdmin from '@/components/UserRowAdmin';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
+import { redirect } from 'next/navigation';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -14,7 +15,7 @@ const AdminPage = async () => {
       } | null,
     );
   } catch (error) {
-    return <div>Access denied</div>;
+    redirect('/login'); // Redirect if user is not authenticated
   }
 
   const users = await prisma.user.findMany({});

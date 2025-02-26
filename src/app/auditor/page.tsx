@@ -1,40 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { auditorProtectedPage } from '@/lib/page-protection';
 import { Container } from 'react-bootstrap';
 import { useSession } from 'next-auth/react';
 
 /** The Auditor page. */
-const Auditor = () => {
+export default function Auditor() {
   const { data: session, status } = useSession();
-  const [accessDenied, setAccessDenied] = useState(false);
-
-  useEffect(() => {
-    if (status === 'loading') return;
-
-    try {
-      auditorProtectedPage(
-        session as {
-          user: { email: string; id: string; randomKey: string };
-        } | null,
-      );
-    } catch (error) {
-      setAccessDenied(true);
-    }
-  }, [session, status]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
-  if (accessDenied) {
-    return <div>Access denied</div>;
-  }
-
   return (
     <main>
       <Container id="landing-page" fluid className="mt-20 py-3">
+        <h1>
+          Welcome,
+          <br />
+          {session?.user?.email}
+          <br />
+          ! This is the Auditor Page.
+        </h1>
+        <p>You now have access to protected auditor content.</p>
         <h1 className="center">Mockup Page for Auditor Home Page</h1>
         <div className="center">
           <a href="/1">
@@ -557,6 +544,4 @@ const Auditor = () => {
       </Container>
     </main>
   );
-};
-
-export default Auditor;
+}
