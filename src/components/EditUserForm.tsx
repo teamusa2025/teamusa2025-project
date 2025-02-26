@@ -59,18 +59,7 @@ const EditUserForm = ({ user }: { user: User }) => {
                   />
                   <div className="invalid-feedback">{errors.email?.message}</div>
                 </Form.Group>
-                {/* PASSWORD FIELD HERE; SHOWS HASHEDPASSWORD ONLY AND EDITS ARE UNPREDICTABLE */}
                 <input type="hidden" {...register('password')} value={user.password} />
-                {/* <Form.Group>
-                  <Form.Label>Password</Form.Label>
-                  <input
-                    type="text"
-                    {...register('password')}
-                    defaultValue={user.password}
-                    className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.password?.message}</div>
-                </Form.Group> */}
                 <Form.Group>
                   <Form.Label>Role</Form.Label>
                   <select
