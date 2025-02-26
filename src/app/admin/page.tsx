@@ -5,17 +5,28 @@ import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import { redirect } from 'next/navigation';
+import { Subrole } from '@prisma/client';
 
 const AdminPage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = (await getServerSession(authOptions)) as {
+    user: {
+      email: string;
+      id: string;
+      randomKey: string;
+      name?: string | null;
+      image?: string | null;
+      username: string;
+      subrole: Subrole;
+    };
+  };
+  if (!session) {
+    redirect('/auth/signin');
+  }
+
   try {
-    adminProtectedPage(
-      session as {
-        user: { email: string; id: string; randomKey: string };
-      } | null,
-    );
+    adminProtectedPage(session);
   } catch (error) {
-    redirect('/login'); // Redirect if user is not authenticated
+    redirect('/not-authorized');
   }
 
   const users = await prisma.user.findMany({});

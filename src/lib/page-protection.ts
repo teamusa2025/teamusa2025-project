@@ -14,9 +14,11 @@ export const loggedInProtectedPage = (session: { user: { email: string; id: stri
  * Redirects to the login page if the user is not logged in.
  * Redirects to the not-authorized page if the user is not an admin.
  */
-export const adminProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const adminProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string; subrole: Subrole } } | null,
+) => {
   loggedInProtectedPage(session);
-  if (session && session.user.randomKey !== Subrole.ADMIN) {
+  if (session && session.user.subrole !== Subrole.ADMIN) {
     redirect('/not-authorized');
   }
 };
@@ -25,9 +27,11 @@ export const adminProtectedPage = (session: { user: { email: string; id: string;
  * Redirects to the login page if the user is not logged in.
  * Redirects to the not-authorized page if the user is not an analyst.
  */
-export const analystProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const analystProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string; subrole: Subrole } } | null,
+) => {
   loggedInProtectedPage(session);
-  if (session && session.user.randomKey !== Subrole.ANALYST) {
+  if (session && session.user.subrole !== Subrole.ANALYST) {
     redirect('/not-authorized');
   }
 };
@@ -36,9 +40,11 @@ export const analystProtectedPage = (session: { user: { email: string; id: strin
  * Redirects to the login page if the user is not logged in.
  * Redirects to the not-authorized page if the user is not an auditor.
  */
-export const auditorProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const auditorProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string; subrole: Subrole } } | null,
+) => {
   loggedInProtectedPage(session);
-  if (session && session.user.randomKey !== Subrole.AUDITOR) {
+  if (session && session.user.subrole !== Subrole.AUDITOR) {
     redirect('/not-authorized');
   }
 };
@@ -47,9 +53,11 @@ export const auditorProtectedPage = (session: { user: { email: string; id: strin
  * Redirects to the login page if the user is not logged in.
  * Redirects to the not-authorized page if the user is not an executive.
  */
-export const executiveProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const executiveProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string; subrole: Subrole } } | null,
+) => {
   loggedInProtectedPage(session);
-  if (session && session.user.randomKey !== Subrole.EXECUTIVE) {
+  if (session && session.user.subrole !== Subrole.EXECUTIVE) {
     redirect('/not-authorized');
   }
 };
