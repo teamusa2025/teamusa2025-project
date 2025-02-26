@@ -4,6 +4,7 @@ import UserRowAdmin from '@/components/UserRowAdmin';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
+import { Button } from '@mui/material';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -36,8 +37,11 @@ const AdminPage = async () => {
                     <th scope="col" className="px-6 py-3">
                       Subrole
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-10 py-3">
                       Edit
+                    </th>
+                    <th scope="col" className="px-2 py-3">
+                      Delete
                     </th>
                   </tr>
                 </thead>
@@ -47,6 +51,9 @@ const AdminPage = async () => {
                   ))}
                 </tbody>
               </table>
+              <Button href="#" size="large" className="px-6 py-3 text-blue-600 hover:underline">
+                Add User
+              </Button>
             </div>
           </Col>
         </Row>
