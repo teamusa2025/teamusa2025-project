@@ -1,30 +1,42 @@
 'use client';
 
 import { Container } from 'react-bootstrap';
-import { getServerSession } from 'next-auth';
-import { useEffect } from 'react';
+import { getServerSession } from 'next-auth/next';
+import { Session } from 'next-auth';
+import { useEffect, useState } from 'react';
 import { executiveProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 
 /** The Executive page. */
 const Executive = () => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [accessDenied, setAccessDenied] = useState(false);
+
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getServerSession(authOptions);
       try {
+        const session = await getServerSession(authOptions);
         executiveProtectedPage(
           session as {
             user: { email: string; id: string; randomKey: string };
           } | null,
         );
-        return session;
+        setSession(session);
       } catch (error) {
-        return <div>Access denied</div>;
+        setAccessDenied(true);
       }
     };
 
     fetchSession();
   }, []);
+
+  if (accessDenied) {
+    return <div>Access denied</div>;
+  }
+
+  if (!session) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main>
