@@ -214,7 +214,7 @@ const Sidebar = () => {
           <span className="transition-all duration-300">Admin Dashboard</span>
         </a>
         <a
-          href="/analyst/Home"
+          href="/analyst"
           className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-300
           no-underline transition-colors hover:bg-gray-700"
         >
@@ -244,7 +244,7 @@ const Sidebar = () => {
             />
           </svg>
 
-          <span className="transition-all duration-300">Analyst Home</span>
+          <span className="transition-all duration-300">Analyst Dashboard</span>
         </a>
         <a
           href="/analyst/FC"

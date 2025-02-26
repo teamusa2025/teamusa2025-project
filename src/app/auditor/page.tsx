@@ -2,9 +2,16 @@ import { prisma } from '@/lib/prisma';
 import { Container } from 'react-bootstrap';
 
 // Helper function to generate empty cells (for spacer rows)
-const extraEmptyCells = (count: number) => [...Array(count)].map((_, index) => (
-  <td key={index} className="px-6 py-4" />
-));
+const extraEmptyCells = (count: number) =>
+  [...Array(count)].map((_, index) => <td key={index} className="px-6 py-4" />);
+
+// Format a regular number as a whole integer.
+const formatNumber = (v: number) =>
+  v !== undefined && v !== null ? Math.round(v).toLocaleString() : '-';
+
+// Format a percentage value rounded to one decimal place.
+const formatPercentage = (v: number) =>
+  v !== undefined && v !== null ? `${parseFloat(v.toFixed(1))}%` : '-';
 
 // Auditor page as a server component
 export default async function Auditor() {
@@ -25,146 +32,136 @@ export default async function Auditor() {
     financesByYear[item.year] = item;
   });
 
+  // Create a memoization object for computed values for each metric.
+  const memo: Record<string, Record<number, number>> = {};
+
+  // Helper function: for a given metric (rowKey) and year,
+  // if a direct value exists in the DB, use it; otherwise compute it
+  // as the average of the three preceding years.
+  function compute(rowKey: string, year: number): number {
+    if (memo[rowKey] && memo[rowKey][year] !== undefined) {
+      return memo[rowKey][year];
+    }
+    if (financesByYear[year] && financesByYear[year][rowKey] !== undefined) {
+      const val = financesByYear[year][rowKey];
+      memo[rowKey] = memo[rowKey] || {};
+      memo[rowKey][year] = val;
+      return val;
+    }
+    // For years before 2022, return 0 (or adjust as needed)
+    if (year < 2022) return 0;
+    // Calculate the average of the previous three years.
+    const val1 = compute(rowKey, year - 3);
+    const val2 = compute(rowKey, year - 2);
+    const val3 = compute(rowKey, year - 1);
+    const avg = (val1 + val2 + val3) / 3;
+    memo[rowKey] = memo[rowKey] || {};
+    memo[rowKey][year] = avg;
+    return avg;
+  }
+
   // Define the rows for the table.
-  // Each row has a label, a key (that corresponds to the auditedFinances field),
-  // and a formatting function.
   const rows = [
-    {
-      label: 'Revenue',
-      key: 'revenue',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
-    {
-      label: 'Net Sales',
-      key: 'netSales',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Revenue', key: 'revenue', format: formatNumber },
+    { label: 'Net Sales', key: 'netSales', format: formatNumber },
     { spacer: true },
     { section: 'Cost of Goods Sold:' },
     {
       label: 'Cost of Contracting',
       key: 'costOfContracting',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
-    {
-      label: 'Overhead',
-      key: 'overhead',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Overhead', key: 'overhead', format: formatNumber },
     {
       label: 'Cost of Goods Sold',
       key: 'costOfGoodsSold',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
-    {
-      label: 'Gross Profit',
-      key: 'grossProfit',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Gross Profit', key: 'grossProfit', format: formatNumber },
     {
       label: 'Gross Margin',
       key: 'grossMarginPercent',
-      format: (v: number) => (v !== undefined ? `${v}%` : '-'),
+      format: formatPercentage,
     },
     { spacer: true },
     { section: 'Operating Expenses:' },
     {
       label: 'Salaries and Benefits',
       key: 'salariesAndBenefits',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Rent and Overhead',
       key: 'rentAndOverhead',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Depreciation and Amortization',
       key: 'depreciationAndAmortization',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
-    {
-      label: 'Interest',
-      key: 'interest',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Interest', key: 'interest', format: formatNumber },
     {
       label: 'Total Operating Expenses',
       key: 'totalOperatingExpenses',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Operating Expenses%',
       key: 'operatingExpensesPercent',
-      format: (v: number) => (v !== undefined ? `${v}%` : '-'),
+      format: formatPercentage,
     },
     { spacer: true },
     {
       label: 'Profit (loss) from operations',
       key: 'profitLossFromOperations',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Profit (loss) from operations%',
       key: 'profitLossFromOperationsPercent',
-      format: (v: number) => (v !== undefined ? `${v}%` : '-'),
+      format: formatPercentage,
     },
     { spacer: true },
     { section: 'Other Income Expenses' },
-    {
-      label: 'Interest income',
-      key: 'interestIncome',
-      format: (v: number) => (v !== undefined ? v?.toLocaleString() : '-'),
-    },
-    {
-      label: 'Interest expense',
-      key: 'interestExpense',
-      format: (v: number) => (v !== undefined ? v?.toLocaleString() : '-'),
-    },
+    { label: 'Interest income', key: 'interestIncome', format: formatNumber },
+    { label: 'Interest expense', key: 'interestExpense', format: formatNumber },
     {
       label: 'Gain (loss) on disposal of assets',
       key: 'gainLossOnDisposalOfAssets',
-      format: (v: number) => (v !== undefined ? v?.toLocaleString() : '-'),
+      format: formatNumber,
     },
     {
       label: 'Other income (expense)',
       key: 'otherIncomeExpense',
-      format: (v: number) => (v !== undefined ? v?.toLocaleString() : '-'),
+      format: formatNumber,
     },
     {
       label: 'Total other income (expense)',
       key: 'totalOtherIncomeExpense',
-      format: (v: number) => (v !== undefined ? v?.toLocaleString() : '-'),
+      format: formatNumber,
     },
     {
       label: 'Total other income (expense)%',
       key: 'totalOtherIncomeExpensePercent',
-      format: (v: number) => (v !== undefined ? `${v}%` : '-'),
+      format: formatPercentage,
     },
     {
       label: 'Income (loss) before income taxes',
       key: 'incomeLossBeforeIncomeTaxes',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Pre-tax income%',
       key: 'preTaxIncomePercent',
-      format: (v: number) => (v !== undefined ? `${v}%` : '-'),
+      format: formatPercentage,
     },
-    {
-      label: 'Income taxes',
-      key: 'incomeTaxes',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
-    {
-      label: 'Net income (loss)',
-      key: 'netIncomeLoss',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Income taxes', key: 'incomeTaxes', format: formatNumber },
+    { label: 'Net income (loss)', key: 'netIncomeLoss', format: formatNumber },
     {
       label: 'Net income (loss)%',
       key: 'netIncomeLossPercent',
-      format: (v: number) => (v !== undefined ? `${v}%` : '-'),
+      format: formatPercentage,
     },
     { spacer: true },
     { section: 'Assets' },
@@ -172,120 +169,88 @@ export default async function Auditor() {
     {
       label: 'Cash and cash equivalents',
       key: 'cashEquivalents',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Accounts receivable',
       key: 'accountsReceivable',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
-    {
-      label: 'Inventory',
-      key: 'inventory',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Inventory', key: 'inventory', format: formatNumber },
     {
       label: 'Total Current Assets',
       key: 'totalCurrentAssets',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     { spacer: true },
     { section: 'Long Term Assets:' },
     {
       label: 'Property, plant, and equipment',
       key: 'propertyPlantAndEquipment',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
-    {
-      label: 'Investment',
-      key: 'investment',
-      format: (v: number) => (v !== undefined ? v?.toLocaleString() : '-'),
-    },
+    { label: 'Investment', key: 'investment', format: formatNumber },
     {
       label: 'Total long-term asset',
       key: 'totalLongTermAssets',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     { spacer: true },
-    {
-      label: 'TOTAL ASSETS',
-      key: 'totalAssets',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'TOTAL ASSETS', key: 'totalAssets', format: formatNumber },
     { spacer: true },
     { section: 'Liabilities and Equity' },
     { section: 'Current Liabilities (due within 1 year):' },
-    {
-      label: 'Accounts payable',
-      key: 'accountsPayable',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
-    {
-      label: 'Debt service',
-      key: 'debtService',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
-    {
-      label: 'Taxes payable',
-      key: 'taxesPayable',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Accounts payable', key: 'accountsPayable', format: formatNumber },
+    { label: 'Debt service', key: 'debtService', format: formatNumber },
+    { label: 'Taxes payable', key: 'taxesPayable', format: formatNumber },
     {
       label: 'Total Current Liabilities',
       key: 'totalCurrentLiabilities',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     { spacer: true },
     { section: 'Long Term Liabilities (Due after one year):' },
     {
       label: 'Debt service (long term)',
       key: 'debtServiceLongTerm',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
-    {
-      label: 'Loans payable',
-      key: 'loansPayable',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Loans payable', key: 'loansPayable', format: formatNumber },
     {
       label: 'Total Long-term Liabilities',
       key: 'totalLongTermLiabilities',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: 'Total Liabilities',
       key: 'totalLiabilities',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     { spacer: true },
     { section: "Stockholder's Equity:" },
-    {
-      label: 'Equity Capital',
-      key: 'equityCapital',
-      format: (v: number) => v?.toLocaleString() || '-',
-    },
+    { label: 'Equity Capital', key: 'equityCapital', format: formatNumber },
     {
       label: 'Retained earnings',
       key: 'retainedEarnings',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     {
       label: "Total Stockholder's Equity",
       key: 'totalStockholdersEquity',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
     { spacer: true },
     {
       label: 'TOTAL LIABILITIES AND EQUITY',
       key: 'totalLiabilitiesAndEquity',
-      format: (v: number) => v?.toLocaleString() || '-',
+      format: formatNumber,
     },
   ];
 
   return (
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
-        <span className="center text-2xl">Auditor Dashboad | Table</span>
+        <span className="center text-2xl">Auditor Dashboard | Table</span>
         <div className="relative mt-4 overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -338,13 +303,15 @@ export default async function Auditor() {
                       {row.label}
                     </th>
                     {yearsToDisplay.map((year) => {
-                      const finance = financesByYear[year];
-                      const cellValue = finance && finance[row.key] !== undefined
-                        ? row.format(finance[row.key])
-                        : '-';
+                      const hasDirectValue =
+                        financesByYear[year] &&
+                        financesByYear[year][row.key] !== undefined;
+                      const value = hasDirectValue
+                        ? financesByYear[year][row.key]
+                        : compute(row.key, year);
                       return (
                         <td key={year} className="px-6 py-4">
-                          {cellValue}
+                          {row.format(value)}
                         </td>
                       );
                     })}
