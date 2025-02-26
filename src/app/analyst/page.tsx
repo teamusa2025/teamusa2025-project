@@ -2,20 +2,33 @@ import { prisma } from '@/lib/prisma';
 import { Container } from 'react-bootstrap';
 import InteractiveAnalystTable from '@/components/InteractiveAnalystTable.client';
 
-export default async function Analyst() {
+type FinanceRecord = {
+  year: number;
+  [key: string]: any;
+};
+
+type RowsConfig = {
+  label?: string;
+  key?: string;
+  formatType?: 'number' | 'percentage';
+  spacer?: boolean;
+  section?: string;
+};
+
+export default async function Analyst(): Promise<JSX.Element> {
   // Fetch audited finances directly using Prisma.
-  const finances = await prisma.auditedFinances.findMany();
+  const finances: FinanceRecord[] = await prisma.auditedFinances.findMany();
   // Sort the results by year (ascending)
   finances.sort((a, b) => a.year - b.year);
 
   // Define the years we want to display (2022 through 2036)
-  const yearsToDisplay = [
+  const yearsToDisplay: number[] = [
     2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033,
     2034, 2035, 2036,
   ];
 
   // Create a lookup object so we can easily access finance data by year.
-  const financesByYear: { [year: number]: any } = {};
+  const financesByYear: Record<number, FinanceRecord> = {};
   finances.forEach((item) => {
     financesByYear[item.year] = item;
   });
@@ -23,7 +36,7 @@ export default async function Analyst() {
   // Define the rows for the table.
   // Instead of passing functions, we pass a "formatType" field:
   // use 'number' for regular numbers and 'percentage' for percentage values.
-  const rows = [
+  const rows: RowsConfig[] = [
     { label: 'Revenue', key: 'revenue', formatType: 'number' },
     { label: 'Net Sales', key: 'netSales', formatType: 'number' },
     { spacer: true },
