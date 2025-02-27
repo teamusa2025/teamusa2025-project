@@ -1,11 +1,16 @@
 import { prisma } from '@/lib/prisma';
 import { Container } from 'react-bootstrap';
 import InteractiveAnalystTable from '@/components/InteractiveAnalystTable.client';
-import AnalystSidebar from '@/components/AnalystSidebar';
-import { useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
 import { analystProtectedPage } from '@/lib/page-protection';
 import { redirect } from 'next/navigation';
 import { Subrole } from '@prisma/client';
+
+type FinanceRecord = {
+  year: number;
+  [key: string]: any;
+};
 
 type RowsConfig = {
   label?: string;
@@ -15,7 +20,30 @@ type RowsConfig = {
   section?: string;
 };
 
-export async function Analyst(): Promise<JSX.Element> {
+export default async function Analyst(): Promise<JSX.Element> {
+  // Apply page protections
+  const session = await getServerSession(authOptions) as {
+    user: {
+      email: string;
+      id: string;
+      randomKey: string;
+      name?: string | null;
+      image?: string | null;
+      username: string;
+      subrole: Subrole;
+    };
+  };
+
+  if (!session) {
+    redirect('/auth/signin');
+  }
+
+  try {
+    analystProtectedPage(session);
+  } catch (error) {
+    redirect('/not-authorized');
+  }
+
   // Fetch audited finances directly using Prisma.
   const finances: FinanceRecord[] = await prisma.auditedFinances.findMany();
   // Sort the results by year (ascending)
@@ -23,7 +51,8 @@ export async function Analyst(): Promise<JSX.Element> {
 
   // Define the years we want to display (2022 through 2036)
   const yearsToDisplay: number[] = [
-    2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036,
+    2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033,
+    2034, 2035, 2036,
   ];
 
   // Create a lookup object so we can easily access finance data by year.
@@ -109,43 +138,12 @@ export async function Analyst(): Promise<JSX.Element> {
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
         <span className="center text-2xl">Analyst Dashboard | Table</span>
-        <InteractiveAnalystTable financesByYear={financesByYear} rows={rows} yearsToDisplay={yearsToDisplay} />
+        <InteractiveAnalystTable
+          financesByYear={financesByYear}
+          rows={rows}
+          yearsToDisplay={yearsToDisplay}
+        />
       </Container>
     </main>
   );
 }
-
-/** The Analyst page. */
-// eslint-disable-next-line react/prop-types
-const Analyst: React.FC<AnalystProps> = ({ children }) => {
-  const { data: session, status } = useSession() as {
-    user: {
-      email: string;
-      id: string;
-      randomKey: string;
-      name?: string | null;
-      image?: string | null;
-      username: string;
-      subrole: Subrole;
-    };
-  };
-
-  if (!session) {
-    redirect('/auth/signin');
-  }
-
-  try {
-    analystProtectedPage(session);
-  } catch (error) {
-    redirect('/not-authorized');
-  }
-
-  return (
-    <div>
-      <AnalystSidebar />
-      <main>{children}</main>
-    </div>
-  );
-};
-
-export { Analyst as default };

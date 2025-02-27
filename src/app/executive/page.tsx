@@ -18,10 +18,9 @@ export default function Executive() {
           Welcome,
           <br />
           {session?.user?.email}
-          <br />
-          ! This is the Executive Page.
         </h1>
         <p>You now have access to protected executive content.</p>
+        <br />
       </Container>
     </main>
   );

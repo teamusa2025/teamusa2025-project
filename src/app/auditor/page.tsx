@@ -18,10 +18,9 @@ export default function Auditor() {
           Welcome,
           <br />
           {session?.user?.email}
-          <br />
-          ! This is the Auditor Page.
         </h1>
         <p>You now have access to protected auditor content.</p>
+        <br />
         <h1 className="center">Mockup Page for Auditor Home Page</h1>
         <div className="center">
           <a href="/1">
