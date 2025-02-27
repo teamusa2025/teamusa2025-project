@@ -28,7 +28,7 @@ const SignIn = () => {
 
   return (
     <section className="bg-white-50 dark:bg-gray-900">
-      <div className="min-h-3/5 lg:min-h-1/2 mx-auto mt-36 flex flex-col items-center px-6 py-8">
+      <div className="min-h-3/5 lg:min-h-1/2 mx-auto mt-24 flex flex-col items-center px-6 py-8">
         <a href="/" className="mb-6 items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -123,7 +123,7 @@ const SignIn = () => {
                 Don’t have an account yet?
                 {' '}
                 <a
-                  href="/"
+                  href="/auth/request-access"
                   className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
                 >
                   Request access

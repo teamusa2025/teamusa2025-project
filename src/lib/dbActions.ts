@@ -170,3 +170,19 @@ export async function changePassword(credentials: { email: string; password: str
     },
   });
 }
+/**
+ * When a new user want to gain access to the application, they can request access.
+ * @param credentials, an object with the following properties: fullName, email, reason.
+ */
+export async function requestAccess(credentials: { fullName: string; email: string, reason: string }) {
+  // console.log(`requestAccess data: ${JSON.stringify(credentials, null, 2)}`);
+  await prisma.requestAccess.create({
+    data: {
+      email: credentials.email,
+      fullName: credentials.fullName,
+      reason: credentials.reason,
+      status: 'pending', // Default status
+      createdAt: new Date(),
+    },
+  });
+}
