@@ -44,7 +44,7 @@ const AddUserForm: React.FC = () => {
   // }
 
   return (
-    <Container className="py-3">
+    <Container className="mt-10 py-5">
       <Row className="justify-content-center">
         <Col xs={5}>
           <Col className="text-center">
