@@ -8,7 +8,7 @@ const UserRowAdmin = ({ username, email, role, subrole, id }: User) => (
     <td>{role}</td>
     <td>{subrole}</td>
     <td>
-      <a href={`/edit/${id}`}>Edit</a>
+      <a href={`/edit-user/${id}`}>Edit</a>
     </td>
   </tr>
 );

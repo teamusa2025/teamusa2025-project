@@ -1,9 +1,17 @@
 'use server';
 
-import { Stuff, Condition, User } from '@prisma/client';
+import { Stuff, Condition, User, $Enums } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
+
+// type NewUser = {
+//   username: string;
+//   email: string;
+//   password: string;
+//   role: $Enums.Role;
+//   subrole: $Enums.Subrole;
+// };
 
 /**
  * Adds a new stuff to the database.
@@ -31,6 +39,29 @@ export async function addStuff(stuff: { name: string; quantity: number; owner: s
   redirect('/list');
 }
 
+type NewUser = {
+  password: string;
+  username: string;
+  email: string;
+  role: $Enums.Role;
+  subrole: $Enums.Subrole;
+};
+
+export async function addUser(user: NewUser) {
+  const hashedPassword = await hash(user.password, 10);
+  await prisma.user.create({
+    data: {
+      username: user.username,
+      email: user.email,
+      password: hashedPassword,
+      role: user.role,
+      subrole: user.subrole,
+    },
+  });
+  // After adding, redirect to the admin page
+  redirect('/admin');
+}
+
 /**
  * Edits an existing stuff in the database.
  * @param stuff, an object with the following properties: id, name, quantity, owner, condition.
@@ -56,16 +87,29 @@ export async function editStuff(stuff: Stuff) {
  */
 export async function editUser(user: User) {
   // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      username: user.username,
-      email: user.email,
-      password: user.password,
-      role: user.role,
-      subrole: user.subrole,
-    },
-  });
+  if (user.password === 'Replace This To Change Password') {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        subrole: user.subrole,
+      },
+    });
+  } else {
+    const hashedPassword = await hash(user.password, 10);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        username: user.username,
+        email: user.email,
+        password: hashedPassword,
+        role: user.role,
+        subrole: user.subrole,
+      },
+    });
+  }
   // After updating, redirect to the admin page
   redirect('/admin');
 }
@@ -81,6 +125,19 @@ export async function deleteStuff(id: number) {
   });
   // After deleting, redirect to the list page
   redirect('/list');
+}
+
+/**
+ * Deletes an existing user from the database.
+ * @param id, the id of the user to delete.
+ */
+export async function deleteUser(id: number) {
+  // console.log(`deleteUser id: ${id}`);
+  await prisma.user.delete({
+    where: { id },
+  });
+  // After deleting, redirect to the list page
+  redirect('/admin');
 }
 
 /**

@@ -1,59 +1,64 @@
 'use client';
 
+// import { useSession } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import swal from 'sweetalert';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Role, Subrole, User } from '@prisma/client';
-import { EditUserSchema } from '@/lib/validationSchemas';
-import { editUser, deleteUser } from '@/lib/dbActions';
+import swal from 'sweetalert';
+// import { redirect } from 'next/navigation';
+import { addUser } from '@/lib/dbActions';
+// import LoadingSpinner from '@/components/LoadingSpinner';
+import { AddUserSchema } from '@/lib/validationSchemas';
+import { $Enums, Role, Subrole } from '@prisma/client';
 
-const onSubmit = async (data: User) => {
+type NewUser = {
+  password: string;
+  username: string;
+  email: string;
+  role: $Enums.Role;
+  subrole: $Enums.Subrole;
+};
+
+const onSubmit = async (data: NewUser) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await editUser(data);
-  swal('Success', 'The user has been updated', 'success', {
+  await addUser(data);
+  swal('Success', 'The user has been added', 'success', {
     timer: 2000,
   });
 };
 
-const onDelete = async (data: User) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  const { id } = data;
-  await deleteUser(id);
-  swal('Success', 'The user has been deleted', 'success', {
-    timer: 2000,
-  });
-};
-
-const EditUserForm = ({ user }: { user: User }) => {
-  // const passwordRef = useRef(null);
+const AddUserForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<User>({
-    resolver: yupResolver(EditUserSchema),
+  } = useForm<NewUser>({
+    resolver: yupResolver(AddUserSchema),
   });
-  // console.log(user);
+  // if (status === 'loading') {
+  //   return <LoadingSpinner />;
+  // }
+  // if (status === 'unauthenticated') {
+  //   redirect('/auth/signin');
+  // }
 
   return (
-    <Container className="mt-10 py-5">
+    <Container className="py-3">
       <Row className="justify-content-center">
-        <Col xs={6}>
+        <Col xs={5}>
           <Col className="text-center">
-            <h2>Edit User</h2>
+            <h2>Add User</h2>
           </Col>
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                <input type="hidden" {...register('id')} value={user.id} />
                 <Form.Group>
                   <Form.Label>Username</Form.Label>
                   <input
                     type="text"
                     {...register('username')}
-                    defaultValue={user.username}
+                    required
                     className={`form-control ${errors.username ? 'is-invalid' : ''}`}
                   />
                   <div className="invalid-feedback">{errors.username?.message}</div>
@@ -63,18 +68,17 @@ const EditUserForm = ({ user }: { user: User }) => {
                   <input
                     type="text"
                     {...register('email')}
-                    defaultValue={user.email}
+                    required
                     className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                   />
                   <div className="invalid-feedback">{errors.email?.message}</div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Change Password</Form.Label>
+                  <Form.Label>Password</Form.Label>
                   <input
                     type="text"
                     {...register('password')}
-                    defaultValue="Replace This To Change Password"
-                    placeholder="Insert New Password"
+                    required
                     className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                   />
                   <div className="invalid-feedback">{errors.password?.message}</div>
@@ -83,8 +87,8 @@ const EditUserForm = ({ user }: { user: User }) => {
                   <Form.Label>Role</Form.Label>
                   <select
                     {...register('role')}
+                    required
                     className={`form-control ${errors.role ? 'is-invalid' : ''}`}
-                    defaultValue={user.role}
                   >
                     <option value={Role.USER}>User</option>
                     <option value={Role.ADMIN}>Admin</option>
@@ -95,29 +99,26 @@ const EditUserForm = ({ user }: { user: User }) => {
                   <Form.Label>Subrole</Form.Label>
                   <select
                     {...register('subrole')}
+                    required
                     className={`form-control ${errors.subrole ? 'is-invalid' : ''}`}
-                    defaultValue={user.subrole}
                   >
                     <option value={Subrole.ADMIN}>Admin</option>
                     <option value={Subrole.EXECUTIVE}>Executive</option>
                     <option value={Subrole.ANALYST}>Analyst</option>
                     <option value={Subrole.AUDITOR}>Auditor</option>
                   </select>
-                  <div className="invalid-feedback">{errors.subrole?.message}</div>
+                  <div className="invalid-feedback">{errors.role?.message}</div>
                 </Form.Group>
                 <Form.Group className="form-group">
                   <Row className="pt-3">
                     <Col>
                       <Button type="submit" variant="primary">
-                        Submit Changes
-                      </Button>
-                      <Button type="button" onClick={() => reset()} variant="warning">
-                        Reset Changes
+                        Submit
                       </Button>
                     </Col>
                     <Col>
-                      <Button type="button" onClick={() => onDelete(user)} variant="danger" className="float-right">
-                        DELETE USER
+                      <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
+                        Reset
                       </Button>
                     </Col>
                   </Row>
@@ -131,4 +132,4 @@ const EditUserForm = ({ user }: { user: User }) => {
   );
 };
 
-export default EditUserForm;
+export default AddUserForm;

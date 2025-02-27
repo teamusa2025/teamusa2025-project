@@ -47,7 +47,7 @@ const AdminPage = async () => {
         </Row>
         <Row>
           <Col>
-            <h4>Accounts Management</h4>
+            <h1>Accounts Management</h1>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -63,6 +63,7 @@ const AdminPage = async () => {
                 ))}
               </tbody>
             </Table>
+            <a href="/add-user">Add User</a>
           </Col>
         </Row>
       </Container>
