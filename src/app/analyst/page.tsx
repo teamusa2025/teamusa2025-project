@@ -1,6 +1,11 @@
 import { prisma } from '@/lib/prisma';
 import { Container } from 'react-bootstrap';
 import InteractiveAnalystTable from '@/components/InteractiveAnalystTable.client';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
+import { analystProtectedPage } from '@/lib/page-protection';
+import { redirect } from 'next/navigation';
+import { Subrole } from '@prisma/client';
 
 type FinanceRecord = {
   year: number;
@@ -16,6 +21,29 @@ type RowsConfig = {
 };
 
 export default async function Analyst(): Promise<JSX.Element> {
+  // Apply page protections
+  const session = await getServerSession(authOptions) as {
+    user: {
+      email: string;
+      id: string;
+      randomKey: string;
+      name?: string | null;
+      image?: string | null;
+      username: string;
+      subrole: Subrole;
+    };
+  };
+
+  if (!session) {
+    redirect('/auth/signin');
+  }
+
+  try {
+    analystProtectedPage(session);
+  } catch (error) {
+    redirect('/not-authorized');
+  }
+
   // Fetch audited finances directly using Prisma.
   const finances: FinanceRecord[] = await prisma.auditedFinances.findMany();
   // Sort the results by year (ascending)
