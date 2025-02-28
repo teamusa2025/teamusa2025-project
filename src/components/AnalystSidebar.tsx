@@ -1,9 +1,11 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 const AnalystSidebar = () => {
   const pathName = usePathname();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <section className="mt-20 py-1 dark:bg-gray-900">
@@ -89,14 +91,11 @@ const AnalystSidebar = () => {
               </a>
             </li>
             <li>
-              <a
-                href="/analyst/StressTest"
-                className={`group flex items-center rounded-lg p-2 py-3 text-gray-900 no-underline hover:bg-gray-200
-              dark:text-white dark:hover:bg-gray-700 ${
-                pathName === '/analyst/StressTest'
-                  ? 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-white'
-                  : 'text-gray-900'
-              }`}
+              <button
+                type="button"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="group flex items-center rounded-lg p-2 py-3 text-gray-900 no-underline
+                    hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700"
               >
                 <svg
                   // eslint-disable-next-line tailwindcss/enforces-shorthand
@@ -120,8 +119,44 @@ const AnalystSidebar = () => {
                0c-8.8 0-16-7.2-16-16z"
                   />
                 </svg>
-                <span className="ms-3 flex-1 whitespace-nowrap">StressTest</span>
-              </a>
+                <span className="ms-3 flex-1 whitespace-nowrap">Stress Tests</span>
+                <svg
+                  // eslint-disable-next-line tailwindcss/enforces-shorthand
+                  className={`ml-2 h-3 w-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 4 4 4-4"
+                  />
+                </svg>
+              </button>
+              <ul className={`${isDropdownOpen ? 'block' : 'hidden'} space-y-2 py-2`}>
+                <li>
+                  <a
+                    href="/analyst/StressTest/scenario1"
+                    className="group flex items-center rounded-lg p-2 py-3 pe-5 text-gray-900 no-underline
+                    hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700"
+                  >
+                    Scenario 1
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/analyst/StressTest/scenario2"
+                    className="group flex items-center rounded-lg p-2 py-3 pe-5 text-gray-900 no-underline
+                    hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700"
+                  >
+                    Scenario 2
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
