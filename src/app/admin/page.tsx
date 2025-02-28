@@ -1,23 +1,39 @@
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Button } from 'react-bootstrap';
 import UserRowAdmin from '@/components/UserRowAdmin';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import { Button } from '@mui/material';
+import { redirect } from 'next/navigation';
+import { Subrole } from '@prisma/client';
 
 const AdminPage = async () => {
-  const session = await getServerSession(authOptions);
-  adminProtectedPage(
-    session as {
-      user: { email: string; id: string; randomKey: string };
-    } | null,
-  );
+  const session = (await getServerSession(authOptions)) as {
+    user: {
+      email: string;
+      id: string;
+      randomKey: string;
+      name?: string | null;
+      image?: string | null;
+      username: string;
+      subrole: Subrole;
+    };
+  };
+  if (!session) {
+    redirect('/auth/signin');
+  }
+
+  try {
+    adminProtectedPage(session);
+  } catch (error) {
+    redirect('/not-authorized');
+  }
+
   const users = await prisma.user.findMany({});
 
   return (
     <main>
-      <Container id="list" fluid className="mt-10 py-3">
+      <Container id="list" fluid className="mt-20 py-3">
         <Row>
           <Col>
             <span className="center text-2xl">Admin Dashboard | Accounts</span>
@@ -51,7 +67,7 @@ const AdminPage = async () => {
                   ))}
                 </tbody>
               </table>
-              <Button href="#" size="large" className="px-6 py-3 text-blue-600 hover:underline">
+              <Button href="#" size="lg" className="px-6 py-3 text-blue-600 hover:underline">
                 Add User
               </Button>
             </div>
