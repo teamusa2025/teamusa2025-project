@@ -51,7 +51,7 @@ const Sidebar: React.FC = () => {
       >
         <img
           className="mr-3 h-10 rounded-full"
-          src="https://cdn.discordapp.com/attachments/1328472895554584677/1334273560943923287/Smaller.png?ex=67be3596&is=67bce416&hm=32632bd3d4599bc8374a5d57ca1195c09b88d6b27c3f1a28ecc4dff9524b78e8&"
+          src="./spire_logo.png"
           alt="sidebar logo"
         />
         <span>Spire</span>
