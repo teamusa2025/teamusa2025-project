@@ -45,12 +45,12 @@ const Sidebar: React.FC = () => {
       {/* Header */}
       <a
         href="/"
-        className="flex h-14 items-center border-b px-4 text-2xl font-medium text-gray-300 no-underline"
+        className="flex h-14 items-center border-b px-4 text-2xl font-medium text-gray-300
+          no-underline"
         style={{ borderBottom: '1px solid #374151' }}
       >
         <img
           className="mr-3 h-10 rounded-full"
-          // eslint-disable-next-line max-len
           src="https://cdn.discordapp.com/attachments/1328472895554584677/1334273560943923287/Smaller.png?ex=67be3596&is=67bce416&hm=32632bd3d4599bc8374a5d57ca1195c09b88d6b27c3f1a28ecc4dff9524b78e8&"
           alt="sidebar logo"
         />
@@ -88,16 +88,17 @@ const Sidebar: React.FC = () => {
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 p-2">
-        <span className="group flex items-center rounded-md px-3 pt-3 text-xs font-medium
-        text-gray-500 no-underline transition-colors hover:bg-gray-700"
+        <span
+          className="group flex items-center rounded-md px-3 pt-3 text-xs font-medium text-gray-500
+            no-underline transition-colors hover:bg-gray-700"
         >
           Overview
         </span>
         {/* Dashboard Link */}
         <a
           href={dashboardUrl}
-          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium
-          text-gray-300 no-underline transition-colors hover:bg-gray-700"
+          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-300
+            no-underline transition-colors hover:bg-gray-700 hover:text-white"
         >
           <svg
             className="mr-2 size-6 text-gray-300 dark:text-white"
@@ -108,11 +109,15 @@ const Sidebar: React.FC = () => {
             fill="currentColor"
             viewBox="1 1 24 24"
           >
-            <path d="M13.5 2c-.178 0-.356.013-.492.022l-.074.005a1 1 0 0 0-.934.998V11a1
-            1 0 0 0 1 1h7.975a1 1 0 0 0 .998-.934l.005-.074A7.04 7.04 0 0 0 22 10.5 8.5
-            8.5 0 0 0 13.5 2Z"
+            <path
+              d="M13.5 2c-.178 0-.356.013-.492.022l-.074.005a1 1 0 0 0-.934.998V11a1 1 0
+              0 0 1 1h7.975a1 1 0 0 0 .998-.934l.005-.074A7.04 7.04 0 0 0 22 10.5
+              8.5 8.5 0 0 0 13.5 2Z"
             />
-            <path d="M11 6.025a1 1 0 0 0-1.065-.998 8.5 8.5 0 1 0 9.038 9.039A1 1 0 0 0 17.975 13H11V6.025Z" />
+            <path
+              d="M11 6.025a1 1 0 0 0-1.065-.998 8.5 8.5 0 1 0 9.038 9.039A1 1 0 0 0
+              17.975 13H11V6.025Z"
+            />
           </svg>
           <span className="transition-all duration-300">Dashboard</span>
         </a>
@@ -123,8 +128,9 @@ const Sidebar: React.FC = () => {
             <button
               type="button"
               onClick={() => setStressTestOpen(!isStressTestOpen)}
-              className="group flex w-full items-center rounded-md px-3 py-2 text-sm font-medium
-              text-gray-300 no-underline transition-colors hover:bg-gray-700"
+              className="group flex w-full items-center rounded-md px-3 py-2 text-sm
+                font-medium text-gray-300 no-underline transition-colors hover:bg-gray-700
+                hover:text-white"
             >
               <motion.svg
                 className="mr-2 size-6"
@@ -161,8 +167,9 @@ const Sidebar: React.FC = () => {
                       <motion.a
                         key={scenarioNumber}
                         href={`/analyst/stress-test/${scenarioNumber}`}
-                        className="group flex items-center rounded-md px-3 py-2 text-sm font-medium
-                        text-gray-300 no-underline transition-colors hover:bg-gray-700"
+                        className="group flex items-center rounded-md px-3 py-2 text-sm
+                          font-medium text-gray-300 no-underline transition-colors hover:bg-gray-700
+                          hover:text-white"
                         variants={itemVariants}
                       >
                         <svg
@@ -176,10 +183,10 @@ const Sidebar: React.FC = () => {
                         >
                           <path
                             fillRule="evenodd"
-                            d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2
-                            2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-6
-                            8a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h6a1 1 0 1 0
-                            0-2H9Z"
+                            d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0
+                              1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1
+                              1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-6 8a1 1 0 0 1 1-1h6a1 1 0 1 1 0
+                              2H9a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
                             clipRule="evenodd"
                           />
                         </svg>
@@ -196,8 +203,8 @@ const Sidebar: React.FC = () => {
         {/* Documentation Link */}
         <a
           href="/"
-          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-300
-          no-underline transition-colors hover:bg-gray-700"
+          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium
+            text-gray-300 no-underline transition-colors hover:bg-gray-700 hover:text-white"
         >
           <svg
             className="mr-2 size-6 text-gray-300 dark:text-white"
@@ -210,24 +217,26 @@ const Sidebar: React.FC = () => {
           >
             <path
               fillRule="evenodd"
-              d="M11 4.717c-2.286-.58-4.16-.756-7.045-.71A1.99 1.99 0 0 0 2 6v11c0 1.133.934 2.022
-              2.044 2.007 2.759-.038 4.5.16 6.956.791V4.717Zm2 15.081c2.456-.631 4.198-.829 6.956-.791A2.013
-              2.013 0 0 0 22 16.999V6a1.99 1.99 0 0 0-1.955-1.993c-2.885-.046-4.76.13-7.045.71v15.081Z"
+              d="M11 4.717c-2.286-.58-4.16-.756-7.045-.71A1.99 1.99 0 0 0 2 6v11c0
+                1.133.934 2.022 2.044 2.007 2.759-.038 4.5.16 6.956.791V4.717Zm2
+                15.081c2.456-.631 4.198-.829 6.956-.791A2.013 2.013 0 0 0 22 16.999V6a1.99
+                1.99 0 0 0-1.955-1.993c-2.885-.046-4.76.13-7.045.71v15.081Z"
               clipRule="evenodd"
             />
           </svg>
           <span className="transition-all duration-300">Documentation</span>
         </a>
 
-        <span className="group flex items-center rounded-md px-3 pt-3 text-xs font-medium text-gray-500
-        no-underline transition-colors hover:bg-gray-700"
+        <span
+          className="group flex items-center rounded-md px-3 pt-3 text-xs font-medium text-gray-500
+            no-underline transition-colors hover:bg-gray-700"
         >
           Account
         </span>
         <a
           href="/auth/change-password"
-          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-300
-          no-underline transition-colors hover:bg-gray-700"
+          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium
+            text-gray-300 no-underline transition-colors hover:bg-gray-700 hover:text-white"
         >
           <svg
             className="mr-2 size-6 text-gray-300 dark:text-white"
@@ -243,8 +252,8 @@ const Sidebar: React.FC = () => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0
-              0 12.68-3.15M6 20v-4h4"
+              d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652
+                8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"
             />
           </svg>
           <span className="transition-all duration-300">Change Password</span>
@@ -252,8 +261,8 @@ const Sidebar: React.FC = () => {
         <button
           type="button"
           onClick={() => signOut({ callbackUrl: '/', redirect: true })}
-          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-300
-          no-underline transition-colors hover:bg-gray-700"
+          className="group flex items-center rounded-md px-3 py-2 text-sm font-medium
+            text-gray-300 no-underline transition-colors hover:bg-gray-700 hover:text-white"
         >
           <svg
             className="mr-2 size-6 text-gray-300 dark:text-white"
@@ -269,7 +278,8 @@ const Sidebar: React.FC = () => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
+              d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3
+                3h-2"
             />
           </svg>
           <span className="transition-all duration-300">Sign Out</span>
