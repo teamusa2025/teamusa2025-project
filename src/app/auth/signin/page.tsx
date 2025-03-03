@@ -2,11 +2,13 @@
 
 'use client';
 
-import { signIn } from 'next-auth/react';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn, getSession } from 'next-auth/react';
 
-/** The sign-in page. */
-const SignIn = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SignIn: React.FC = () => {
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -15,14 +17,24 @@ const SignIn = () => {
     };
     const email = target.email.value;
     const password = target.password.value;
+    // Prevent automatic redirection.
     const result = await signIn('credentials', {
-      callbackUrl: '/list',
+      redirect: false,
       email,
       password,
     });
 
     if (result?.error) {
       console.error('Sign in failed: ', result.error);
+    } else if (result?.ok) {
+      // Wait for the session to be updated, then fetch it.
+      const session = await getSession();
+      const subrole = session?.user?.subrole?.toLowerCase();
+      if (subrole) {
+        router.push(`/${subrole}`);
+      } else {
+        router.push('/');
+      }
     }
   };
 
@@ -39,11 +51,14 @@ const SignIn = () => {
           />
         </a>
         <div
-          className="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800
-        sm:max-w-md md:mt-0 xl:p-0"
+          className="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700
+          dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
         >
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+            <h1
+              className="text-xl font-bold leading-tight tracking-tight text-gray-900
+              dark:text-white md:text-2xl"
+            >
               Sign in to your account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
@@ -58,9 +73,10 @@ const SignIn = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border
-                  border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white
-                  dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full
+                  rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900
+                  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
+                  dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   placeholder="name@example.com"
                   required
                 />
@@ -77,21 +93,24 @@ const SignIn = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border
-                  border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white
-                  dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full
+                  rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900
+                  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
+                  dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   required
                 />
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  {/* <div className="flex h-5 items-center">
+                {/* Uncomment and adjust the following if you want a "Remember me" option */}
+                {/* <div className="flex items-start">
+                  <div className="flex h-5 items-center">
                     <input
                       id="remember"
                       aria-describedby="remember"
                       type="checkbox"
-                      className="focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 size-4 rounded border
-                      border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                      className="focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600
+                      size-4 rounded border border-gray-300 bg-gray-50 dark:border-gray-600
+                      dark:bg-gray-700 dark:ring-offset-gray-800"
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -101,8 +120,8 @@ const SignIn = () => {
                     >
                       Remember me
                     </label>
-                  </div> */}
-                </div>
+                  </div>
+                </div> */}
                 {/* <a
                   href="/"
                   className="text-primary-600 dark:text-primary-500 text-sm font-medium hover:underline"
@@ -112,10 +131,9 @@ const SignIn = () => {
               </div>
               <button
                 type="submit"
-                className="w-full rounded-lg bg-blue-600 px-5
-                py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700
-                focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700
-                dark:focus:ring-blue-800"
+                className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm
+                font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4
+                focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Sign in
               </button>

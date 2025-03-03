@@ -39,6 +39,7 @@
     "classnames": "^2.5.1",
     "core-js": "^3.36.0",
     "flowbite-react": "^0.10.2",
+    "framer-motion": "^12.4.7",
     "graphql": "^16.8.1",
     "meteor-node-stubs": "^1.2.7",
     "moment": "^2.30.1",

@@ -26,14 +26,14 @@ const AdminPage = async () => {
   try {
     adminProtectedPage(session);
   } catch (error) {
-    redirect('/not-authorized');
+    redirect('/not-found');
   }
 
   const users = await prisma.user.findMany({});
 
   return (
     <main>
-      <Container id="list" fluid className="mt-20 py-3">
+      <Container id="list" fluid className="mt-10 py-3">
         <Row>
           <Col>
             <span className="center text-2xl">Admin Dashboard | Accounts</span>
@@ -56,9 +56,6 @@ const AdminPage = async () => {
                     <th scope="col" className="px-10 py-3">
                       Edit
                     </th>
-                    <th scope="col" className="px-2 py-3">
-                      Delete
-                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -67,7 +64,7 @@ const AdminPage = async () => {
                   ))}
                 </tbody>
               </table>
-              <Button href="#" size="lg" className="px-6 py-3 text-blue-600 hover:underline">
+              <Button href="/add-user" className="px-6 py-3 text-blue-600 hover:underline">
                 Add User
               </Button>
             </div>

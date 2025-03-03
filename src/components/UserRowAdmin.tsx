@@ -9,13 +9,8 @@ const UserRowAdmin = ({ username, email, role, subrole, id }: User) => (
     <td className="px-6 py-4">{role}</td>
     <td className="px-6 py-4">{subrole}</td>
     <td className="px-6 py-4">
-      <Button href={`/edit/${id}`} className="text-blue-600 hover:underline">
+      <Button href={`/edit-user/${id}`} className="text-blue-600 hover:underline">
         Edit
-      </Button>
-    </td>
-    <td>
-      <Button href="#" className="text-blue-600 hover:underline">
-        Delete
       </Button>
     </td>
   </tr>
