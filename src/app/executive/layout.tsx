@@ -25,7 +25,7 @@ export default async function ExecutiveLayout({ children }: { children: React.Re
   try {
     executiveProtectedPage(session);
   } catch (error) {
-    redirect('/not-authorized');
+    redirect('/not-found');
   }
 
   return children; // Render client-side Auditor UI only if authenticated
