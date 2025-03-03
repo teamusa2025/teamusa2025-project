@@ -41,7 +41,7 @@ export default async function Analyst(): Promise<JSX.Element> {
   try {
     analystProtectedPage(session);
   } catch (error) {
-    redirect('/not-authorized');
+    redirect('/not-found');
   }
 
   // Fetch audited finances directly using Prisma.
