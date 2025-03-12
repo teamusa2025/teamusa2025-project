@@ -1,18 +1,13 @@
 import { prisma } from '@/lib/prisma';
 import { Container } from 'react-bootstrap';
-import InteractiveAnalystTable from '@/components/InteractiveAnalystTable.client';
 import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/authOptions';
 import { analystProtectedPage } from '@/lib/page-protection';
 import { redirect } from 'next/navigation';
 import { Subrole } from '@prisma/client';
+import ForecastDashboardWrapper from '@/components/ForecastDashboardWrapper';
 
-type FinanceRecord = {
-  year: number;
-  [key: string]: any;
-};
-
-type RowsConfig = {
+export type RowsConfig = {
   label?: string;
   key?: string;
   formatType?: 'number' | 'percentage';
@@ -20,9 +15,13 @@ type RowsConfig = {
   section?: string;
 };
 
+type FinanceRecord = {
+  year: number;
+  [key: string]: any;
+};
+
 export default async function Analyst(): Promise<JSX.Element> {
-  // Apply page protections
-  const session = await getServerSession(authOptions) as {
+  const session = (await getServerSession(authOptions)) as {
     user: {
       email: string;
       id: string;
@@ -44,26 +43,19 @@ export default async function Analyst(): Promise<JSX.Element> {
     redirect('/not-found');
   }
 
-  // Fetch audited finances directly using Prisma.
   const finances: FinanceRecord[] = await prisma.auditedFinances.findMany();
-  // Sort the results by year (ascending)
   finances.sort((a, b) => a.year - b.year);
 
-  // Define the years we want to display (2022 through 2036)
   const yearsToDisplay: number[] = [
     2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033,
     2034, 2035, 2036,
   ];
 
-  // Create a lookup object so we can easily access finance data by year.
   const financesByYear: Record<number, FinanceRecord> = {};
   finances.forEach((item) => {
     financesByYear[item.year] = item;
   });
 
-  // Define the rows for the table.
-  // Instead of passing functions, we pass a "formatType" field:
-  // use 'number' for regular numbers and 'percentage' for percentage values.
   const rows: RowsConfig[] = [
     { label: 'Revenue', key: 'revenue', formatType: 'number' },
     { label: 'Net Sales', key: 'netSales', formatType: 'number' },
@@ -138,7 +130,7 @@ export default async function Analyst(): Promise<JSX.Element> {
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
         <span className="center text-2xl">Analyst Dashboard | Table</span>
-        <InteractiveAnalystTable
+        <ForecastDashboardWrapper
           financesByYear={financesByYear}
           rows={rows}
           yearsToDisplay={yearsToDisplay}

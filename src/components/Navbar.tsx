@@ -97,7 +97,7 @@ const NavBar: React.FC = () => {
           <button
             type="button"
             onClick={() => signIn()}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+            className="rounded bg-cyan-500 px-4 py-2 text-white hover:bg-blue-600"
           >
             Sign In
           </button>
