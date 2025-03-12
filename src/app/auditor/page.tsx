@@ -14,13 +14,6 @@ export default function Auditor() {
   return (
     <main>
       <Container id="landing-page" fluid className="mt-20 py-3">
-        <h1>
-          Welcome,
-          <br />
-          {session?.user?.email}
-        </h1>
-        <p>You now have access to protected auditor content.</p>
-        <br />
         <h1 className="center">Mockup Page for Auditor Home Page</h1>
         <div className="center">
           <a href="/1">
@@ -539,6 +532,9 @@ export default function Auditor() {
               </tbody>
             </table>
           </div>
+          <p className="text-white">
+            {session?.user?.email}
+          </p>
         </div>
       </Container>
     </main>
