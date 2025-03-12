@@ -5,7 +5,7 @@ import authOptions from '@/lib/authOptions';
 import { auditorProtectedPage } from '@/lib/page-protection';
 import { redirect } from 'next/navigation';
 import { Subrole } from '@prisma/client';
-import AuditorTable from '@/components/AuditorTable';
+import EditAuditorTable from '@/components/EditAuditorTable';
 
 type FinanceRecord = {
   year: number;
@@ -20,7 +20,7 @@ type RowsConfig = {
   section?: string;
 };
 
-export default async function Auditor(): Promise<JSX.Element> {
+export default async function AuditorEdit(): Promise<JSX.Element> {
   // Apply page protections
   const session = await getServerSession(authOptions) as {
     user: {
@@ -48,11 +48,6 @@ export default async function Auditor(): Promise<JSX.Element> {
   const finances: FinanceRecord[] = await prisma.auditedFinances.findMany();
   // Sort the results by year (ascending)
   finances.sort((a, b) => a.year - b.year);
-
-  // Display Only Years With Data. Note: Need to find a way to display when there is more.
-  const yearsToDisplay: number[] = [
-    2022, 2023, 2024,
-  ];
 
   // Create a lookup object so we can easily access finance data by year.
   const financesByYear: Record<number, FinanceRecord> = {};
@@ -136,19 +131,10 @@ export default async function Auditor(): Promise<JSX.Element> {
   return (
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
-        <span className="center text-2xl">Auditor Dashboard | Table</span>
-        <a href="/auditor/audit-edit">
-          <button
-            type="button"
-            className="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800"
-          >
-            Edit
-          </button>
-        </a>
-        <AuditorTable
+        <span className="center text-2xl">Edit Data</span>
+        <EditAuditorTable
           financesByYear={financesByYear}
           rows={rows}
-          yearsToDisplay={yearsToDisplay}
         />
       </Container>
     </main>
