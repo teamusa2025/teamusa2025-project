@@ -90,7 +90,7 @@ const ScenarioOne: React.FC = () => {
           </span>
         </label>
       </div>
-      
+
       <InputField label="Present Value" id="presentValue" value={presentValue} onChange={setPresentValue} />
       <InputField label="Interest Rate (%)" id="interestRate" value={interestRate} onChange={setInterestRate} />
       <InputField label="Term (in years)" id="termYears" value={termYears} onChange={setTermYears} />
