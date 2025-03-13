@@ -1,3 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* You can remove the following lines as they are not valid CSS at-rules */
+/* @plugin "flowbite/plugin"; */
+/* @source "../node_modules/flowbite"; */
+
+/* Custom theme colors should be defined in tailwind.config.js */
