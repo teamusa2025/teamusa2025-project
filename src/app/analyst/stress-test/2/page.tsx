@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 
 const ScenarioTwo: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [stressEffect, setStressEffect] = useState<boolean>(false);
+  const scenarioToggle = 'stress-effect-toggle';
   const [percentage, setPercentage] = useState<number>(0);
   const [projections, setProjections] = useState<Array<{ fiscalYear: number, totalRevenue: number,
     decreaseInRevenue: number }>>([]);
@@ -32,10 +35,30 @@ const ScenarioTwo: React.FC = () => {
   };
 
   return (
-    <div className=" mx-auto mt-6 max-w-4xl p-6">
+    <div className=" mx-auto max-w-4xl">
       {/* Header */}
       <h1 className="mt-20 text-center text-3xl font-bold">Scenario #2</h1>
       <h2 className="mb-8 text-center text-2xl">60% sustained drop in return rate of Investment</h2>
+      <hr className="solid" />
+
+      {/* Toggle Switch */}
+      <div>
+        <label htmlFor={scenarioToggle} className="inline-flex cursor-pointer items-center">
+          <input id={scenarioToggle} type="checkbox" value="" className="peer sr-only" />
+          <div className="after:top after:start after:content peer relative h-6 w-11 rounded-full
+          bg-gray-200 after:absolute after:size-5 after:rounded-full after:border after:border-gray-300
+          after:bg-white after:transition-all peer-checked:bg-blue-600 peer-checked:after:translate-x-full
+          peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
+          dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800
+          rtl:peer-checked:after:-translate-x-full"
+          />
+          <span
+            className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Stress Effect
+          </span>
+        </label>
+      </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div>
@@ -56,38 +79,37 @@ const ScenarioTwo: React.FC = () => {
             placeholder="Enter percentage"
           />
         </div>
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">Fiscal Year</th>
-              <th scope="col" className="px-6 py-3">Total Revenues</th>
-              <th scope="col" className="px-6 py-3">Decreases in Revenues</th>
-            </tr>
-          </thead>
-          <tbody>
-            {projections.map((projection) => (
-              <tr
-                key={projection.fiscalYear}
-                className="border-b border-gray-200 bg-white hover:bg-gray-50
-              dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-              >
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {projection.fiscalYear}
-                </td>
-                <td className="whitespace-nowrap px-6 py-1 font-medium text-gray-900 dark:text-white">
-                  $
-                  {projection.totalRevenue.toLocaleString()}
-                </td>
-                <td className="border-b border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800
-                dark:hover:bg-gray-600"
-                >
-                  $
-                  {projection.decreaseInRevenue.toLocaleString()}
-                </td>
+        <div className="overflow-hidden rounded-lg">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-blue-500 text-xs uppercase text-white">
+              <tr>
+                <th scope="col" className="px-6 py-3">Fiscal Year</th>
+                <th scope="col" className="px-6 py-3">Total Revenues</th>
+                <th scope="col" className="px-6 py-3">Decreases in Revenues</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {projections.map((projection) => (
+                <tr
+                  key={projection.fiscalYear}
+                  className="border-b border-gray-200 bg-blue-100 hover:bg-blue-200"
+                >
+                  <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                    {projection.fiscalYear}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                    $
+                    {projection.totalRevenue.toLocaleString()}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                    $
+                    {projection.decreaseInRevenue.toLocaleString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

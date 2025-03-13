@@ -70,6 +70,7 @@ const ScenarioOne: React.FC = () => {
     <div className="mx-auto mt-6 max-w-4xl p-6">
       <h1 className="mt-20 text-center text-3xl font-bold">Scenario #1</h1>
       <h2 className="mb-8 text-center text-2xl">30% Drop in return rate of investment</h2>
+      <hr className="solid" />
 
       {/* Toggle Switch */}
       <div>
@@ -95,32 +96,32 @@ const ScenarioOne: React.FC = () => {
       <InputField label="Term (in years)" id="termYears" value={termYears} onChange={setTermYears} />
       <InputField label="Contribution each year" id="contribution" value={contribution} onChange={setContribution} />
 
-      <div className="m-4 overflow-x-auto">
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+      <div className="m-4 overflow-x-auto rounded-lg">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-blue-500 text-xs uppercase text-white">
             <tr>
               {['Year', 'Balance', 'Yearly Contribution', 'Interest Earned', 'Interest + Balance'].map((header) => (
-                <th key={header} className="px-6 py-3">{header}</th>
+                <th scope="col" key={header} className="px-6 py-3">{header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {projections.map((projection) => (
-              <tr key={projection.fiscalYear} className="border-b border-gray-200 bg-white hover:bg-gray-50">
+              <tr key={projection.fiscalYear} className="border-gray-20 border-b bg-blue-100 hover:bg-blue-200">
                 <td className="px-6 py-4 font-medium text-gray-900">{projection.fiscalYear}</td>
-                <td className="px-6 py-4">
+                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   $
                   {projection.balance}
                 </td>
-                <td className="px-6 py-4">
+                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   $
                   {projection.yearlyContribution}
                 </td>
-                <td className="px-6 py-4">
+                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   $
                   {projection.interestEarned}
                 </td>
-                <td className="px-6 py-4">
+                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   $
                   {projection.interestPlusBalance}
                 </td>
