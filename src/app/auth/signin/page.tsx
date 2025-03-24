@@ -73,8 +73,8 @@ const SignIn: React.FC = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full
-                  rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900
+                  className="block w-full rounded-lg border
+                  border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600
                   dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
                   dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   placeholder="name@example.com"
@@ -93,8 +93,8 @@ const SignIn: React.FC = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="focus:ring-primary-600 focus:border-primary-600 block w-full
-                  rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900
+                  className="block w-full rounded-lg border
+                  border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600
                   dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400
                   dark:focus:border-blue-500 dark:focus:ring-blue-500"
                   required
@@ -142,7 +142,7 @@ const SignIn: React.FC = () => {
                 {' '}
                 <a
                   href="/auth/request-access"
-                  className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
+                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Request access
                 </a>
