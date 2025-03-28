@@ -2,7 +2,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
   const currentUsername = session?.user?.username;
   const userSubrole = session?.user?.subrole?.toLowerCase();
   const dashboardUrl = userSubrole ? `/${userSubrole}` : '/';
-  const [isStressTestOpen, setStressTestOpen] = useState<boolean>(false);
+  // const [isStressTestOpen, setStressTestOpen] = useState<boolean>(false);
 
   // Container variants for the dropdown
   const containerVariants = {
@@ -33,6 +33,19 @@ const Sidebar: React.FC = () => {
     hidden: { opacity: 0, y: -10 },
     visible: { opacity: 1, y: 0 },
   };
+
+  // Load state from localStorage for dropdown menu
+  const [isStressTestOpen, setStressTestOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('stressTestOpen') === 'true';
+    }
+    return false;
+  });
+
+  // Update localStorage whenever the state changes
+  useEffect(() => {
+    localStorage.setItem('stressTestOpen', isStressTestOpen.toString());
+  }, [isStressTestOpen]);
 
   return (
     <aside
@@ -127,7 +140,7 @@ const Sidebar: React.FC = () => {
           <div>
             <button
               type="button"
-              onClick={() => setStressTestOpen(!isStressTestOpen)}
+              onClick={() => setStressTestOpen((prev) => !prev)}
               className="group flex w-full items-center rounded-md px-3 py-2 text-sm
                 font-medium text-gray-300 no-underline transition-colors hover:bg-gray-700
                 hover:text-white"
