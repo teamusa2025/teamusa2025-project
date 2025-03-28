@@ -62,7 +62,7 @@ const NavBar: React.FC = () => {
               shadow-lg dark:border-gray-600 dark:bg-gray-700"
               >
                 <div className="border-b px-4 py-3">
-                  <span className="block text-sm font-medium text-gray-900 dark:text-white">
+                  <span className="block text-sm font-medium text-gray-900 dark:text-black">
                     {currentUsername || 'Unknown User'}
                   </span>
                   <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
@@ -74,7 +74,7 @@ const NavBar: React.FC = () => {
                     <a
                       href="/auth/change-password"
                       className="block px-4 py-2 text-sm text-gray-700 no-underline hover:bg-gray-100
-                      dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-black"
                     >
                       Change Password
                     </a>
@@ -84,7 +84,7 @@ const NavBar: React.FC = () => {
                       type="button"
                       onClick={() => signOut({ callbackUrl: '/', redirect: true })}
                       className="block w-full px-4 py-2 text-left text-sm text-gray-700 no-underline
-                      hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-black"
                     >
                       Sign out
                     </button>
@@ -97,7 +97,8 @@ const NavBar: React.FC = () => {
           <button
             type="button"
             onClick={() => signIn()}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+            className="rounded bg-cyan-500 px-4 py-2 text-white hover:bg-blue-600"
+
           >
             Sign In
           </button>
