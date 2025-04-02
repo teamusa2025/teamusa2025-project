@@ -246,7 +246,7 @@ export default async function Analyst(): Promise<JSX.Element> {
   return (
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
-        <span className="center text-2xl">Analyst Dashboard | Table</span>
+        <span className="center text-2xl">Analyst Dashboard | Overview</span>
         <FinancialLineChart
           financesByYear={financesByYear}
           yearsToDisplay={yearsToDisplay}
