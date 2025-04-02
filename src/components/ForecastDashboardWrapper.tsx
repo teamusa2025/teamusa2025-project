@@ -57,11 +57,11 @@ export default function ForecastDashboardWrapper({
 
   return (
     <>
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 flex pb-4">
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 focus:outline-none
+          className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700 focus:outline-none
           focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
           Edit Forecast Settings
