@@ -35,6 +35,7 @@ interface Projection {
 
 const ScenarioOne: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'scenario1' | 'scenario2'>('scenario1');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stressEffect, setStressEffect] = useState<boolean>(false);
   const scenarioToggle = 'stress-effect-toggle';
 
@@ -121,7 +122,7 @@ const ScenarioOne: React.FC = () => {
             Stress Effect
           </span>
         </label>
-    </div>
+      </div>
 
       {/* Tab Navigation */}
       <div className="my-4 flex border-b">
@@ -192,7 +193,12 @@ const ScenarioOne: React.FC = () => {
           <InputField label="Present Value" id="presentValue2" value={presentValue2} onChange={setPresentValue2} />
           <InputField label="Interest Rate (%)" id="interestRate2" value={interestRate2} onChange={setInterestRate2} />
           <InputField label="Term (in years)" id="termYears2" value={termYears2} onChange={setTermYears2} />
-          <InputField label="Contribution each year" id="contribution2" value={contribution2} onChange={setContribution2} />
+          <InputField
+            label="Contribution each year"
+            id="contribution2"
+            value={contribution2}
+            onChange={setContribution2}
+          />
 
           <div className="m-4 overflow-x-auto rounded-lg">
             <table className="w-full text-left text-sm">
