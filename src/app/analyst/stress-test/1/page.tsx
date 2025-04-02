@@ -34,22 +34,30 @@ interface Projection {
 }
 
 const ScenarioOne: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeTab, setActiveTab] = useState<'scenario1' | 'scenario2'>('scenario1');
   const [stressEffect, setStressEffect] = useState<boolean>(false);
   const scenarioToggle = 'stress-effect-toggle';
-  const [presentValue, setPresentValue] = useState<number>(0);
-  const [interestRate, setInterestRate] = useState<number>(0);
-  const [termYears, setTermYears] = useState<number>(0);
-  const [contribution, setContribution] = useState<number>(0);
 
-  const projections = useMemo<Projection[]>(() => {
-    if (presentValue <= 0 || termYears <= 0) return [];
+  // Part 1
+  const [presentValue1, setPresentValue1] = useState<number>(0);
+  const [interestRate1, setInterestRate1] = useState<number>(0);
+  const [termYears1, setTermYears1] = useState<number>(0);
+  const [contribution1, setContribution1] = useState<number>(0);
 
-    let balance = presentValue;
-    const rate = interestRate / 100;
-    const yearlyContribution = contribution;
+  // Part 2
+  const [presentValue2, setPresentValue2] = useState<number>(0);
+  const [interestRate2, setInterestRate2] = useState<number>(0);
+  const [termYears2, setTermYears2] = useState<number>(0);
+  const [contribution2, setContribution2] = useState<number>(0);
 
-    return Array.from({ length: termYears }, (_, year) => {
+  const projections1 = useMemo<Projection[]>(() => {
+    if (presentValue1 <= 0 || termYears1 <= 0) return [];
+
+    let balance = presentValue1;
+    const rate = interestRate1 / 100;
+    const yearlyContribution = contribution1;
+
+    return Array.from({ length: termYears1 }, (_, year) => {
       const interestEarned = balance * rate;
       const totalWithInterest = balance + interestEarned;
 
@@ -64,7 +72,31 @@ const ScenarioOne: React.FC = () => {
       balance = totalWithInterest + yearlyContribution;
       return projection;
     });
-  }, [presentValue, interestRate, termYears, contribution]);
+  }, [presentValue1, interestRate1, termYears1, contribution1]);
+
+  const projections2 = useMemo<Projection[]>(() => {
+    if (presentValue2 <= 0 || termYears2 <= 0) return [];
+
+    let balance = presentValue2;
+    const rate = interestRate2 / 100;
+    const yearlyContribution = contribution2;
+
+    return Array.from({ length: termYears2 }, (_, year) => {
+      const interestEarned = balance * rate;
+      const totalWithInterest = balance + interestEarned;
+
+      const projection: Projection = {
+        fiscalYear: year + 1,
+        balance: balance.toFixed(2),
+        yearlyContribution: yearlyContribution > 0 ? yearlyContribution.toFixed(2) : '',
+        interestEarned: interestEarned.toFixed(2),
+        interestPlusBalance: totalWithInterest.toFixed(2),
+      };
+
+      balance = totalWithInterest + yearlyContribution;
+      return projection;
+    });
+  }, [presentValue2, interestRate2, termYears2, contribution2]);
 
   return (
     <div className="mx-auto mt-6 max-w-4xl p-6">
@@ -89,47 +121,115 @@ const ScenarioOne: React.FC = () => {
             Stress Effect
           </span>
         </label>
-      </div>
+    </div>
 
-      <InputField label="Present Value" id="presentValue" value={presentValue} onChange={setPresentValue} />
-      <InputField label="Interest Rate (%)" id="interestRate" value={interestRate} onChange={setInterestRate} />
-      <InputField label="Term (in years)" id="termYears" value={termYears} onChange={setTermYears} />
-      <InputField label="Contribution each year" id="contribution" value={contribution} onChange={setContribution} />
-
-      <div className="m-4 overflow-x-auto rounded-lg">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-blue-500 text-xs uppercase text-white">
-            <tr>
-              {['Year', 'Balance', 'Yearly Contribution', 'Interest Earned', 'Interest + Balance'].map((header) => (
-                <th scope="col" key={header} className="px-6 py-3">{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {projections.map((projection) => (
-              <tr key={projection.fiscalYear} className="border-gray-20 border-b bg-blue-100 hover:bg-blue-200">
-                <td className="px-6 py-4 font-medium text-gray-900">{projection.fiscalYear}</td>
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  $
-                  {projection.balance}
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  $
-                  {projection.yearlyContribution}
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  $
-                  {projection.interestEarned}
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                  $
-                  {projection.interestPlusBalance}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Tab Navigation */}
+      <div className="my-4 flex border-b">
+        {/* eslint-disable-next-line react/button-has-type */}
+        <button
+          className={`px-4 py-2 ${activeTab === 'scenario1' ? 'border-b-2 border-blue-500 font-bold' : ''}`}
+          onClick={() => setActiveTab('scenario1')}
+        >
+          Scenario 1
+        </button>
+        {/* eslint-disable-next-line react/button-has-type */}
+        <button
+          className={`px-4 py-2 ${activeTab === 'scenario2' ? 'border-b-2 border-blue-500 font-bold' : ''}`}
+          onClick={() => setActiveTab('scenario2')}
+        >
+          Scenario 2
+        </button>
       </div>
+      {activeTab === 'scenario1' ? (
+        <div>
+          <InputField label="Present Value" id="presentValue1" value={presentValue1} onChange={setPresentValue1} />
+          <InputField label="Interest Rate (%)" id="interestRate1" value={interestRate1} onChange={setInterestRate1} />
+          <InputField label="Term (in years)" id="termYears1" value={termYears1} onChange={setTermYears1} />
+          <InputField
+            label="Contribution each year"
+            id="contribution1"
+            value={contribution1}
+            onChange={setContribution1}
+          />
+
+          <div className="m-4 overflow-x-auto rounded-lg">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-blue-500 text-xs uppercase text-white">
+                <tr>
+                  {['Year', 'Balance', 'Yearly Contribution', 'Interest Earned', 'Interest + Balance'].map((header) => (
+                    <th scope="col" key={header} className="px-6 py-3">{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {projections1.map((projection) => (
+                  <tr key={projection.fiscalYear} className="border-gray-20 border-b bg-blue-100 hover:bg-blue-200">
+                    <td className="px-6 py-4 font-medium text-gray-900">{projection.fiscalYear}</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.balance}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.yearlyContribution}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.interestEarned}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.interestPlusBalance}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <InputField label="Present Value" id="presentValue2" value={presentValue2} onChange={setPresentValue2} />
+          <InputField label="Interest Rate (%)" id="interestRate2" value={interestRate2} onChange={setInterestRate2} />
+          <InputField label="Term (in years)" id="termYears2" value={termYears2} onChange={setTermYears2} />
+          <InputField label="Contribution each year" id="contribution2" value={contribution2} onChange={setContribution2} />
+
+          <div className="m-4 overflow-x-auto rounded-lg">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-blue-500 text-xs uppercase text-white">
+                <tr>
+                  {['Year', 'Balance', 'Yearly Contribution', 'Interest Earned', 'Interest + Balance'].map((header) => (
+                    <th scope="col" key={header} className="px-6 py-3">{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {projections2.map((projection) => (
+                  <tr key={projection.fiscalYear} className="border-gray-20 border-b bg-blue-100 hover:bg-blue-200">
+                    <td className="px-6 py-4 font-medium text-gray-900">{projection.fiscalYear}</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.balance}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.yearlyContribution}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.interestEarned}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                      $
+                      {projection.interestPlusBalance}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
