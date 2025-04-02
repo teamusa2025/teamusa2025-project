@@ -4,8 +4,8 @@ import React from 'react';
 import { LineChart } from '@mui/x-charts';
 
 export type ForecastConfig = Record<
-  string,
-  { forecastType: 'average' | 'multiplier'; multiplier: number }
+string,
+{ forecastType: 'average' | 'multiplier'; multiplier: number }
 >;
 
 export type FinanceRecord = {
@@ -69,11 +69,10 @@ export default function FinancialLineChart({
       }
       let forecast = 0;
       if (config.forecastType === 'average') {
-        forecast =
-          (getValue(key, year - 3) +
-            getValue(key, year - 2) +
-            getValue(key, year - 1)) /
-          3;
+        forecast = (getValue(key, year - 3)
+            + getValue(key, year - 2)
+            + getValue(key, year - 1))
+          / 3;
       } else {
         forecast = getValue(key, year - 1) * (1 + config.multiplier);
       }
@@ -86,8 +85,7 @@ export default function FinancialLineChart({
       case 'grossProfit': {
         // Gross Profit = Revenue - (Cost of Contracting + Overhead)
         const revenue = getValue('revenue', year);
-        const cost =
-          getValue('costOfContracting', year) + getValue('overhead', year);
+        const cost = getValue('costOfContracting', year) + getValue('overhead', year);
         const gp = revenue - cost;
         valueCache[key][year] = gp;
         return gp;
@@ -110,7 +108,7 @@ export default function FinancialLineChart({
     <div style={{ marginTop: '2rem' }}>
       <h3>Financial Metrics Over Time</h3>
       <LineChart
-        xAxis={[{ id: 'x-axis', dataKey: 'year', scale: 'band' }]}
+        xAxis={[{ id: 'x-axis', dataKey: 'year' }]}
         dataset={chartData}
         series={[
           { dataKey: 'revenue' },
