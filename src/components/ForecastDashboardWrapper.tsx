@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-
 'use client';
 
 import { useState } from 'react';
@@ -79,8 +77,7 @@ export default function ForecastDashboardWrapper({
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-4
-          focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
           Edit Forecast Settings
         </button>
@@ -97,14 +94,14 @@ export default function ForecastDashboardWrapper({
               checked={active}
               onChange={() => toggleStressTest(index)}
             />
-            <div className="peer relative h-6 w-11 rounded-full bg-gray-200 peer-checked:bg-green-500
-            peer-focus:outline-none
-            peer-focus:ring-4 peer-focus:ring-green-300 dark:bg-gray-700 dark:peer-focus:ring-green-800"
-            >
-              <span className="absolute left-0.5 top-0.5 size-5 rounded-full border border-gray-300 bg-white
-              transition-transform peer-checked:translate-x-full"
-              />
-            </div>
+            <div
+              className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-1/2 
+              after:size-5 after:-translate-y-1/2
+              after:rounded-full
+              after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-500 peer-checked:after:translate-x-full 
+              peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:border-gray-600 dark:bg-gray-700
+              dark:peer-focus:ring-green-800"
+            />
             <span className="ml-3 text-sm font-medium text-gray-900">{`Stress Test ${index + 1}`}</span>
           </label>
         ))}
