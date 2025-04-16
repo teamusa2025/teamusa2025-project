@@ -31,10 +31,11 @@ export default function EditAuditorTable({
   rows,
 }: AuditorTableProps): JSX.Element {
   const [currentYear, setYear] = useState<'2022' | '2023' | '2024'>('2022');
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   function yearSelect(e: ChangeEvent<HTMLSelectElement>) {
     setYear(e.target.value as '2022' | '2023' | '2024');
+    reset(financesByYear[currentYear]);
   }
 
   const onSubmit = async (data: any) => {
