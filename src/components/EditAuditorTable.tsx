@@ -30,23 +30,24 @@ export default function EditAuditorTable({
   financesByYear,
   rows,
 }: AuditorTableProps): JSX.Element {
-  // Local function to format values based on formatType.
   const [currentYear, setYear] = useState<'2022' | '2023' | '2024'>('2022');
-  const { handleSubmit } = useForm();
-  function formatValue(
-    formatType: 'number' | 'percentage' | undefined,
-    value: number,
-  ): string {
-    if (formatType === 'number') {
-      return Math.round(value).toLocaleString();
-    }
-    if (formatType === 'percentage') {
-      return `${parseFloat(value.toFixed(1))}%`;
-    }
-    return String(value);
+  const { handleSubmit, register } = useForm();
+
+  function yearSelect(e: ChangeEvent<HTMLSelectElement>) {
+    setYear(e.target.value as '2022' | '2023' | '2024');
   }
 
-  // Use a counter to generate unique keys for spacer rows.
+  const onSubmit = async (data: any) => {
+    const formattedData = {
+      year: parseInt(currentYear, 10),
+      ...Object.fromEntries(
+        Object.entries(data).map(([key, val]) => [key, parseFloat(val as string)]),
+      ),
+    };
+    console.log('Submitting:', formattedData);
+    await saveAuditedFinances(formattedData);
+  };
+
   let spacerRowCounter = 0;
   function getRowKey(row: Row): string {
     if (row.spacer) {
@@ -59,22 +60,18 @@ export default function EditAuditorTable({
     return 'row-unknown';
   }
 
-  // Used when Changing Years
-  // function changeYear(rowKey: string): number {
-  //  return financesByYear[currentYear][rowKey];
-  // }
-
-  function yearSelect(e: ChangeEvent<HTMLSelectElement>) {
-    setYear(e.target.value as '2022' | '2023' | '2024');
+  function formatValue(
+    formatType: 'number' | 'percentage' | undefined,
+    value: number,
+  ): string {
+    if (formatType === 'number') {
+      return Math.round(value).toLocaleString();
+    }
+    if (formatType === 'percentage') {
+      return `${parseFloat(value.toFixed(1))}%`;
+    }
+    return String(value);
   }
-
-  const onSubmit = async (data: any) => {
-    const formattedData = {
-      year: currentYear,
-      ...data,
-    };
-    await saveAuditedFinances(formattedData);
-  };
 
   return (
     <>
@@ -89,45 +86,46 @@ export default function EditAuditorTable({
           <option value="2023">2023</option>
           <option value="2024">2024</option>
         </select>
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Financial Metrics
-              </th>
-              <th key={currentYear} scope="col" className="px-6 py-3">
-                {currentYear}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => {
-              const rowKey = getRowKey(row);
-              if (row.spacer) {
-                return (
-                  <tr key={rowKey} className="bg-white dark:bg-gray-800">
-                    <th
-                      scope="row"
-                      className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-                      aria-label="extra empty cells"
-                    />
-                  </tr>
-                );
-              }
-              if (row.section) {
-                return (
-                  <tr key={rowKey} className="bg-white dark:bg-gray-800">
-                    <th
-                      scope="row"
-                      colSpan={currentYear.length + 1}
-                      className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white"
-                    >
-                      {row.section}
-                    </th>
-                  </tr>
-                );
-              }
-              if (row.added) {
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Financial Metrics
+                </th>
+                <th key={currentYear} scope="col" className="px-6 py-3">
+                  {currentYear}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => {
+                const rowKey = getRowKey(row);
+                if (row.spacer) {
+                  return (
+                    <tr key={rowKey} className="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                        aria-label="extra empty cells"
+                      />
+                    </tr>
+                  );
+                }
+                if (row.section) {
+                  return (
+                    <tr key={rowKey} className="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        colSpan={2}
+                        className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white"
+                      >
+                        {row.section}
+                      </th>
+                    </tr>
+                  );
+                }
                 return (
                   <tr
                     key={rowKey}
@@ -140,43 +138,32 @@ export default function EditAuditorTable({
                       {row.label}
                     </th>
                     <td key={`${rowKey}-${currentYear}`} className="px-6 py-4">
-                      {formatValue(row.formatType, financesByYear[currentYear][row.key!])}
+                      {row.added ? (
+                        formatValue(
+                          row.formatType,
+                          financesByYear[currentYear][row.key!],
+                        )
+                      ) : (
+                        <input
+                          type="number"
+                          {...register(row.key!)}
+                          defaultValue={financesByYear[currentYear][row.key!]}
+                          className="block w-full rounded-lg border p-2.5 text-gray-900"
+                        />
+                      )}
                     </td>
                   </tr>
                 );
-              }
-              return (
-                <tr
-                  key={rowKey}
-                  className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <th
-                    scope="row"
-                    className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-                  >
-                    {row.label}
-                  </th>
-                  <td key={`${rowKey}-${currentYear}`} className="px-6 py-4">
-                    <form className="mx-auto max-w-sm" onSubmit={handleSubmit(onSubmit)}>
-                      <div className="mb-5">
-                        {/* eslint-disable-next-line max-len */}
-                        <label htmlFor="number" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white" />
-                        <input
-                          type="number"
-                          id="number"
-                          className="block w-full rounded-lg border p-2.5 text-gray-900"
-                          placeholder={formatValue(row.formatType, financesByYear[currentYear][row.key!])}
-                          required
-                        />
-                      </div>
-                    </form>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <button type="submit" className="mt-4 rounded bg-blue-500 px-4 py-2 text-white">Save</button>
+              })}
+            </tbody>
+          </table>
+          <button
+            type="submit"
+            className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+          >
+            Save
+          </button>
+        </form>
       </div>
     </>
   );

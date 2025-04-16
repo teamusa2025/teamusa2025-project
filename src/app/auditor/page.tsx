@@ -50,9 +50,7 @@ export default async function Auditor(): Promise<JSX.Element> {
   finances.sort((a, b) => a.year - b.year);
 
   // Display Only Years With Data. Note: Need to find a way to display when there is more.
-  const yearsToDisplay: number[] = [
-    2022, 2023, 2024,
-  ];
+  const yearsToDisplay: number[] = [...new Set(finances.map((item) => item.year))].sort();
 
   // Create a lookup object so we can easily access finance data by year.
   const financesByYear: Record<number, FinanceRecord> = {};
