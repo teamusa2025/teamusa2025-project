@@ -96,7 +96,6 @@ export default function FinancialLineChart({
     }
   };
 
-  // Prepare chart data: one entry per year with the key metrics
   const chartData = yearsToDisplay.map((year) => ({
     year,
     revenue: getValue('revenue', year),
