@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { LineChart } from '@mui/x-charts';
 
 export type ForecastConfig = Record<
@@ -10,7 +10,7 @@ string,
 
 export type FinanceRecord = {
   year: number;
-  [key: string]: any;
+  [key: string]: number;
 };
 
 type FinancialLineChartProps = {
@@ -24,84 +24,101 @@ export default function FinancialLineChart({
   yearsToDisplay,
   forecastConfig,
 }: FinancialLineChartProps): JSX.Element {
-  // Define which fields are treated as base fields (forecasted)
-  const baseFields = new Set([
-    'revenue',
-    'netSales',
-    'costOfContracting',
-    'overhead',
-  ]);
+  // All base fields that support forecasting
+  const baseFields = useMemo(
+    () => new Set([
+      'revenue',
+      'netSales',
+      'costOfContracting',
+      'overhead',
+      'salariesAndBenefits',
+      'rentAndOverhead',
+      'depreciationAndAmortization',
+      'interest',
+      'interestIncome',
+      'interestExpense',
+      'gainLossOnDisposalOfAssets',
+      'otherIncomeExpense',
+      'incomeTaxes',
+      'cashEquivalents',
+      'accountsReceivable',
+      'inventory',
+      'propertyPlantAndEquipment',
+      'investment',
+      'accountsPayable',
+      'debtService',
+      'taxesPayable',
+      'loansPayable',
+      'equityCapital',
+      'retainedEarnings',
+    ]),
+    [],
+  );
 
-  // Simple cache to avoid redundant recursive calculations
-  const valueCache: Record<string, Record<number, number>> = {};
+  // Memoize chart data so it's recomputed when inputs change
+  const chartData = useMemo(() => {
+    // Caches for computed values
+    const valueCache: Record<string, Record<number, number>> = {};
 
-  const getDirectValue = (key: string, year: number): number | undefined => {
-    if (financesByYear[year] && financesByYear[year][key] !== undefined) {
-      return financesByYear[year][key];
-    }
-    return undefined;
-  };
+    const getDirect = (key: string, year: number): number | undefined => financesByYear[year]?.[key];
 
-  // Recursive function that mimics the table’s getValue logic
-  const getValue = (key: string, year: number): number => {
-    if (!valueCache[key]) {
-      valueCache[key] = {};
-    }
-    if (valueCache[key][year] !== undefined) return valueCache[key][year];
+    const getValue = (key: string, year: number): number => {
+      // init cache
+      if (!valueCache[key]) valueCache[key] = {};
+      if (valueCache[key][year] !== undefined) return valueCache[key][year];
 
-    // Use direct value if available
-    const direct = getDirectValue(key, year);
-    if (direct !== undefined) {
-      valueCache[key][year] = direct;
-      return direct;
-    }
-
-    // If key is a base field, compute forecast using the config
-    if (baseFields.has(key)) {
-      const config = forecastConfig[key] || {
-        forecastType: 'average',
-        multiplier: 1.5,
-      };
-      // For the first year (or earlier) return 0 if no direct data
-      if (year <= yearsToDisplay[0]) {
-        valueCache[key][year] = 0;
-        return 0;
+      // direct data
+      const direct = getDirect(key, year);
+      if (direct !== undefined) {
+        valueCache[key][year] = direct;
+        return direct;
       }
-      let forecast = 0;
-      if (config.forecastType === 'average') {
-        forecast = (getValue(key, year - 3)
-            + getValue(key, year - 2)
-            + getValue(key, year - 1))
-          / 3;
-      } else {
-        forecast = getValue(key, year - 1) * (1 + config.multiplier);
-      }
-      valueCache[key][year] = forecast;
-      return forecast;
-    }
 
-    // Computed fields
-    switch (key) {
-      case 'grossProfit': {
-        // Gross Profit = Revenue - (Cost of Contracting + Overhead)
-        const revenue = getValue('revenue', year);
-        const cost = getValue('costOfContracting', year) + getValue('overhead', year);
-        const gp = revenue - cost;
-        valueCache[key][year] = gp;
-        return gp;
+      // forecasted base fields
+      if (baseFields.has(key)) {
+        const cfg = forecastConfig[key] || {
+          forecastType: 'average',
+          multiplier: 0,
+        };
+        let result = 0;
+        if (cfg.forecastType === 'average') {
+          // average of past three years
+          const years = [year - 3, year - 2, year - 1];
+          const sum = years.reduce((sumAcc, y) => sumAcc + getValue(key, y), 0);
+          result = sum / 3;
+        } else {
+          // multiplier percent
+          const prev = getValue(key, year - 1);
+          result = prev + prev * (cfg.multiplier / 100);
+        }
+        valueCache[key][year] = result;
+        return result;
       }
-      default:
-        valueCache[key][year] = 0;
-        return 0;
-    }
-  };
 
-  const chartData = yearsToDisplay.map((year) => ({
-    year,
-    revenue: getValue('revenue', year),
-    netSales: getValue('netSales', year),
-    grossProfit: getValue('grossProfit', year),
-  }));
+      // computed metrics
+      let computed = 0;
+      switch (key) {
+        case 'netSales':
+          computed = getValue('revenue', year);
+          break;
+        case 'grossProfit':
+          computed = getValue('revenue', year)
+            - (getValue('costOfContracting', year) + getValue('overhead', year));
+          break;
+        default:
+          computed = 0;
+      }
+      valueCache[key][year] = computed;
+      return computed;
+    };
+
+    return yearsToDisplay.map((year) => ({
+      year,
+      revenue: getValue('revenue', year),
+      netSales: getValue('netSales', year),
+      grossProfit: getValue('grossProfit', year),
+    }));
+  }, [financesByYear, yearsToDisplay, forecastConfig, baseFields]);
 
   return (
     <div style={{ marginTop: '2rem' }}>
@@ -110,9 +127,9 @@ export default function FinancialLineChart({
         xAxis={[{ id: 'x-axis', dataKey: 'year' }]}
         dataset={chartData}
         series={[
-          { dataKey: 'revenue' },
-          { dataKey: 'netSales' },
-          { dataKey: 'grossProfit' },
+          { dataKey: 'revenue', label: 'Revenue' },
+          { dataKey: 'netSales', label: 'Net Sales' },
+          { dataKey: 'grossProfit', label: 'Gross Profit' },
         ]}
         height={400}
       />

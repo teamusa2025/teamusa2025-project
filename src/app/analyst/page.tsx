@@ -6,7 +6,6 @@ import { analystProtectedPage } from '@/lib/page-protection';
 import { redirect } from 'next/navigation';
 import { Subrole } from '@prisma/client';
 import ForecastDashboardWrapper from '@/components/ForecastDashboardWrapper';
-import FinancialLineChart from '@/components/FinancialLineChart';
 
 export type RowsConfig = {
   label?: string;
@@ -247,20 +246,6 @@ export default async function Analyst(): Promise<JSX.Element> {
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
         <span className="center text-2xl">Analyst Dashboard | Overview</span>
-        <FinancialLineChart
-          financesByYear={financesByYear}
-          yearsToDisplay={yearsToDisplay}
-          forecastConfig={
-            // Either pass forecastConfig from a lifted state (preferred)
-            // or re-create the same default config logic here:
-            {
-              revenue: { forecastType: 'average', multiplier: 1.5 },
-              netSales: { forecastType: 'average', multiplier: 1.5 },
-              costOfContracting: { forecastType: 'average', multiplier: 1.5 },
-              overhead: { forecastType: 'average', multiplier: 1.5 },
-            }
-          }
-        />
         <ForecastDashboardWrapper
           financesByYear={financesByYear}
           rows={rows}
