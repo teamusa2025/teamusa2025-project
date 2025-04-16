@@ -3,6 +3,8 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
+import { saveAuditedFinances } from '@/lib/dbActions';
+import { useForm } from 'react-hook-form';
 
 interface FinancesByYear {
   [year: number]: {
@@ -16,6 +18,7 @@ interface Row {
   label?: string;
   key?: string;
   formatType?: 'number' | 'percentage';
+  added?: boolean;
 }
 
 interface AuditorTableProps {
@@ -29,6 +32,7 @@ export default function EditAuditorTable({
 }: AuditorTableProps): JSX.Element {
   // Local function to format values based on formatType.
   const [currentYear, setYear] = useState<'2022' | '2023' | '2024'>('2022');
+  const { handleSubmit } = useForm();
   function formatValue(
     formatType: 'number' | 'percentage' | undefined,
     value: number,
@@ -63,6 +67,14 @@ export default function EditAuditorTable({
   function yearSelect(e: ChangeEvent<HTMLSelectElement>) {
     setYear(e.target.value as '2022' | '2023' | '2024');
   }
+
+  const onSubmit = async (data: any) => {
+    const formattedData = {
+      year: currentYear,
+      ...data,
+    };
+    await saveAuditedFinances(formattedData);
+  };
 
   return (
     <>
@@ -115,6 +127,24 @@ export default function EditAuditorTable({
                   </tr>
                 );
               }
+              if (row.added) {
+                return (
+                  <tr
+                    key={rowKey}
+                    className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    <th
+                      scope="row"
+                      className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                    >
+                      {row.label}
+                    </th>
+                    <td key={`${rowKey}-${currentYear}`} className="px-6 py-4">
+                      {formatValue(row.formatType, financesByYear[currentYear][row.key!])}
+                    </td>
+                  </tr>
+                );
+              }
               return (
                 <tr
                   key={rowKey}
@@ -127,14 +157,14 @@ export default function EditAuditorTable({
                     {row.label}
                   </th>
                   <td key={`${rowKey}-${currentYear}`} className="px-6 py-4">
-                    <form className="mx-auto max-w-sm">
+                    <form className="mx-auto max-w-sm" onSubmit={handleSubmit(onSubmit)}>
                       <div className="mb-5">
                         {/* eslint-disable-next-line max-len */}
                         <label htmlFor="number" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white" />
                         <input
                           type="number"
                           id="number"
-                          className="block w-full rounded-lg border p-2.5 text-gray-900 dark:placeholder:text-gray-400"
+                          className="block w-full rounded-lg border p-2.5 text-gray-900"
                           placeholder={formatValue(row.formatType, financesByYear[currentYear][row.key!])}
                           required
                         />
@@ -146,6 +176,7 @@ export default function EditAuditorTable({
             })}
           </tbody>
         </table>
+        <button type="submit" className="mt-4 rounded bg-blue-500 px-4 py-2 text-white">Save</button>
       </div>
     </>
   );
