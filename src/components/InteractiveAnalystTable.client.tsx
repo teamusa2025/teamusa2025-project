@@ -61,41 +61,43 @@ export default function InteractiveAnalystTable({
   yearsToDisplay,
   forecastConfig,
 }: InteractiveAnalystTableProps): JSX.Element {
-  const averageCache: { [key: string]: { [year: number]: number } } = {};
-  const multiplierCache: { [key: string]: { [year: number]: number } } = {};
+  const averageCache: Record<string, Record<number, number>> = {};
+  const multiplierCache: Record<string, Record<number, number>> = {};
 
   function getDirectValue(key: string, year: number): number | undefined {
-    if (financesByYear[year] && financesByYear[year][key] !== undefined) {
-      return financesByYear[year][key];
-    }
-    return undefined;
+    return financesByYear[year]?.[key];
   }
 
   function getValue(key: string, year: number): number {
     const direct = getDirectValue(key, year);
-    if (direct !== undefined) return direct;
+    if (direct !== undefined) {
+      return direct;
+    }
 
     if (baseFields.has(key)) {
-      const config = forecastConfig[key] || {
+      const { forecastType, multiplier } = forecastConfig[key] || {
         forecastType: 'average',
-        multiplier: 1.5,
+        multiplier: 0,
       };
-      if (year <= yearsToDisplay[0]) return 0;
-      return config.forecastType === 'average'
-        ? computeAverage(key, year)
-        : computeMultiplier(key, year, config.multiplier);
+      if (forecastType === 'average') {
+        return computeAverage(key, year);
+      }
+      return computeMultiplier(key, year, multiplier);
     }
+
     return computeComputedValue(key, year);
   }
 
   function computeAverage(key: string, year: number): number {
-    if (!averageCache[key]) averageCache[key] = {};
-    if (averageCache[key][year] !== undefined) return averageCache[key][year];
-    if (year <= yearsToDisplay[0]) return 0;
-    const val1 = getValue(key, year - 3);
-    const val2 = getValue(key, year - 2);
-    const val3 = getValue(key, year - 1);
-    const avg = (val1 + val2 + val3) / 3;
+    if (!averageCache[key]) {
+      averageCache[key] = {};
+    }
+    if (averageCache[key][year] !== undefined) {
+      return averageCache[key][year];
+    }
+    const prevYears = [year - 3, year - 2, year - 1];
+    const sum = prevYears.reduce((acc, y) => acc + getValue(key, y), 0);
+    const avg = sum / 3;
     averageCache[key][year] = avg;
     return avg;
   }
@@ -103,13 +105,17 @@ export default function InteractiveAnalystTable({
   function computeMultiplier(
     key: string,
     year: number,
-    multiplier: number,
+    multiplierPercent: number,
   ): number {
-    if (!multiplierCache[key]) multiplierCache[key] = {};
-    if (multiplierCache[key][year] !== undefined) return multiplierCache[key][year];
-    if (year <= yearsToDisplay[0]) return 0;
+    if (!multiplierCache[key]) {
+      multiplierCache[key] = {};
+    }
+    if (multiplierCache[key][year] !== undefined) {
+      return multiplierCache[key][year];
+    }
     const prev = getValue(key, year - 1);
-    const result = prev * (1 + multiplier);
+    const rate = multiplierPercent / 100;
+    const result = prev + prev * rate;
     multiplierCache[key][year] = result;
     return result;
   }
@@ -135,9 +141,7 @@ export default function InteractiveAnalystTable({
         );
       case 'operatingExpensesPercent':
         return getValue('revenue', year)
-          ? (getValue('totalOperatingExpenses', year)
-              / getValue('revenue', year))
-              * 100
+          ? (getValue('totalOperatingExpenses', year) / getValue('revenue', year)) * 100
           : 0;
       case 'profitLossFromOperations':
         return (
@@ -146,9 +150,7 @@ export default function InteractiveAnalystTable({
         );
       case 'profitLossFromOperationsPercent':
         return getValue('revenue', year)
-          ? (getValue('profitLossFromOperations', year)
-              / getValue('revenue', year))
-              * 100
+          ? (getValue('profitLossFromOperations', year) / getValue('revenue', year)) * 100
           : 0;
       case 'totalOtherIncomeExpense':
         return (
@@ -159,9 +161,7 @@ export default function InteractiveAnalystTable({
         );
       case 'totalOtherIncomeExpensePercent':
         return getValue('revenue', year)
-          ? (getValue('totalOtherIncomeExpense', year)
-              / getValue('revenue', year))
-              * 100
+          ? (getValue('totalOtherIncomeExpense', year) / getValue('revenue', year)) * 100
           : 0;
       case 'incomeLossBeforeIncomeTaxes':
         return (
@@ -170,9 +170,7 @@ export default function InteractiveAnalystTable({
         );
       case 'preTaxIncomePercent':
         return getValue('revenue', year)
-          ? (getValue('incomeLossBeforeIncomeTaxes', year)
-              / getValue('revenue', year))
-              * 100
+          ? (getValue('incomeLossBeforeIncomeTaxes', year) / getValue('revenue', year)) * 100
           : 0;
       case 'totalCurrentAssets':
         return (
@@ -198,7 +196,8 @@ export default function InteractiveAnalystTable({
         );
       case 'totalLongTermLiabilities':
         return (
-          getValue('debtServiceLongTerm', year) + getValue('loansPayable', year)
+          getValue('debtServiceLongTerm', year)
+          + getValue('loansPayable', year)
         );
       case 'totalLiabilities':
         return (
@@ -207,7 +206,8 @@ export default function InteractiveAnalystTable({
         );
       case 'totalStockholdersEquity':
         return (
-          getValue('equityCapital', year) + getValue('retainedEarnings', year)
+          getValue('equityCapital', year)
+          + getValue('retainedEarnings', year)
         );
       case 'totalLiabilitiesAndEquity':
         return (
@@ -270,15 +270,13 @@ export default function InteractiveAnalystTable({
                     className="whitespace-nowrap px-3 py-2 font-medium text-gray-900 dark:text-white"
                     aria-label="extra empty cells"
                   />
-                  {Array.from({ length: yearsToDisplay.length - 1 }).map(
-                    (_, idx) => (
-                      <td
-                        aria-hidden="true"
-                        key={`${rowKey}-empty-${idx}`}
-                        className="px-3 py-2"
-                      />
-                    ),
-                  )}
+                  {yearsToDisplay.map((_, idx) => (
+                    <td
+                      aria-hidden="true"
+                      key={`${rowKey}-empty-${idx}`}
+                      className="px-3 py-2"
+                    />
+                  ))}
                 </tr>
               );
             }
