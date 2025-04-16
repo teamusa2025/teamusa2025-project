@@ -67,14 +67,14 @@ export default function AuditorTable({
     <>
       <div className="my-4" />
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+        <table className="w-half text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-1">
                 Financial Metrics
               </th>
               {yearsToDisplay.map((year) => (
-                <th key={year} scope="col" className="px-6 py-3">
+                <th key={year} scope="col" className="px-6 py-1">
                   {year}
                 </th>
               ))}
@@ -88,7 +88,7 @@ export default function AuditorTable({
                   <tr key={rowKey} className="bg-white dark:bg-gray-800">
                     <th
                       scope="row"
-                      className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                      className="whitespace-nowrap px-6 py-1 font-medium text-gray-900 dark:text-white"
                       aria-label="extra empty cells"
                     />
                     {extraEmptyCells(yearsToDisplay.length - 1)}
@@ -101,7 +101,7 @@ export default function AuditorTable({
                     <th
                       scope="row"
                       colSpan={yearsToDisplay.length + 1}
-                      className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white"
+                      className="whitespace-nowrap px-6 py-1 font-bold text-gray-900 dark:text-white"
                     >
                       {row.section}
                     </th>

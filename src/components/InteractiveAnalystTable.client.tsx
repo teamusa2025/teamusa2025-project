@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
 'use client';
@@ -248,11 +249,11 @@ export default function InteractiveAnalystTable({
       <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="p-3">
               Financial Metrics
             </th>
             {yearsToDisplay.map((year) => (
-              <th key={year} scope="col" className="px-6 py-3">
+              <th key={year} scope="col" className="px-3 py-1">
                 {year}
               </th>
             ))}
@@ -266,16 +267,15 @@ export default function InteractiveAnalystTable({
                 <tr key={rowKey} className="bg-white dark:bg-gray-800">
                   <th
                     scope="row"
-                    className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                    className="whitespace-nowrap px-3 py-2 font-medium text-gray-900 dark:text-white"
                     aria-label="extra empty cells"
                   />
                   {Array.from({ length: yearsToDisplay.length - 1 }).map(
                     (_, idx) => (
                       <td
                         aria-hidden="true"
-                        // eslint-disable-next-line react/no-array-index-key
                         key={`${rowKey}-empty-${idx}`}
-                        className="px-6 py-4"
+                        className="px-3 py-2"
                       />
                     ),
                   )}
@@ -288,7 +288,7 @@ export default function InteractiveAnalystTable({
                   <th
                     scope="row"
                     colSpan={yearsToDisplay.length + 1}
-                    className="whitespace-nowrap px-6 py-4 font-bold text-gray-900 dark:text-white"
+                    className="whitespace-nowrap p-3 font-bold text-gray-900 dark:text-white"
                   >
                     {row.section}
                   </th>
@@ -302,14 +302,14 @@ export default function InteractiveAnalystTable({
               >
                 <th
                   scope="row"
-                  className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                  className="whitespace-nowrap p-3 font-medium text-gray-900 dark:text-white"
                 >
                   {row.label}
                 </th>
                 {yearsToDisplay.map((year) => {
                   const cellValue = row.key ? getValue(row.key, year) : 0;
                   return (
-                    <td key={`${rowKey}-${year}`} className="px-6 py-4">
+                    <td key={`${rowKey}-${year}`} className="px-3 py-2">
                       {formatValue(row.formatType, cellValue)}
                     </td>
                   );
