@@ -186,3 +186,18 @@ export async function requestAccess(credentials: { fullName: string; email: stri
     },
   });
 }
+
+/**
+ * Saves audited finances data.
+ * If an entry for the given year exists, it updates the record.
+ * Otherwise, it creates a new entry.
+ *
+ * @param {Object} financeData - The audited finance data.
+ */
+export async function saveAuditedFinances(financeData: { year: any; }) {
+  // Update existing record
+  await prisma.auditedFinances.update({
+    where: { year: financeData.year },
+    data: financeData,
+  });
+}
