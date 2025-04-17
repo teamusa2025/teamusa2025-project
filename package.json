@@ -26,6 +26,8 @@
     "@babel/runtime": "^7.27.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@headlessui/react": "^2.2.1",
+    "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.6.0",
     "@mapbox/node-pre-gyp": "^2.0.0",
     "@mui/material": "^6.4.5",
