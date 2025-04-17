@@ -22,7 +22,7 @@ type RowsConfig = {
 
 export default async function Auditor(): Promise<JSX.Element> {
   // Apply page protections
-  const session = await getServerSession(authOptions) as {
+  const session = (await getServerSession(authOptions)) as {
     user: {
       email: string;
       id: string;
@@ -134,7 +134,10 @@ export default async function Auditor(): Promise<JSX.Element> {
   return (
     <main>
       <Container id="landing-page" fluid className="mt-10 py-3">
-        <span className="center text-2xl">Auditor Dashboard | Table</span>
+        <span className="center text-2xl">
+          Auditor Dashboard | Table
+          {' '}
+        </span>
         <a href="/auditor/audit-edit">
           <button
             type="button"
@@ -143,11 +146,7 @@ export default async function Auditor(): Promise<JSX.Element> {
             Edit
           </button>
         </a>
-        <AuditorTable
-          financesByYear={financesByYear}
-          rows={rows}
-          yearsToDisplay={yearsToDisplay}
-        />
+        <AuditorTable financesByYear={financesByYear} rows={rows} yearsToDisplay={yearsToDisplay} />
       </Container>
     </main>
   );
