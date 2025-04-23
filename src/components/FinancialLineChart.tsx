@@ -136,7 +136,6 @@ export default function FinancialLineChart({
         dataset={chartData}
         series={[
           { dataKey: 'revenue', label: 'Revenue' },
-          { dataKey: 'netSales', label: 'Net Sales' },
           { dataKey: 'grossProfit', label: 'Gross Profit' },
         ]}
         height={400}

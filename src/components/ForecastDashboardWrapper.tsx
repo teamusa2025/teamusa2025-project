@@ -9,6 +9,7 @@ import InteractiveAnalystTable, {
   ForecastConfig,
 } from '@/components/InteractiveAnalystTable.client';
 import FinancialLineChart from '@/components/FinancialLineChart';
+import Switch from '@mui/material/Switch';
 
 export type ForecastDashboardWrapperProps = {
   financesByYear: Record<number, any>;
@@ -36,6 +37,16 @@ export default function ForecastDashboardWrapper({
     setShowModal(false);
   };
 
+  const [activeStressTests, setActiveStressTests] = useState<boolean[]>(
+    Array(6).fill(false),
+  );
+
+  const toggleStressTest = (index: number) => {
+    const updated = [...activeStressTests];
+    updated[index] = !updated[index];
+    setActiveStressTests(updated);
+  };
+
   return (
     <>
       <FinancialLineChart
@@ -50,6 +61,22 @@ export default function ForecastDashboardWrapper({
         >
           Edit Forecast Settings
         </button>
+        <div className="flex flex-wrap items-center gap-4">
+          {Array.from({ length: 6 }).map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={index} className="flex items-center gap-2">
+              <span className="text-sm">
+                Stress Test #
+                {index + 1}
+              </span>
+              <Switch
+                checked={activeStressTests[index]}
+                onChange={() => toggleStressTest(index)}
+                inputProps={{ 'aria-label': `Stress Test ${index + 1}` }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {showModal && (
