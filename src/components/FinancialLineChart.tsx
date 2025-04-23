@@ -124,7 +124,15 @@ export default function FinancialLineChart({
     <div style={{ marginTop: '2rem' }}>
       <h3>Financial Metrics Over Time</h3>
       <LineChart
-        xAxis={[{ id: 'x-axis', dataKey: 'year', valueFormatter: (value) => String(Math.round(value)) }]}
+        xAxis={[
+          {
+            id: 'x-axis',
+            dataKey: 'year',
+            tickMinStep: 1, // only show one tick per full year
+            valueFormatter: (value) => (Number.isInteger(value) ? String(value) : ''),
+            scaleType: 'linear',
+          },
+        ]}
         dataset={chartData}
         series={[
           { dataKey: 'revenue', label: 'Revenue' },
