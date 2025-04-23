@@ -21,6 +21,7 @@ const ScenarioTwo: React.FC = () => {
   // eslint-disable-next-line max-len
   const [projections2, setProjections2] = useState<Array<{ fiscalYear: number, totalRevenue: number, decreaseInRevenue: number }>>([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const initialRevenues2 = [
     153034, 155329, 157659, 160024, 162424, 164861,
     167334, 169844, 172391, 174977, 177602, 180266,
