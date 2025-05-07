@@ -1,203 +1,119 @@
+/* eslint-disable max-len */
+
 'use server';
 
-import { Stuff, Condition, User, $Enums } from '@prisma/client';
+import {
+  Stuff,
+  Condition,
+  User,
+  $Enums,
+  StressTestOneInput,
+} from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
 
-// type NewUser = {
-//   username: string;
-//   email: string;
-//   password: string;
-//   role: $Enums.Role;
-//   subrole: $Enums.Subrole;
-// };
+// -- Stress Test One Input Retrieval & Update --
 
 /**
- * Adds a new stuff to the database.
- * @param stuff, an object with the following properties: name, quantity, owner, condition.
+ * Retrieves the single StressTestOneInput record (id = 1)
  */
-export async function addStuff(stuff: { name: string; quantity: number; owner: string; condition: string }) {
-  // console.log(`addStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  let condition: Condition = 'good';
-  if (stuff.condition === 'poor') {
-    condition = 'poor';
-  } else if (stuff.condition === 'excellent') {
-    condition = 'excellent';
-  } else {
-    condition = 'fair';
-  }
-  await prisma.stuff.create({
+export async function getStressTestOneInput(): Promise<StressTestOneInput | null> {
+  return prisma.stressTestOneInput.findUnique({
+    where: { id: 1 },
+  });
+}
+
+/**
+ * Updates the StressTestOneInput record (id = 1)
+ * @param input - object containing presentValue, interestRate, termYears, monthlyContributionPercent
+ */
+export async function updateStressTestOneInput(input: {
+  presentValue: number;
+  interestRate: number;
+  termYears: number;
+  monthlyContributionPercent: number;
+}): Promise<StressTestOneInput> {
+  return prisma.stressTestOneInput.update({
+    where: { id: 1 },
     data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition,
+      presentValue: input.presentValue,
+      interestRate: input.interestRate,
+      termYears: input.termYears,
+      monthlyContributionPercent: input.monthlyContributionPercent,
     },
   });
-  // After adding, redirect to the list page
+}
+
+// -- Stuff CRUD --
+
+export async function addStuff(stuff: { name: string; quantity: number; owner: string; condition: string }) {
+  let condition: Condition = 'good';
+  if (stuff.condition === 'poor') condition = 'poor';
+  else if (stuff.condition === 'excellent') condition = 'excellent';
+
+  await prisma.stuff.create({
+    data: { name: stuff.name, quantity: stuff.quantity, owner: stuff.owner, condition },
+  });
   redirect('/list');
 }
 
-type NewUser = {
-  password: string;
-  username: string;
-  email: string;
-  role: $Enums.Role;
-  subrole: $Enums.Subrole;
-};
-
-export async function addUser(user: NewUser) {
-  const hashedPassword = await hash(user.password, 10);
-  await prisma.user.create({
-    data: {
-      username: user.username,
-      email: user.email,
-      password: hashedPassword,
-      role: user.role,
-      subrole: user.subrole,
-    },
+export async function editStuff(stuff: Stuff) {
+  await prisma.stuff.update({
+    where: { id: stuff.id },
+    data: { name: stuff.name, quantity: stuff.quantity, owner: stuff.owner, condition: stuff.condition },
   });
-  // After adding, redirect to the admin page
+  redirect('/list');
+}
+
+export async function deleteStuff(id: number) {
+  await prisma.stuff.delete({ where: { id } });
+  redirect('/list');
+}
+
+// -- User CRUD --
+
+export async function addUser(user: { password: string; username: string; email: string; role: $Enums.Role; subrole: $Enums.Subrole; }) {
+  const hashedPassword = await hash(user.password, 10);
+  await prisma.user.create({ data: { ...user, password: hashedPassword } });
   redirect('/admin');
 }
 
-/**
- * Edits an existing stuff in the database.
- * @param stuff, an object with the following properties: id, name, quantity, owner, condition.
- */
-export async function editStuff(stuff: Stuff) {
-  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  await prisma.stuff.update({
-    where: { id: stuff.id },
-    data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition: stuff.condition,
-    },
-  });
-  // After updating, redirect to the list page
-  redirect('/list');
-}
-
-/**
- * Edits an existing user in the database.
- * @param user, an object with the following properties: id, name, quantity, owner, condition.
- */
 export async function editUser(user: User) {
-  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
   if (user.password === 'Replace This To Change Password') {
     await prisma.user.update({
       where: { id: user.id },
-      data: {
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        subrole: user.subrole,
-      },
+      data: { username: user.username, email: user.email, role: user.role, subrole: user.subrole },
     });
   } else {
     const hashedPassword = await hash(user.password, 10);
     await prisma.user.update({
       where: { id: user.id },
-      data: {
-        username: user.username,
-        email: user.email,
-        password: hashedPassword,
-        role: user.role,
-        subrole: user.subrole,
-      },
+      data: { username: user.username, email: user.email, password: hashedPassword, role: user.role, subrole: user.subrole },
     });
   }
-  // After updating, redirect to the admin page
   redirect('/admin');
 }
 
-/**
- * Deletes an existing stuff from the database.
- * @param id, the id of the stuff to delete.
- */
-export async function deleteStuff(id: number) {
-  // console.log(`deleteStuff id: ${id}`);
-  await prisma.stuff.delete({
-    where: { id },
-  });
-  // After deleting, redirect to the list page
-  redirect('/list');
-}
-
-/**
- * Deletes an existing user from the database.
- * @param id, the id of the user to delete.
- */
 export async function deleteUser(id: number) {
-  // console.log(`deleteUser id: ${id}`);
-  await prisma.user.delete({
-    where: { id },
-  });
-  // After deleting, redirect to the list page
+  await prisma.user.delete({ where: { id } });
   redirect('/admin');
 }
 
-/**
- * Creates a new user in the database.
- * @param credentials, an object with the following properties: email, password, username.
- */
-export async function createUser(credentials: { email: string; password: string; username: string }) {
-  // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
-  const hashedPassword = await hash(credentials.password, 10);
-  await prisma.user.create({
-    data: {
-      email: credentials.email,
-      username: credentials.username,
-      password: hashedPassword,
-    },
-  });
-}
+// -- Access Requests --
 
-/**
- * Changes the password of an existing user in the database.
- * @param credentials, an object with the following properties: email, password.
- */
-export async function changePassword(credentials: { email: string; password: string }) {
-  // console.log(`changePassword data: ${JSON.stringify(credentials, null, 2)}`);
-  const hashedPassword = await hash(credentials.password, 10);
-  await prisma.user.update({
-    where: { email: credentials.email },
-    data: {
-      password: hashedPassword,
-    },
-  });
-}
-/**
- * When a new user want to gain access to the application, they can request access.
- * @param credentials, an object with the following properties: fullName, email, reason.
- */
-export async function requestAccess(credentials: { fullName: string; email: string, reason: string }) {
-  // console.log(`requestAccess data: ${JSON.stringify(credentials, null, 2)}`);
+export async function requestAccess(credentials: { fullName: string; email: string; reason: string }) {
   await prisma.requestAccess.create({
-    data: {
-      email: credentials.email,
-      fullName: credentials.fullName,
-      reason: credentials.reason,
-      status: 'pending', // Default status
-      createdAt: new Date(),
-    },
+    data: { ...credentials, status: 'pending', createdAt: new Date() },
   });
 }
 
-/**
- * Saves audited finances data.
- * If an entry for the given year exists, it updates the record.
- * Otherwise, it creates a new entry.
- *
- * @param {Object} financeData - The audited finance data.
- */
-export async function saveAuditedFinances(financeData: { year: any; }) {
-  // Update existing record
-  await prisma.auditedFinances.update({
+// -- Audited Finances --
+
+export async function saveAuditedFinances(financeData: any) {
+  await prisma.auditedFinances.upsert({
     where: { year: financeData.year },
-    data: financeData,
+    update: financeData,
+    create: financeData,
   });
 }

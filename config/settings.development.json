@@ -1,16 +1,60 @@
 {
   "defaultAccounts": [
-    { "username": "Admin", "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "subrole": "ADMIN" },
-    { "username": "Executive", "email": "executive@foo.com", "password": "changeme", "role": "USER", "subrole": "EXECUTIVE" },
-    { "username": "Analyst", "email": "analyst@foo.com", "password": "changeme", "role": "USER", "subrole": "ANALYST" },
-    { "username": "Auditor", "email": "auditor@foo.com", "password": "changeme", "role": "USER", "subrole": "AUDITOR" }
+    {
+      "username": "Admin",
+      "email": "admin@foo.com",
+      "password": "changeme",
+      "role": "ADMIN",
+      "subrole": "ADMIN"
+    },
+    {
+      "username": "Executive",
+      "email": "executive@foo.com",
+      "password": "changeme",
+      "role": "USER",
+      "subrole": "EXECUTIVE"
+    },
+    {
+      "username": "Analyst",
+      "email": "analyst@foo.com",
+      "password": "changeme",
+      "role": "USER",
+      "subrole": "ANALYST"
+    },
+    {
+      "username": "Auditor",
+      "email": "auditor@foo.com",
+      "password": "changeme",
+      "role": "USER",
+      "subrole": "AUDITOR"
+    }
   ],
 
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "admin@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "executive@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "analyst@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "auditor@foo.com", "condition": "fair" }
+    {
+      "name": "Basket",
+      "quantity": 3,
+      "owner": "admin@foo.com",
+      "condition": "excellent"
+    },
+    {
+      "name": "Bicycle",
+      "quantity": 2,
+      "owner": "executive@foo.com",
+      "condition": "poor"
+    },
+    {
+      "name": "Banana",
+      "quantity": 2,
+      "owner": "analyst@foo.com",
+      "condition": "good"
+    },
+    {
+      "name": "Boogie Board",
+      "quantity": 2,
+      "owner": "auditor@foo.com",
+      "condition": "fair"
+    }
   ],
 
   "auditedFinances": [
@@ -178,7 +222,14 @@
       "status": "pending",
       "createdAt": "2025-02-16T12:05:00Z"
     }
+  ],
+
+  "defaultStressTestOneInput": [
+    {
+      "presentValue": 50000,
+      "interestRate": 2.94,
+      "termYears": 30,
+      "monthlyContributionPercent": 100.0
+    }
   ]
 }
-
-

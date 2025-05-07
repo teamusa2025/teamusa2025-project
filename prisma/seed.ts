@@ -22,7 +22,9 @@ async function main() {
     if (account.subrole === 'AUDITOR') {
       subrole = 'AUDITOR';
     }
-    console.log(`  Creating user: ${account.email} with role: ${role} and subrole: ${subrole}`);
+    console.log(
+      `  Creating user: ${account.email} with role: ${role} and subrole: ${subrole}`,
+    );
     await prisma.user.upsert({
       where: { email: account.email },
       update: {},
@@ -81,7 +83,8 @@ async function main() {
         totalOperatingExpenses: finData.totalOperatingExpenses,
         operatingExpensesPercent: finData.operatingExpensesPercent,
         profitLossFromOperations: finData.profitLossFromOperations,
-        profitLossFromOperationsPercent: finData.profitLossFromOperationsPercent,
+        profitLossFromOperationsPercent:
+          finData.profitLossFromOperationsPercent,
         interestIncome: finData.interestIncome,
         interestExpense: finData.interestExpense,
         gainLossOnDisposalOfAssets: finData.gainLossOnDisposalOfAssets,
@@ -132,6 +135,23 @@ async function main() {
       },
     });
   });
+
+  // Seed StressTestOneInput defaults in parallel
+  await Promise.all(
+    config.defaultStressTestOneInput.map(async (inp) => {
+      console.log(`  Seeding stress test input (PV: ${inp.presentValue})`);
+      return prisma.stressTestOneInput.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+          presentValue: inp.presentValue,
+          interestRate: inp.interestRate,
+          termYears: inp.termYears,
+          monthlyContributionPercent: inp.monthlyContributionPercent,
+        },
+      });
+    }),
+  );
 }
 
 main()

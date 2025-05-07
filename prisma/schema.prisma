@@ -136,3 +136,11 @@ model RequestAccess {
   status    String  @default("pending")
   createdAt DateTime @default(now())
 }
+
+model StressTestOneInput {
+  id                         Int     @id @default(autoincrement())
+  presentValue               Float   // e.g. 50000
+  interestRate               Float   // e.g. 2.94
+  termYears                  Int     // e.g. 30
+  monthlyContributionPercent Float   // e.g. 100.0
+}
