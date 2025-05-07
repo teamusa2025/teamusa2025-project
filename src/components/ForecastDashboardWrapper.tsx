@@ -1,13 +1,12 @@
+/* eslint-disable max-len */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/button-has-type */
 
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import FCModal, { RowConfig } from '@/components/FCModal';
-import InteractiveAnalystTable, {
-  RowsConfig,
-  ForecastConfig,
-} from '@/components/InteractiveAnalystTable.client';
+import InteractiveAnalystTable, { RowsConfig, ForecastConfig } from '@/components/InteractiveAnalystTable.client';
 import FinancialLineChart from '@/components/FinancialLineChart';
 import Switch from '@mui/material/Switch';
 
@@ -22,24 +21,23 @@ export default function ForecastDashboardWrapper({
   rows,
   yearsToDisplay,
 }: ForecastDashboardWrapperProps): JSX.Element {
-  // Build default forecast config for each row key
+  // Default forecast config
   const defaultConfig: ForecastConfig = {};
   rows.forEach((r) => {
     if (r.key) defaultConfig[r.key] = { forecastType: 'average', multiplier: 1.5 };
   });
 
-  // Live state for forecast settings
+  // State
   const [forecastConfig, setForecastConfig] = useState<ForecastConfig>(defaultConfig);
   const [showModal, setShowModal] = useState(false);
+  const [activeStressTests, setActiveStressTests] = useState<boolean[]>(Array(6).fill(false));
+  const [viewMode, setViewMode] = useState<'graph' | 'table'>('graph');
 
+  // Handlers
   const handleModalSave = (newConfig: Record<string, RowConfig>) => {
     setForecastConfig(newConfig);
     setShowModal(false);
   };
-
-  const [activeStressTests, setActiveStressTests] = useState<boolean[]>(
-    Array(6).fill(false),
-  );
 
   const toggleStressTest = (index: number) => {
     const updated = [...activeStressTests];
@@ -49,12 +47,8 @@ export default function ForecastDashboardWrapper({
 
   return (
     <>
-      <FinancialLineChart
-        financesByYear={financesByYear}
-        yearsToDisplay={yearsToDisplay}
-        forecastConfig={forecastConfig}
-      />
-      <div className="mb-6 flex items-center space-x-4">
+      {/* Forecast Settings & Stress Test Toggles */}
+      <div className="my-3 flex flex-wrap items-center space-x-4">
         <button
           onClick={() => setShowModal(true)}
           className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
@@ -63,7 +57,6 @@ export default function ForecastDashboardWrapper({
         </button>
         <div className="flex flex-wrap items-center gap-4">
           {Array.from({ length: 6 }).map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
             <div key={index} className="flex items-center gap-2">
               <span className="text-sm">
                 Stress Test #
@@ -79,6 +72,39 @@ export default function ForecastDashboardWrapper({
         </div>
       </div>
 
+      {/* View Mode Toggle */}
+      <div className="mb-6 flex space-x-4">
+        <button
+          onClick={() => setViewMode('graph')}
+          className={`rounded px-4 py-2 ${viewMode === 'graph' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+        >
+          Graph View
+        </button>
+        <button
+          onClick={() => setViewMode('table')}
+          className={`rounded px-4 py-2 ${viewMode === 'table' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+        >
+          Table View
+        </button>
+      </div>
+
+      {/* Content */}
+      {viewMode === 'graph' ? (
+        <FinancialLineChart
+          financesByYear={financesByYear}
+          yearsToDisplay={yearsToDisplay}
+          forecastConfig={forecastConfig}
+        />
+      ) : (
+        <InteractiveAnalystTable
+          financesByYear={financesByYear}
+          rows={rows}
+          yearsToDisplay={yearsToDisplay}
+          forecastConfig={forecastConfig}
+        />
+      )}
+
+      {/* Settings Modal */}
       {showModal && (
         <FCModal
           initialConfig={forecastConfig}
@@ -86,13 +112,6 @@ export default function ForecastDashboardWrapper({
           onClose={() => setShowModal(false)}
         />
       )}
-
-      <InteractiveAnalystTable
-        financesByYear={financesByYear}
-        rows={rows}
-        yearsToDisplay={yearsToDisplay}
-        forecastConfig={forecastConfig}
-      />
     </>
   );
 }
