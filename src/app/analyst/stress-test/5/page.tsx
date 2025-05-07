@@ -1,3 +1,6 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable max-len */
+
 'use client';
 
 import React, { useState, useMemo } from 'react';
@@ -11,7 +14,13 @@ interface InputFieldProps {
   type?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, id, value, onChange, type = 'number' }) => (
+const InputField: React.FC<InputFieldProps> = ({
+  label,
+  id,
+  value,
+  onChange,
+  type = 'number',
+}) => (
   <div className="mb-4 flex items-center">
     <label htmlFor={id} className="w-1/3 text-lg font-medium text-gray-700">
       {label}
@@ -53,7 +62,9 @@ interface PaymentSchedule {
 }
 
 const ScenarioFive: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'investment' | 'loan'>('investment');
+  const [activeTab, setActiveTab] = useState<'investment' | 'loan'>(
+    'investment',
+  );
   const [stressEffect, setStressEffect] = useState<boolean>(false);
 
   // Investment calculator state
@@ -125,7 +136,8 @@ const ScenarioFive: React.FC = () => {
       const projection: Projection = {
         fiscalYear: year + 1,
         balance: balance.toFixed(2),
-        yearlyContribution: yearlyContribution > 0 ? yearlyContribution.toFixed(2) : '',
+        yearlyContribution:
+          yearlyContribution > 0 ? yearlyContribution.toFixed(2) : '',
         interestEarned: interestEarned.toFixed(2),
         interestPlusBalance: totalWithInterest.toFixed(2),
       };
@@ -149,7 +161,8 @@ const ScenarioFive: React.FC = () => {
     if (loanAmount > 0 && annualInterestRate > 0 && loanPeriodYears > 0) {
       const monthlyRate = annualInterestRate / 100 / 12;
       const numberOfPayments = loanPeriodYears * 12;
-      const monthlyPayment = (monthlyRate * loanAmount) / (1 - (1 + monthlyRate) ** -numberOfPayments);
+      const monthlyPayment = (monthlyRate * loanAmount)
+        / (1 - (1 + monthlyRate) ** -numberOfPayments);
 
       let balance = loanAmount;
       const schedule: PaymentSchedule[] = [];
@@ -159,7 +172,11 @@ const ScenarioFive: React.FC = () => {
       // Adjust initial date to 30th or last day of month
       currentDate.setDate(30);
       if (currentDate.getDate() !== 30) {
-        currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        currentDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1,
+          0,
+        );
       }
 
       for (let i = 0; i < numberOfPayments; i++) {
@@ -214,7 +231,7 @@ const ScenarioFive: React.FC = () => {
   }, [loanDetails]);
 
   return (
-    <div className="mx-auto px-4">
+    <div className="mx-auto px-4 text-base">
       <h1 className="mt-20 text-center text-3xl font-bold">Scenario #5</h1>
       <h2 className="mb-8 text-center text-2xl">
         30% Decrease bond return to 1.7% due to increase in inflation
@@ -223,14 +240,12 @@ const ScenarioFive: React.FC = () => {
 
       {/* Tab Navigation */}
       <div className="my-4 flex border-b">
-        {/* eslint-disable-next-line react/button-has-type */}
         <button
           className={`px-4 py-2 ${activeTab === 'investment' ? 'border-b-2 border-blue-500 font-bold' : ''}`}
           onClick={() => setActiveTab('investment')}
         >
           Investment Calculator
         </button>
-        {/* eslint-disable-next-line react/button-has-type */}
         <button
           className={`px-4 py-2 ${activeTab === 'loan' ? 'border-b-2 border-blue-500 font-bold' : ''}`}
           onClick={() => setActiveTab('loan')}
@@ -242,7 +257,10 @@ const ScenarioFive: React.FC = () => {
       {activeTab === 'investment' ? (
         <>
           <div className="my-4">
-            <label htmlFor="stress-effect-toggle" className="inline-flex cursor-pointer items-center">
+            <label
+              htmlFor="stress-effect-toggle"
+              className="inline-flex cursor-pointer items-center"
+            >
               <input
                 id="stress-effect-toggle"
                 type="checkbox"
@@ -250,12 +268,13 @@ const ScenarioFive: React.FC = () => {
                 onChange={(e) => setStressEffect(e.target.checked)}
                 className="peer sr-only"
               />
-              <div className="after:top after:start after:content peer relative h-6 w-11 rounded-full
-                bg-gray-200 after:absolute after:size-5 after:rounded-full after:border after:border-gray-300
-                after:bg-white after:transition-all peer-checked:bg-blue-600 peer-checked:after:translate-x-full
-                peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
-                dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600 dark:peer-focus:ring-blue-800
-                rtl:peer-checked:after:-translate-x-full"
+              <div
+                className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-0 after:top-0
+                         after:size-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all
+                         peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white
+                         peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
+                         dark:border-gray-600 dark:bg-gray-700 dark:peer-checked:bg-blue-600
+                         dark:peer-focus:ring-blue-800"
               />
               <span className="ms-3 text-lg font-medium text-gray-900 dark:text-gray-300">
                 Stress Effect
@@ -295,53 +314,69 @@ const ScenarioFive: React.FC = () => {
               <div className="relative overflow-x-auto shadow-md sm:rounded-lg md:w-1/2">
                 <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
                   <tbody>
-                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700
-                    odd:dark:bg-gray-900 even:dark:bg-gray-800"
-                    >
-                      <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                      >
                         Value after 5 years
                       </th>
                       <td className="px-6 py-4">
-                        {presentValue > 0 ? formatCurrency(fiveYear.futureValue) : 'N/A'}
+                        {presentValue > 0
+                          ? formatCurrency(fiveYear.futureValue)
+                          : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
-                        {presentValue > 0 ? formatPercentage(fiveYear.appreciation) : 'N/A'}
+                        {presentValue > 0
+                          ? formatPercentage(fiveYear.appreciation)
+                          : 'N/A'}
                       </td>
                     </tr>
-                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700
-                    odd:dark:bg-gray-900 even:dark:bg-gray-800"
-                    >
-                      <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                      >
                         Total interest earned after 5 years
                       </th>
                       <td className="px-6 py-4">
-                        {presentValue > 0 ? formatCurrency(fiveYear.totalInterest) : 'N/A'}
+                        {presentValue > 0
+                          ? formatCurrency(fiveYear.totalInterest)
+                          : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
                         {formatPercentage(interestRate)}
                       </td>
                     </tr>
-                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700
-                    odd:dark:bg-gray-900 even:dark:bg-gray-800"
-                    >
-                      <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                      >
                         Value after 30 years
                       </th>
                       <td className="px-6 py-4">
-                        {presentValue > 0 ? formatCurrency(thirtyYear.futureValue) : 'N/A'}
+                        {presentValue > 0
+                          ? formatCurrency(thirtyYear.futureValue)
+                          : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
-                        {presentValue > 0 ? formatPercentage(thirtyYear.appreciation) : 'N/A'}
+                        {presentValue > 0
+                          ? formatPercentage(thirtyYear.appreciation)
+                          : 'N/A'}
                       </td>
                     </tr>
-                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700
-                    odd:dark:bg-gray-900 even:dark:bg-gray-800"
-                    >
-                      <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                      >
                         Total interest earned after 30 years
                       </th>
                       <td className="px-6 py-4">
-                        {presentValue > 0 ? formatCurrency(thirtyYear.totalInterest) : 'N/A'}
+                        {presentValue > 0
+                          ? formatCurrency(thirtyYear.totalInterest)
+                          : 'N/A'}
                       </td>
                       <td className="px-6 py-4">
                         {formatPercentage(interestRate)}
@@ -361,26 +396,32 @@ const ScenarioFive: React.FC = () => {
                 label="Loan Amount ($)"
                 id="loanAmount"
                 value={loanDetails.loanAmount}
-                onChange={(v) => setLoanDetails(prev => ({ ...prev, loanAmount: Number(v) }))}
+                onChange={(v) => setLoanDetails((prev) => ({ ...prev, loanAmount: Number(v) }))}
               />
               <InputField
                 label="Annual Interest Rate (%)"
                 id="annualInterestRate"
                 value={loanDetails.annualInterestRate}
-                onChange={(v) => setLoanDetails(prev => ({ ...prev, annualInterestRate: Number(v) }))}
+                onChange={(v) => setLoanDetails((prev) => ({
+                  ...prev,
+                  annualInterestRate: Number(v),
+                }))}
               />
               <InputField
                 label="Loan Period (years)"
                 id="loanPeriodYears"
                 value={loanDetails.loanPeriodYears}
-                onChange={(v) => setLoanDetails(prev => ({ ...prev, loanPeriodYears: Number(v) }))}
+                onChange={(v) => setLoanDetails((prev) => ({
+                  ...prev,
+                  loanPeriodYears: Number(v),
+                }))}
               />
               <InputField
                 label="Start Date"
                 id="startDate"
                 type="date"
                 value={loanDetails.startDate}
-                onChange={(v) => setLoanDetails(prev => ({ ...prev, startDate: v }))}
+                onChange={(v) => setLoanDetails((prev) => ({ ...prev, startDate: v }))}
               />
             </div>
 
@@ -388,27 +429,43 @@ const ScenarioFive: React.FC = () => {
               <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
                 <tbody>
                   <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50">
-                    <th className="px-6 py-4 font-medium text-gray-900">Monthly Payment</th>
+                    <th className="px-6 py-4 font-medium text-gray-900">
+                      Monthly Payment
+                    </th>
                     <td className="px-6 py-4">
-                      {loanDetails.loanAmount > 0 ? formatCurrency(calculatedValues.monthlyPayment) : 'N/A'}
+                      {loanDetails.loanAmount > 0
+                        ? formatCurrency(calculatedValues.monthlyPayment)
+                        : 'N/A'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50">
-                    <th className="px-6 py-4 font-medium text-gray-900">Number of Payments</th>
+                    <th className="px-6 py-4 font-medium text-gray-900">
+                      Number of Payments
+                    </th>
                     <td className="px-6 py-4">
-                      {loanDetails.loanAmount > 0 ? calculatedValues.numberOfPayments : 'N/A'}
+                      {loanDetails.loanAmount > 0
+                        ? calculatedValues.numberOfPayments
+                        : 'N/A'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50">
-                    <th className="px-6 py-4 font-medium text-gray-900">Total Interest</th>
+                    <th className="px-6 py-4 font-medium text-gray-900">
+                      Total Interest
+                    </th>
                     <td className="px-6 py-4">
-                      {loanDetails.loanAmount > 0 ? formatCurrency(calculatedValues.totalInterest) : 'N/A'}
+                      {loanDetails.loanAmount > 0
+                        ? formatCurrency(calculatedValues.totalInterest)
+                        : 'N/A'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 odd:bg-white even:bg-gray-50">
-                    <th className="px-6 py-4 font-medium text-gray-900">Total Cost</th>
+                    <th className="px-6 py-4 font-medium text-gray-900">
+                      Total Cost
+                    </th>
                     <td className="px-6 py-4">
-                      {loanDetails.loanAmount > 0 ? formatCurrency(calculatedValues.totalCost) : 'N/A'}
+                      {loanDetails.loanAmount > 0
+                        ? formatCurrency(calculatedValues.totalCost)
+                        : 'N/A'}
                     </td>
                   </tr>
                 </tbody>
@@ -423,23 +480,43 @@ const ScenarioFive: React.FC = () => {
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              {activeTab === 'investment' ? (
-                ['Year', 'Balance', 'Yearly Contribution', 'Interest Earned', 'Interest + Balance'].map((header) => (
-                  <th key={header} className="px-6 py-3">{header}</th>
+              {activeTab === 'investment'
+                ? [
+                  'Year',
+                  'Balance',
+                  'Yearly Contribution',
+                  'Interest Earned',
+                  'Interest + Balance',
+                ].map((header) => (
+                  <th key={header} className="px-6 py-3">
+                    {header}
+                  </th>
                 ))
-              ) : (
-                ['No.', 'Payment Date', 'Beginning Balance', 'Payment', 'Principal', 'Interest', 'Ending Balance']
-                  .map((header) => (
-                    <th key={header} className="px-6 py-3">{header}</th>
-                  ))
-              )}
+                : [
+                  'No.',
+                  'Payment Date',
+                  'Beginning Balance',
+                  'Payment',
+                  'Principal',
+                  'Interest',
+                  'Ending Balance',
+                ].map((header) => (
+                  <th key={header} className="px-6 py-3">
+                    {header}
+                  </th>
+                ))}
             </tr>
           </thead>
           <tbody>
-            {activeTab === 'investment' ? (
-              projections.map((projection) => (
-                <tr key={projection.fiscalYear} className="border-b border-gray-200 bg-white hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-gray-900">{projection.fiscalYear}</td>
+            {activeTab === 'investment'
+              ? projections.map((projection) => (
+                <tr
+                  key={projection.fiscalYear}
+                  className="border-b border-gray-200 bg-white hover:bg-gray-50"
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {projection.fiscalYear}
+                  </td>
                   <td className="px-6 py-4">
                     $
                     {projection.balance}
@@ -458,19 +535,30 @@ const ScenarioFive: React.FC = () => {
                   </td>
                 </tr>
               ))
-            ) : (
-              paymentSchedule.map((payment) => (
-                <tr key={payment.no} className="border-b border-gray-200 bg-white hover:bg-gray-50">
+              : paymentSchedule.map((payment) => (
+                <tr
+                  key={payment.no}
+                  className="border-b border-gray-200 bg-white hover:bg-gray-50"
+                >
                   <td className="px-6 py-4">{payment.no}</td>
                   <td className="px-6 py-4">{payment.paymentDate}</td>
-                  <td className="px-6 py-4">{formatCurrency(payment.beginningBalance)}</td>
-                  <td className="px-6 py-4">{formatCurrency(payment.payment)}</td>
-                  <td className="px-6 py-4">{formatCurrency(payment.principal)}</td>
-                  <td className="px-6 py-4">{formatCurrency(payment.interest)}</td>
-                  <td className="px-6 py-4">{formatCurrency(payment.endingBalance)}</td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(payment.beginningBalance)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(payment.payment)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(payment.principal)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(payment.interest)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(payment.endingBalance)}
+                  </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
       </div>

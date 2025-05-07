@@ -121,7 +121,10 @@ export default function FinancialLineChart({
   }, [financesByYear, yearsToDisplay, forecastConfig, baseFields]);
 
   return (
-    <div style={{ marginTop: '2rem' }}>
+    <div
+      style={{ marginTop: '2rem', backgroundColor: '#D8D8D8', padding: '1rem' }}
+      className="rounded border-lg"
+    >
       <h3>Financial Metrics Over Time</h3>
       <LineChart
         xAxis={[
@@ -138,7 +141,8 @@ export default function FinancialLineChart({
           { dataKey: 'revenue', label: 'Revenue' },
           { dataKey: 'grossProfit', label: 'Gross Profit' },
         ]}
-        height={400}
+        height={600} // increased vertical space
+        style={{ backgroundColor: '#D8D8D8' }} // light gray chart background
       />
     </div>
   );

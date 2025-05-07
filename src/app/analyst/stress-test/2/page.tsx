@@ -1,174 +1,181 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import InputField from '../../../../components/InputField';
 
-const ScenarioTwo: React.FC = () => {
-  const [enableScenarioEffect2, setEnableScenarioEffect2] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return sessionStorage.getItem('scenario2-enableScenarioEffect2') === 'true';
+interface StressEffectRow {
+  fiscalYear: number;
+  totalRevenue: number;
+  decreaseInRevenue: number;
+}
+
+interface ResidualEffectRow {
+  fiscalYear: number;
+  totalInterestsLost: number;
+}
+
+export default function ScenarioTwo() {
+  // toggles
+  const [enableStress, setEnableStress] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+    return sessionStorage.getItem('scenario2-enableStress') === 'true';
+  });
+  const [enableResidual, setEnableResidual] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+    return sessionStorage.getItem('scenario2-enableResidual') === 'true';
   });
 
-  const [enableResidualEffect2, setEnableResidualEffect2] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return sessionStorage.getItem('scenario2-enableResidualEffect2') === 'true';
+  // input
+  const [pctDecrease, setPctDecrease] = useState<number>(() => {
+    if (typeof window === 'undefined') return -2.25;
+    const v = sessionStorage.getItem('scenario2-pctDecrease');
+    return v !== null ? Number(v) : -2.25;
   });
 
-  const [percentage2, setPercentage2] = useState<number>(() => {
-    if (typeof window === 'undefined') return 0;
-    return Number(sessionStorage.getItem('scenario2-percentage2')) || 0;
-  });
+  // persist toggles & input
+  useEffect(() => {
+    sessionStorage.setItem('scenario2-enableStress', String(enableStress));
+  }, [enableStress]);
+  useEffect(() => {
+    sessionStorage.setItem('scenario2-enableResidual', String(enableResidual));
+  }, [enableResidual]);
+  useEffect(() => {
+    sessionStorage.setItem('scenario2-pctDecrease', String(pctDecrease));
+  }, [pctDecrease]);
 
-  // eslint-disable-next-line max-len
-  const [projections2, setProjections2] = useState<Array<{ fiscalYear: number, totalRevenue: number, decreaseInRevenue: number }>>([]);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const initialRevenues2 = [
-    153034, 155329, 157659, 160024, 162424, 164861,
-    167334, 169844, 172391, 174977, 177602, 180266,
+  // static revenues 2025–2036
+  const revenues = [
+    153034, 155329, 157659, 160024, 162424, 164861, 167334, 169844, 172391,
+    174977, 177602, 180266,
   ];
+  const startYear = 2025;
 
-  useEffect(() => {
-    sessionStorage.setItem('scenario2-enableScenarioEffect2', enableScenarioEffect2.toString());
-  }, [enableScenarioEffect2]);
+  // stress effects
+  const stressRows = useMemo<StressEffectRow[]>(
+    () => revenues.map((rev, i) => {
+      const year = startYear + i;
+      // decrease = revenue * pctDecrease%
+      const dec = rev * (pctDecrease / 100);
+      return { fiscalYear: year, totalRevenue: rev, decreaseInRevenue: dec };
+    }),
+    [pctDecrease],
+  );
 
-  useEffect(() => {
-    sessionStorage.setItem('scenario2-enableResidualEffect2', enableResidualEffect2.toString());
-  }, [enableResidualEffect2]);
-
-  useEffect(() => {
-    sessionStorage.setItem('scenario2-percentage2', percentage2.toString());
-  }, [percentage2]);
-
-  useEffect(() => {
-    const currentYear = new Date().getFullYear();
-    const newProjections = initialRevenues2.map((revenue, index) => {
-      const fiscalYear = currentYear + index;
-      const decreaseInRevenue = revenue * (percentage2 / 100);
-      return {
-        fiscalYear,
-        totalRevenue: revenue,
-        decreaseInRevenue,
-      };
-    });
-    setProjections2(newProjections);
-  }, [initialRevenues2, percentage2]);
-
-  // Calculate ScenarioEffect2 and ResidualEffect2
-  const { scenarioEffect2, residualEffect2 } = useMemo(() => {
-    // First 12 values of decreaseInRevenue
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const scenarioEffect2 = projections2.slice(0, 12).map(p => p.decreaseInRevenue);
-
-    // Residual effect calculation
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const residualEffect2 = scenarioEffect2.map((_, yearIndex) => {
+  // residual effects (compound lost interest at 6.02%)
+  const residualRows = useMemo<ResidualEffectRow[]>(() => {
+    const rate = 0.0602;
+    return stressRows.map((row, i) => {
+      // total interests lost = sum over j=0..i of row.decrease * ((1+rate)^(i-j+1)-1)
       let total = 0;
-      for (let i = 0; i <= yearIndex; i++) {
-        const exponent = (yearIndex + 1) - i;
-        const base = scenarioEffect2[i];
-        total += base * 1.0602 ** exponent - base;
+      for (let j = 0; j <= i; j++) {
+        const base = stressRows[j].decreaseInRevenue;
+        total += base * ((1 + rate) ** (i - j + 1) - 1);
       }
-      return Number(total.toFixed(2));
+      return { fiscalYear: row.fiscalYear, totalInterestsLost: total };
     });
+  }, [stressRows]);
 
-    return { scenarioEffect2, residualEffect2 };
-  }, [projections2]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && scenarioEffect2.length > 0) {
-      sessionStorage.setItem('scenarioEffect2', JSON.stringify(scenarioEffect2));
-      sessionStorage.setItem('residualEffect2', JSON.stringify(residualEffect2));
-    }
-  }, [scenarioEffect2, residualEffect2]);
-
-  const handlePercentageChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPercentage2(Number(e.target.value));
+  // helper for currency + parentheses
+  const fmt = (val: number) => {
+    const abs = Math.abs(Math.round(val));
+    const s = abs.toLocaleString();
+    return val < 0 ? `($${s})` : `$${s}`;
   };
 
   return (
-    <div className=" mx-auto max-w-4xl">
-      {/* Header */}
+    <div className="mx-auto mt-6 max-w-4xl p-6">
       <h1 className="mt-20 text-center text-3xl font-bold">Scenario #2</h1>
-      <h2 className="mb-8 text-center text-2xl">60% sustained drop in return rate of Investment</h2>
-      <hr className="solid" />
+      <h2 className="mb-8 text-center text-2xl">
+        60% sustained drop in return rate of Investment
+      </h2>
+      <hr className="solid mb-6" />
 
-      {/* Toggle Switches */}
-      <div className="mb-8 space-y-4">
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="flex items-center space-x-3">
+      {/* Toggles */}
+      <div className="mb-6 flex space-x-6">
+        <label className="flex items-center space-x-2">
           <input
             type="checkbox"
-            checked={enableScenarioEffect2}
-            onChange={(e) => setEnableScenarioEffect2(e.target.checked)}
-            className="form-checkbox size-5 rounded text-blue-600 focus:ring-blue-500"
+            checked={enableStress}
+            onChange={(e) => setEnableStress(e.target.checked)}
+            className="form-checkbox text-blue-600"
           />
-          <span className="font-medium text-gray-700">Enable Scenario Effect</span>
+          <span>Enable Stress Effects</span>
         </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="flex items-center space-x-3">
+        <label className="flex items-center space-x-2">
           <input
             type="checkbox"
-            checked={enableResidualEffect2}
-            onChange={(e) => setEnableResidualEffect2(e.target.checked)}
-            className="form-checkbox size-5 rounded text-blue-600 focus:ring-blue-500"
+            checked={enableResidual}
+            onChange={(e) => setEnableResidual(e.target.checked)}
+            className="form-checkbox text-blue-600"
           />
-          <span className="font-medium text-gray-700">Enable Residual Effects</span>
+          <span>Enable Residual Effects</span>
         </label>
       </div>
 
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <div>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label
-            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
-            % Decrease in Revenues
-          </label>
-          <input
-            aria-label="Decrease in Revenues"
-            className="mb-3 ml-1 block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
-            focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white
-            dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-            type="number"
-            value={percentage2}
-            onChange={handlePercentageChange2}
-            placeholder="Enter percentage"
-          />
-        </div>
-        <div className="overflow-hidden rounded-lg">
+      {/* Input */}
+      <div className="mb-6 max-w-xs">
+        <InputField
+          id="pctDecrease"
+          label="% Decrease in Revenues"
+          value={pctDecrease}
+          onChange={setPctDecrease}
+        />
+      </div>
+
+      {/* Stress Effects Table */}
+      {enableStress && (
+        <div className="mb-8 overflow-x-auto rounded-lg shadow">
           <table className="w-full text-left text-sm">
-            <thead className="bg-blue-500 text-xs uppercase text-white">
+            <thead className="bg-blue-500 text-white">
               <tr>
-                <th scope="col" className="px-6 py-3">Fiscal Year</th>
-                <th scope="col" className="px-6 py-3">Total Revenues</th>
-                <th scope="col" className="px-6 py-3">Decreases in Revenues</th>
+                <th className="px-4 py-2">Fiscal Year</th>
+                <th className="px-4 py-2">Total Revenues</th>
+                <th className="px-4 py-2">Decrease in Revenues</th>
               </tr>
             </thead>
             <tbody>
-              {projections2.map((projection) => (
-                <tr
-                  key={projection.fiscalYear}
-                  className="border-b border-gray-200 bg-blue-100 hover:bg-blue-200"
-                >
-                  <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                    {projection.fiscalYear}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+              {stressRows.map((r) => (
+                <tr key={r.fiscalYear} className="border-b bg-blue-100">
+                  <td className="px-4 py-2">{r.fiscalYear}</td>
+                  <td className="px-4 py-2">
                     $
-                    {projection.totalRevenue.toLocaleString()}
+                    {r.totalRevenue.toLocaleString()}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                    $
-                    {projection.decreaseInRevenue.toLocaleString()}
+                  <td className="px-4 py-2 text-red-600">
+                    {fmt(r.decreaseInRevenue)}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+      )}
+
+      {/* Residual Effects Table */}
+      {enableResidual && (
+        <div className="overflow-x-auto rounded-lg shadow">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-blue-500 text-white">
+              <tr>
+                <th className="px-4 py-2">Fiscal Year</th>
+                <th className="px-4 py-2">Total Interests Lost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {residualRows.map((r) => (
+                <tr key={r.fiscalYear} className="border-b bg-blue-100">
+                  <td className="px-4 py-2">{r.fiscalYear}</td>
+                  <td className="px-4 py-2">{fmt(r.totalInterestsLost)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
-};
-
-export default ScenarioTwo;
+}

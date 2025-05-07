@@ -174,7 +174,7 @@ const Sidebar: React.FC = () => {
                   exit="exit"
                   variants={containerVariants}
                 >
-                  {Array.from({ length: 6 }, (_, i) => {
+                  {Array.from({ length: 5 }, (_, i) => {
                     const scenarioNumber = i + 1;
                     return (
                       <motion.a
